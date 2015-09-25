@@ -1,6 +1,5 @@
 var React = require('react/addons'),
-	HomePage = React.createFactory(require('./render/pages/js/HomePage')),
-
+	HomePage = React.createFactory(require('./render/pages/js/HomePage'));
 
 module.exports = function (app){
 	app.get('/', function (req, res) {

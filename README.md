@@ -1,5 +1,5 @@
-because express-generator sucks <br>
-bare minimal template for starting a node web app
+Study Helper App
 
-npm install
-node app.js
+Howon Byun
+Ken Aizawa
+Kevin Lin

@@ -1,6 +1,7 @@
 var React = require('react/addons'),
 	HomePage = React.createFactory(require('./render/pages/js/HomePage'));
 
+
 module.exports = function (app){
 	app.get('/', function (req, res) {
 
@@ -9,5 +10,13 @@ module.exports = function (app){
 			title     : 'Raymond',
 			body 	  : reactBody,
 		});
-	})
+	}),
+	app.get('/test', function(req, res) {
+		var models = require('../models/');
+		var p = new models.Course({ "title": "test" });
+		p.save();
+		res.render('index', {
+			title: 'Raymond'
+		});
+	})	
 }

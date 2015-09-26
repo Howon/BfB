@@ -7,12 +7,7 @@ var Course, User;
 var Schema = mongoose.Schema;
 
 var courseSchema = new Schema({
-  title: String,
-  url_name: String,
-  owner_id:   String,
-  body:   String,
-  date: { type: Date, default: Date.now },
-  status: Number
+  title: String
 });
 
 var userSchema = new Schema({

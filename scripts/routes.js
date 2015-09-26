@@ -12,9 +12,11 @@ module.exports = function (app){
 		});
 	}),
 	app.get('/test', function(req, res) {
-		// var models = require('../models/');
-		// var p = new models.Course({ "title": "test" });
-		// p.save();
+		var models = require('../models/');
+		var meeting = new models.Times({ "starttime": "test", "endtime": "test2" });
+		var meetings = [meeting];
+		var course = new models.Course({ "id": "test", "meetingTimes": meetings, "summary": "test", "location": "test" });
+		course.save();
 		res.render('index', {
 			title: 'Raymond'
 		});

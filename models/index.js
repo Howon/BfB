@@ -27,7 +27,8 @@ var userSchema = new Schema({
   email: String
 });
 
+Times = mongoose.model('Times', timeSchema);
 Course = mongoose.model('Course', courseSchema);
 User = mongoose.model('User', userSchema);
 
-module.exports = {"Course": Course, "User": User };
+module.exports = {"Course": Course, "User": User , "Times": Times};

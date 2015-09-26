@@ -6,8 +6,17 @@ db.on('error', console.error.bind(console, 'connection error:'));
 var Course, User;
 var Schema = mongoose.Schema;
 
+var timeSchema = new Schema({
+  starttime: String,
+  endtime: String
+})
+
+
 var courseSchema = new Schema({
-  title: String
+  id: String,
+  meetingTimes:[TimeSchema],
+  summary: String,
+  location: String
 });
 
 var userSchema = new Schema({

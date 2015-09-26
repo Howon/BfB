@@ -12,9 +12,9 @@ module.exports = function (app){
 		});
 	}),
 	app.get('/test', function(req, res) {
-		var models = require('../models/');
-		var p = new models.Course({ "title": "test" });
-		p.save();
+		// var models = require('../models/');
+		// var p = new models.Course({ "title": "test" });
+		// p.save();
 		res.render('index', {
 			title: 'Raymond'
 		});

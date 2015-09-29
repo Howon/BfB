@@ -1,0 +1,8 @@
+extends layout
+
+block head
+  script(type = 'text/javascript', src = '/javascripts/sources/jquery.icalendar.min.js')
+block body
+  div#mount_point= body
+  script(type = 'text/javascript' src="http://localhost:8080/webpack-dev-server.js")
+  script(type = 'text/javascript' src="http://localhost:8080/build/bundle.js")

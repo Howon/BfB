@@ -1,14 +1,7 @@
-var React = require('react/addons'),
-	HomePage = React.createFactory(require('./render/pages/js/HomePage'));
-
-
 module.exports = function (app){
-	app.get('/', function (req, res) {
-
-		var reactBody = React.renderToString(HomePage());
+	app.get('/', function (req, res) {	
 		res.render('index', {
-			title     : 'Raymond',
-			body 	  : reactBody,
+			title     : 'Raymond'			
 		});
 	}),
 	app.get('/test', function(req, res) {

@@ -7,6 +7,8 @@ var config = require('./scripts/config')
 var io = require('socket.io')(server);
 
 require('babel/register');
+var mongoose = require('mongoose');
+mongoose.connect(config.mongoose.url);
 
 server.listen(config.port)
 app.set('views', path.join(__dirname, 'app/views'))

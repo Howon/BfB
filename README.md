@@ -23,6 +23,15 @@ sh run.sh
 ```
 to run the app at localhost:3000
 
+## App Structure
+All of front end components are rendered server side using React and Webpack
+When one runs 
+```bash
+sh run.sh
+```
+It starts off webpack which automates bundling and compilation of ES6 into 
+plain javascript. The mount page just calls the javascript render code
+to display appropriate contents
 
 ## Developers
 Howon Byun <br />

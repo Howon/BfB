@@ -1,11 +1,10 @@
-/** @jsx React.DOM */
-var React = require('react/addons'),
-    io = require('socket.io-client'),
+import React from "react";     
+import io from 'socket.io-client';
     // socket = io('https://anon-message.herokuapp.com/', {secure: true});
-    socket = io('localhost:3000');
+let socket = io('localhost:3000');
     
-var Message = React.createClass({
-    render: function(){
+class Message extends React.Component {    
+    render(){
       return(
         <li className = "message">
           {this.props.sender === this.props.buyer ? 
@@ -14,56 +13,57 @@ var Message = React.createClass({
         </li>
       )
     }
-});
+};
 
-var MessageList = React.createClass({
-  render: function(){
-    var renderMessage = function(message, i){
+class MessageList extends React.Component {    
+  renderMessage(message, i){
       return <Message key = {i} sender = {message.sender} text = {message.message} buyer = {this.props.buyer}/>
-    }
+  }
+  render(){    
     return (
       <ul id="messages" className="chatArea">
-        {this.props.messages.map(renderMessage)} 
+        {this.props.messages.map(this.renderMessage)} 
       </ul>
     );
   }
-});
+};
 
-var MessageInputForm = React.createClass({
-    getInitialState: function(){
-      return {
-        message: ''
-      };
-    },
-    handleChange: function(evt) {
+class MessageInputForm extends React.Component {    
+    constructor(){      
+        super();
+        this.state = {
+          message: ''
+        }
+    }
+    handleChange(evt) {
       this.setState({
         message: evt.target.value
       });
-    },
-    handleSubmit : function(e){
+    }
+    handleSubmit(e){
       if(/\S/.test(this.state.message)){
         this.props.postMessage(this.state.message);    
       }
       this.setState({
         message: ""
       });
-    },
-    handleKeyDown: function(evt) {
+    }
+    handleKeyDown(evt) {
       if (evt.keyCode == 13 ) {
         return this.handleSubmit(evt);
       }
-    },
-    render : function(){
+    }
+    render(){
       return (
         <textarea id="messageInput" type="text" placeholder="Type to chat" className="chatArea"
          onChange = {this.handleChange} value = {this.state.message} onKeyDown={this.handleKeyDown}>
         </textarea>
       )
     }
-});
+};
 
-var Chat = React.createClass({
-  render : function(){
+class Chat extends React.Component {
+  render() {
     return (
         <div id="chatArea">
           <MessageList messages = {this.props.messages} buyer = {this.props.buyer}/>
@@ -71,6 +71,6 @@ var Chat = React.createClass({
         </div>
     )
   }
-});
+};
 
-module.exports = Chat;
+export default Chat;

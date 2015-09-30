@@ -1,5 +1,6 @@
 var mongoose = require('mongoose'),
-    Schema = mongoose.Schema;
+    Schema = mongoose.Schema,
+    timeSchema = require('./time');
 
 var courseSchema = new Schema({
   id: String,
@@ -8,4 +9,4 @@ var courseSchema = new Schema({
   location: String
 });
 
-module.exports = mongoose.model('Course', eventSchema);
+module.exports = mongoose.model('Course', courseSchema);

@@ -2,7 +2,11 @@ import React from "react";
 import io from 'socket.io-client';
     // socket = io('https://anon-message.herokuapp.com/', {secure: true});
 let socket = io('localhost:3000');
- 
+
+import Chat from "../components/Chat.jsx";
+import SideBar from "../components/SideBar.jsx"
+import NavBar from "../components/NavBar.jsx"
+
 class Body extends React.Component {    
     constructor() {
       super();
@@ -15,20 +19,13 @@ class Body extends React.Component {
       let reader = new FileReader();          
       console.log("hello");
     }
-    render (){
-        return (
-            <div>
-                <div>Hello World</div>            
-                <input 
-                  type="file" 
-                  name="file" 
-                  id = "parseOutput" 
-                  ref="file" 
-                  accept=".ics" 
-                  onChange={this.handleSubmit}
-                />
-            </div>
-        )
+    render(){
+      return (
+        <div>
+          <SideBar />
+          <NavBar />
+        </div>
+      )
     }
 }
 

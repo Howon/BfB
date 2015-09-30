@@ -1,0 +1,9 @@
+extends layout
+block body
+   div#main_area
+    div#login
+      span Sign in with
+      span#google_login.login_buttons
+        a(href='/auth/google')
+          | Google &nbsp;
+          i.fa.fa-google-plus

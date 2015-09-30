@@ -6,4 +6,4 @@ var timeSchema = new Schema({
   endtime: String
 });
 
-module.exports = mongoose.model('Time', eventSchema);
+module.exports = mongoose.model('Time', timeSchema);

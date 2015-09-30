@@ -20,16 +20,16 @@ else
 	echo "mongo downloaded"
 fi
 
-if [ ! -d data ]
-	then
-    	mkdir data
-		echo "db directory created"
-fi
-
 if ! type "node" > /dev/null
 	then
 		brew install node
 		echo "node downloaded"
+fi
+
+if [ ! -d data ]
+	then
+    	mkdir data
+		echo "db directory created"
 fi
 
 sudo npm install 

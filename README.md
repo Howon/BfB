@@ -11,12 +11,6 @@ This script installs necessary tools to use and develop this app. It includes <b
 [Node](https://nodejs.org/en/)
 as well as npm packages as declared in package.json
 
-To start MongoDB, run
-```bash
-sh startDB.sh
-```
-(Always remember to quic this script before closing terminal to avoid having to fix db manually)
-
 With the above script running, do
 ```bash
 sh run.sh

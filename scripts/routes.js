@@ -36,8 +36,7 @@ module.exports = function(app, passport) {
 				user      : req.user.info,				
 				APP_PROPS : props
 			});
-		} else {
-			console.log("nope");
+		} else {	
 			res.redirect('/');
 		}
 	});

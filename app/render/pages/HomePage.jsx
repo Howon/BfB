@@ -4,26 +4,22 @@ import io from 'socket.io-client';
 let socket = io('localhost:3000');
 
 import Chat from "../components/Chat.jsx";
-import SideBar from "../components/SideBar.jsx"
-import NavBar from "../components/NavBar.jsx"
+import SideBar from "../components/SideBar.jsx";
+import NavBar from "../components/NavBar.jsx";
 
 class Body extends React.Component {    
-    constructor() {
-      super();
+    constructor(props) {
+      super(props);
       this.state = {
-        file : ''
+        profile : this.props.user_profile,
+        data_uri: null,
       }
-    }
-    handleSubmit(e) {
-      let file = e.target.files[0];
-      let reader = new FileReader();          
-      console.log("hello");
     }
     render(){
       return (
         <div>
           <SideBar />
-          <NavBar />
+          <NavBar profile = {this.state.profile}/>         
         </div>
       )
     }

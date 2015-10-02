@@ -20,8 +20,7 @@ class NavBar extends React.Component {
               </div>
               <div id="navbar" className="navbar-collapse collapse">
                 <ul className="nav navbar-nav navbar-right">
-                  <li><a href="http://getbootstrap.com/examples/dashboard/#">Dashboard</a></li>                  
-                  <li><a href="http://getbootstrap.com/examples/dashboard/#">Profile</a></li>
+                  <li><a href="">{this.props.profile.user.name}</a></li>                                  
                   <li><a href="http://getbootstrap.com/examples/dashboard/#">Settings</a></li>
                   <li><a href="/logout">Logout</a></li>
                 </ul>        

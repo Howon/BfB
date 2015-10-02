@@ -17,6 +17,9 @@ require('babel/register');
 
 var mongoose = require('mongoose');
 mongoose.connect(config.mongoose.url);
+// mongoose.connect(config.mongoose.local, function(){
+// 		mongoose.connection.db.dropDatabase();
+// 	});
 
 server.listen(config.port)
 app.set('views', path.join(__dirname, 'app/views'))

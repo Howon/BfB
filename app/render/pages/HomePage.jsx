@@ -19,7 +19,8 @@ class Body extends React.Component {
       return (
         <div>
           <SideBar />
-          <NavBar profile = {this.state.profile}/>         
+          <NavBar profile = {this.state.profile}/> 
+          <img id = "background" src = '/images/raymond.jpg' />        
         </div>
       )
     }

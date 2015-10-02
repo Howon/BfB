@@ -14,10 +14,9 @@ module.exports = function(app, passport) {
 	}));
 
 	app.get('/auth/google/callback', passport.authenticate('google', {
-			failureRedirect: '/'
+			failureRedirect: '/home'
 		}),
 		function(req, res) {
-			console.log(req.user)
 			res.redirect('/home');
 		}
 	);
@@ -38,6 +37,7 @@ module.exports = function(app, passport) {
 				APP_PROPS : props
 			});
 		} else {
+			console.log("nope");
 			res.redirect('/');
 		}
 	});

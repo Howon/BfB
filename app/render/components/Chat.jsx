@@ -49,7 +49,7 @@ class MessageInputForm extends React.Component {
     }
     handleKeyDown(evt) {
       if (evt.keyCode == 13 ) {
-        return this.handleSubmit(evt);
+        this.handleSubmit(evt);
       }
     }
     render(){

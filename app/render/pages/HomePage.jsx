@@ -10,14 +10,13 @@ class Body extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
-        profile : this.props.user_profile,
-        data_uri: null,
+        profile : this.props.user_profile
       }
     }
     render(){
       return (
         <div>
-          <SideBar />
+          <SideBar profile = {this.state.profile}/>
           <NavBar profile = {this.state.profile}/> 
           <img id = "background" src = '/images/raymond.jpg' />        
         </div>

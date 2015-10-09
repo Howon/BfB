@@ -20,7 +20,7 @@ module.exports = function(app, passport) {
 			res.redirect('/home');
 		}
 	);
-	app.get('/test', function(req, res) {
+	app.get('/chattest', function(req, res) {
 		res.render('chatest',{
 			title: 'Test'
 		});
@@ -28,13 +28,13 @@ module.exports = function(app, passport) {
 	app.get('/home', function(req, res) {
 		if (req.isAuthenticated()) {
 			var props = {
-				user: {
-					id: req.user.info.id,
+				user: {					
+					id : req.user._id,
 					name: req.user.info.name,
-					email: req.user.info.email
+					email: req.user.info.email,
 				}
 			};
-
+			
 			res.render('home', {
 				title: 'Raymond',
 				user: req.user.info,

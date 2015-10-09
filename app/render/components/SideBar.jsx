@@ -5,9 +5,9 @@ let socket = io('localhost:3000');
 class SideBar extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-          data_uri: null,
-        }
+    }
+    componentDidMount(){
+      console.log(this.props.profile.user.id)
     }
     handleSubmit(e) {
       e.preventDefault();
@@ -18,7 +18,8 @@ class SideBar extends React.Component {
       var file = e.target.files[0];
 
       var jsonObject = {
-          'imageData': file
+          'uploader' : this.props.profile.user.id,
+          'calendarData': file
       }
       socket.emit('upload:calendar', jsonObject);
       reader.readAsBinaryString(file);
@@ -29,7 +30,7 @@ class SideBar extends React.Component {
             <div className="row">
               <div className="col-sm-3 col-md-2 sidebar">
                 <form onSubmit={this.handleSubmit} encType="multipart/form-data">
-                  <input type="file" type="file" accept =".ics" onChange={this.handleFile} ></input>                  
+                  <input type="file" type="file" accept =".ics" onChange={this.handleFile.bind(this)} ></input>                  
                 </form>
                 <ul className="nav nav-sidebar">
                   <li className="active"><a href="#">Overview <span className="sr-only">(current)</span></a></li>

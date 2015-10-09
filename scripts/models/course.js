@@ -4,7 +4,7 @@ var mongoose = require('mongoose'),
 
 var courseSchema = new Schema({
   id: String,
-  meetingTimes:[timeSchema],
+  meetingTimes:[{ type: Schema.Types.ObjectId, ref: 'Time' }],
   summary: String,
   location: String
 });

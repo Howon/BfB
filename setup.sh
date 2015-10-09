@@ -33,4 +33,5 @@ if [ ! -d data ]
 fi
 
 sudo npm install 
+sudo npm install -g ical2json
 echo 'node modules downloaded'

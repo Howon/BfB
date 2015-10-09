@@ -11,7 +11,7 @@ module.exports = function(io) {
 			var execCommand = 'ical2json test.ics'
 
 			exec(execCommand, function callback(error, stdout, stderr){
-			    console.log(stdout)
+			    if(error) console.err(error);			
 			});			
 		});
 	});

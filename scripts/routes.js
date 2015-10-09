@@ -20,7 +20,11 @@ module.exports = function(app, passport) {
 			res.redirect('/home');
 		}
 	);
-
+	app.get('/test', function(req, res) {
+		res.render('chatest',{
+			title: 'Test'
+		});
+	})
 	app.get('/home', function(req, res) {
 		if (req.isAuthenticated()) {
 			var props = {
@@ -32,11 +36,11 @@ module.exports = function(app, passport) {
 			};
 
 			res.render('home', {
-				title     : 'Raymond',
-				user      : req.user.info,				
-				APP_PROPS : props
+				title: 'Raymond',
+				user: req.user.info,
+				APP_PROPS: props
 			});
-		} else {	
+		} else {
 			res.redirect('/');
 		}
 	});
@@ -44,7 +48,7 @@ module.exports = function(app, passport) {
 	app.get('/logout', function(req, res) {
 		req.logout();
 		res.redirect('/');
-	});	
+	});
 
 
 	app.get('/test', function(req, res) {

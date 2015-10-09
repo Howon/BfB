@@ -3,7 +3,6 @@ import io from 'socket.io-client';
     // socket = io('https://anon-message.herokuapp.com/', {secure: true});
 let socket = io('localhost:3000');
 
-import Chat from "../components/Chat.jsx";
 import SideBar from "../components/SideBar.jsx";
 import NavBar from "../components/NavBar.jsx";
 

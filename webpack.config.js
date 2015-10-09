@@ -4,9 +4,6 @@ module.exports = {
   entry: {
     app: ['webpack/hot/dev-server', './app/render/homepage.jsx'],
   },
-  node: {
-  fs: "empty"
-},
   output: {
     path: './public/build',
     filename: 'bundle.js',

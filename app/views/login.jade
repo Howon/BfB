@@ -1,9 +1,11 @@
 extends layout
+block head
+  link(rel = 'stylesheet', href = '/stylesheets/style.css') 
 block body
-   div#main_area
-    div#login
-      span Sign in with
-      span#google_login.login_buttons
-        a(href='/auth/google')
-          | Google &nbsp;
-          i.fa.fa-google-plus
+  img#background(src = '/images/raymond.jpg')
+  nav.navbar.navbar-inverse.navbar-fixed-top
+    div.container-fluid
+      a.nav.navbar-left.navbar-brand(href="/")
+        | Raymond
+      a#nav.navbar-right.navbar-brand(href='/auth/google')
+        | Login &nbsp;                  

@@ -28,6 +28,8 @@ module.exports = function(io) {
 
 			    			meeting.save();
 
+			    			console.log(classtimes);
+
 			    			var id = classtimes[i]['UID'];
 			    			if (id_meetings[id]){
 			    				id_meetings[id]['meetings'].push(meeting);
@@ -35,7 +37,7 @@ module.exports = function(io) {
 			    			else {
 			    				id_meetings[id] = {};
 			    				id_meetings[id].summary = classtimes[i]['SUMMARY'];
-			    				id_meetings[id].locations = classtimes[i]['LOCATION'];
+			    				id_meetings[id].location = classtimes[i]['LOCATION'];
 			    				id_meetings[id]['meetings'] = [];
 			    				id_meetings[id]['meetings'].push(meeting);
 			    			}

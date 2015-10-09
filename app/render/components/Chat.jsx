@@ -1,15 +1,10 @@
 import React from "react";     
-import io from 'socket.io-client';
-    // socket = io('https://anon-message.herokuapp.com/', {secure: true});
-let socket = io('localhost:3000');
-    
+
 class Message extends React.Component {    
     render(){
       return(
         <li className = "message">
-          {this.props.sender === this.props.buyer ? 
-            <p className="messageBuyer">{this.props.sender}</p> : 
-            <p className="messageSeller">{this.props.sender}</p>} : {this.props.text}          
+          {this.props.text}          
         </li>
       )
     }
@@ -17,7 +12,8 @@ class Message extends React.Component {
 
 class MessageList extends React.Component {    
   renderMessage(message, i){
-      return <Message key = {i} sender = {message.sender} text = {message.message} buyer = {this.props.buyer}/>
+      console.log(message)
+      return <Message key = {i} text = {message} />
   }
   render(){    
     return (
@@ -30,12 +26,14 @@ class MessageList extends React.Component {
 
 class MessageInputForm extends React.Component {    
     constructor(){      
-        super();
+        super();        
         this.state = {
           message: ''
         }
     }
     handleChange(evt) {
+      evt.preventDefault();
+            
       this.setState({
         message: evt.target.value
       });
@@ -44,19 +42,20 @@ class MessageInputForm extends React.Component {
       if(/\S/.test(this.state.message)){
         this.props.postMessage(this.state.message);    
       }
+      e.preventDefault();
       this.setState({
         message: ""
       });
     }
     handleKeyDown(evt) {
       if (evt.keyCode == 13 ) {
-        return this.handleSubmit(evt);
+        this.handleSubmit(evt);
       }
     }
     render(){
       return (
         <textarea id="messageInput" type="text" placeholder="Type to chat" className="chatArea"
-         onChange = {this.handleChange} value = {this.state.message} onKeyDown={this.handleKeyDown}>
+         onChange = {this.handleChange.bind(this)} value = {this.state.message} onKeyDown={this.handleKeyDown.bind(this)}>
         </textarea>
       )
     }
@@ -66,7 +65,7 @@ class Chat extends React.Component {
   render() {
     return (
         <div id="chatArea">
-          <MessageList messages = {this.props.messages} buyer = {this.props.buyer}/>
+          <MessageList messages = {this.props.messages}/>
           <MessageInputForm postMessage = {this.props.postMessage}/>
         </div>
     )

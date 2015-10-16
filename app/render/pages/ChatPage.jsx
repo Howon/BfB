@@ -44,7 +44,8 @@ class Body extends React.Component{
 	render(){
     	return (
 			<div id="container">
-				<Chat messages = {this.state.messages} postMessage = {this.postMessage.bind(this)}/>
+				<Chat messages = {this.state.messages} 
+                  postMessage = {this.postMessage.bind(this)}/>
 			</div>
      	)
   	}

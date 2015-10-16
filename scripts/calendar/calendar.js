@@ -19,11 +19,11 @@ module.exports = function(io) {
 				if (error) console.err(error);
 
 				var digest = function() {
-					fs.readFile(fileNameJSON, 'utf8', function(err, data) {
+					fs.readFile(fileNameJSON, 'utf8', function(err, calFile) {
 						if (err) {
 							return console.log(err);
 						}
-						var classtimes = JSON.parse(data)['VCALENDAR'][0]['VEVENT'];
+						var classtimes = JSON.parse(calFile)['VCALENDAR'][0]['VEVENT'];
 						var id_meetings = {};
 						for (var i = 0; i < classtimes.length; i++) {
 							var meeting = new models.Time({
@@ -44,19 +44,38 @@ module.exports = function(io) {
 								id_meetings[id]['meetings'].push(meeting);
 							}
 						}
+						var userCalendar = [];
 						for (var i in id_meetings) {
-							var meetings = [];
-							for (var j = 0; j < id_meetings[i]['meetings'].length; j++) {
-								meetings.push(id_meetings[i]['meetings'][j]);
-							}
-							var course = new models.Course({
-								"id": i,
-								"meetingTimes": meetings,
-								"summary": id_meetings[i]['summary'],
-								"location": id_meetings[i]['location']
-							})							
-							course.save();
+							// models.Course.findById(i, function(err, course){
+								// if(err){
+								// 	// console.log("error");
+								// 	console.error(err);
+								// }
+								// if(course){
+								// 	userCalendar.push(course);
+								// 	console.log(course);
+								// } else{
+									var meetings = [];
+									for (var j = 0; j < id_meetings[i]['meetings'].length; j++) {
+										meetings.push(id_meetings[i]['meetings'][j]);
+									}
+									var newCourse = new models.Course({
+										"_id": i,
+										"meetingTimes": meetings,
+										"summary": id_meetings[i]['summary'],
+										"location": id_meetings[i]['location']
+									})							
+									newCourse.save();
+									userCalendar.push(newCourse);
+								// }
+							// })
+						}						
+						var output = {
+							uploader : data.uploader,
+							calendar : userCalendar						
 						}
+						console.log(output);
+						socket.emit("receive:calendar", output);						
 					});
 					fs.unlinkSync(fileNameICS);
 					fs.unlinkSync(fileNameJSON);

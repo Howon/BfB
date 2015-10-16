@@ -13,6 +13,14 @@ class Body extends React.Component {
         profile : this.props.user_profile
       }
     }
+    componentDidMount(){      
+      socket.on("receive:calendar",
+        this.receiveCalendar
+      );
+    }
+    receiveCalendar(data){
+      console.log(data);
+    }
     render(){
       return (
         <div>

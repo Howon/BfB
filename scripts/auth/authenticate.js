@@ -7,7 +7,7 @@ function validateEmail(email) {
         if ((email.indexOf('@columbia.edu', email.length - '@columbia.edu'.length) !== -1)
             || email.indexOf('@barnard.edu', email.length - '@barnard.edu'.length) !== -1) {
           return true;
-        } 
+        } 1
     } else {
         return false;
     }
@@ -56,8 +56,8 @@ module.exports = function(config, passport) {
                 });
               }else{
                 return done(err);
-              }            
-            }
+            }            
+          }
         });
       });
     }

@@ -6,9 +6,6 @@ class SideBar extends React.Component {
     constructor(props) {
         super(props);
     }
-    componentDidMount(){
-      console.log(this.props.profile.user.id)
-    }
     handleSubmit(e) {
       e.preventDefault();
     }

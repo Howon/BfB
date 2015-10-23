@@ -4,7 +4,7 @@ let socket = io('localhost:3000');
 
 class SideBar extends React.Component {
     constructor(props) {
-        super(props);
+      super(props);
     }
     handleSubmit(e) {
       e.preventDefault();

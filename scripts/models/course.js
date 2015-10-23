@@ -3,7 +3,7 @@ var mongoose = require('mongoose'),
 	timeSchema = require('./time');
 
 var courseSchema = new Schema({
-	_id: Number,
+	_id: String,
 	meetingTimes: [{
 		type: Schema.Types.ObjectId,
 		ref: 'Time'

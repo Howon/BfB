@@ -38,7 +38,7 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
-require('./scripts/calendar/calendar')(io);
+require('./scripts/calendar/calendar').parseCal(io);
 require('./scripts/chat/chat').chatHandler(io);
 require('./scripts/auth/authenticate')(config, passport);
 require('./scripts/routes')(app, passport);

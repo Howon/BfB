@@ -1,89 +1,108 @@
-import React from "react";    
+// from alan
+
+import React from "react";  
+
 function formatTime(d) {
-    // Remove the minutes if the time is on the hour
-    var timeString = "";
-    var hour = d.getHours();
+  var timeString = "";
+  var hour = d.getHours();
 
-    // Humanize hours.
-    timeString += hour % 12 || 12;
+  timeString += hour % 12 || 12;
 
-    // Humanize minutes.
-    if (d.getMinutes() < 10) {
-        timeString += ":0" + d.getMinutes();
-    }
-    else {
-        timeString += ":" + d.getMinutes();
-    }
+  // Humanize minutes.
+  if (d.getMinutes() < 10) {
+    timeString += ":0" + d.getMinutes();
+  }
+  else {
+    timeString += ":" + d.getMinutes();
+  }
 
-    return timeString;
+  return timeString;
+}
+
+function calenDate(icalStr)  { 
+  var strYear = icalStr.substr(0,4);
+  var strMonth = parseInt(icalStr.substr(4,2), 10) - 1;
+  var strDay = icalStr.substr(6,2);
+  var strHour = icalStr.substr(9,2);
+  var strMin = icalStr.substr(11,2);
+  var strSec = icalStr.substr(13,2);
+
+  var oDate =  new Date(strYear,strMonth, strDay, strHour, strMin, strSec)
+  return oDate;
 }
 
 function AMPM(d) {
-    // Determine whether the time is AM or PM.
-    return d.getHours() < 12 ? "AM" : "PM";
+  // Determine whether the time is AM or PM.
+  return d.getHours() < 12 ? "AM" : "PM";
 }
 
-class Event extends React.Component {
-    render() {
-        var start = new Date(this.props.data.start);
-        
-        var timeString = formatTime(start);
-        if (this.props.data.end !== null) {
-            var end = new Date(this.props.data.end);
-            var endTimeString = formatTime(end);
+class Course extends React.Component {
+  render() {
+    let temp = this.props.data;
+    let startTime = calenDate(temp.startTime);
+    let endTime = calenDate(temp.endTime);
 
-            // \u2013 is a -
-            timeString += AMPM(start) + " \u2013 " + formatTime(end) + AMPM(end);
-        }
-        else {
-            timeString += AMPM(start);
-        }
+    let differenceMin = Math.round((endTime - startTime) / 60000);    
 
-        return (
-            <div className="event">
-                <a href={this.props.data.url} target="_blank"> { this.props.data.name } </a> <br />
-                { timeString }
-            </div>
-        );
-    }
+    let classHeight = 40.0 * (differenceMin / 60.0);    
+    let classTopOffset = Math.floor(40*((startTime.getHours() - 7) + (startTime.getMinutes() / 60.0)));
+
+    let blockStyle = { 
+        height : classHeight,
+        top    : classTopOffset 
+    };
+
+    let timeString = formatTime(startTime) + AMPM(startTime);
+    timeString += " \u2013 " + formatTime(endTime) + AMPM(endTime);
+
+    return (
+      <div className="calendar_course_item" style = { blockStyle }>
+          { temp.className } <br />
+      </div>
+    );
   }
+}
 
 class Day extends React.Component {
-    render() {
-        var events = this.props.eventList.map(function(evt, i) {
-            return <Event key={ evt.id } data={ evt }/>;
-        });
+  render() {
+    var courses = this.props.courses.map(function(evt, i) {
+      return <Course key = { i } data = { evt }/>;
+    });
 
-        return (
-            <td className="day">
-                { events }
-            </td>
-        );
-    }
+    return (
+      <td className="calendar_day">
+        { courses }
+      </td>
+    );
+  }
 }
 
 class Week extends React.Component {
-  constructor(props){
-    super(props);
-  }
-  parseCalendar(calendar){
-
-  }
   render() {
-    var events = [[], [], [], [], [], [], []];
-    // for (var i = 0; i < this.props.eventList.length; i++) {
-    //   var evt = this.props.eventList[i];
-    //   var start = new Date(evt.start);
-    //   events[start.getDay()].push(evt);
-    // }
+    let coursesArr = [[], [], [], [], []];
+    let tempCal = this.props.calendar;
 
-    var days = [];
-    for (var i = 0; i < 7; i++) {
-      days.push( <Day key={ i } eventList={ events[i] }/> );
+    for(let i = 0; i < tempCal.length; i++){      
+      let meetingTimes = tempCal[i].meetingTimes;
+      for(let j = 0; j < meetingTimes.length; j++){
+        let day = calenDate(meetingTimes[j].startTime).getDay() - 1;
+        let tempCourse = {
+          id        : tempCal[i]._id,
+          className : tempCal[i].summary,
+          location  : tempCal[i].location,
+          startTime : meetingTimes[j].startTime,
+          endTime   : meetingTimes[j].endTime
+        }     
+        coursesArr[day].push(tempCourse);
+      }      
     }
 
+    var days = coursesArr.map(function(courses, i) {
+      return <Day key={ i } courses = { courses }/> ;
+    });
+
     return (
-      <tr className="week">
+      <tr className = "calendar_week">
           { days }
       </tr>
     );
@@ -92,19 +111,34 @@ class Week extends React.Component {
 
 class Calendar extends React.Component { 
   render() {
-    return (
-      <table className="calendar">
-        <thead>
-          <td> Sunday </td>
-          <td> Monday </td>
-          <td> Tuesday </td>
-          <td> Wednesday </td>
-          <td> Thursday </td>
-          <td> Friday </td>
-          <td> SatuDay </td>
-        </thead>
-        <Week calendar = {this.props.calendar} />
-      </table>
+    var hours = [];
+    for (var i = 8; i < 23; i++){
+      var time = "";
+      if (i <= 11){
+        time = i + "am";
+      } else if (i == 12){
+        time = i + "pm";
+      } else {
+        time = i - 12 + "pm";
+      }
+      hours.push(<li className = "time_bar_hour">{ time }</li>);
+    }
+    return (      
+      <div id = "calendar">
+        <ul id = "time_bar"> 
+          { hours } 
+        </ul>
+        <table className="calendar_area">        
+          <thead>          
+            <td className = "calendar_week_day"> Monday </td>
+            <td className = "calendar_week_day"> Tuesday </td>
+            <td className = "calendar_week_day"> Wednesday </td>
+            <td className = "calendar_week_day"> Thursday </td>
+            <td className = "calendar_week_day"> Friday </td>
+          </thead>
+          <Week calendar = {this.props.calendar} />
+        </table>
+      </div>
     );
   }    
 }

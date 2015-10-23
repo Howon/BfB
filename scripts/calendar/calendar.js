@@ -27,14 +27,13 @@ module.exports = {
 							var classtimes = JSON.parse(calFile)['VCALENDAR'][0]['VEVENT'];
 							var id_meetings = {};
 							for (var i = 0; i < classtimes.length; i++) {
-								var meeting = new models.Time({
-									"starttime": classtimes[i]['DTSTART'],
-									'endtime': classtimes[i]['DTEND']
-								})
-
-								meeting.save();
+								var meeting = {
+									"startTime": classtimes[i]['DTSTART'],
+									'endTime': classtimes[i]['DTEND']
+								}
 
 								var id = classtimes[i]['UID'];
+
 								if (id_meetings[id]) {
 									id_meetings[id]['meetings'].push(meeting);
 								} else {
@@ -55,21 +54,16 @@ module.exports = {
 									// if(course){
 									// 	userCalendar.push(course);
 									// 	console.log(course);
-									// } else{
-										var meetings = [];
-										for (var j = 0; j < id_meetings[i]['meetings'].length; j++) {
-											meetings.push(id_meetings[i]['meetings'][j]);
-										}
+									// } else{						
+																					
 										var newCourse = new models.Course({
-											"_id": i,
-											"meetingTimes": meetings,
+											"classID": i,
+											"meetingTimes": id_meetings[i]['meetings'],
 											"summary": id_meetings[i]['summary'],
 											"location": id_meetings[i]['location']
-										})							
-										newCourse.save();
+										});				
+										newCourse.save();			
 										userCalendar.push(newCourse);
-									// }
-								// })
 							}						
 							var output = {
 								uploader : data.uploader,
@@ -80,7 +74,6 @@ module.exports = {
 						fs.unlinkSync(fileNameICS);
 						fs.unlinkSync(fileNameJSON);
 					};
-
 					digest();
 				});
 			});

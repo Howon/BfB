@@ -1,0 +1,27 @@
+#side_bar_container{
+	position: absolute;
+	width: 50px;
+	background-color: red;
+	height: 100%;
+}
+
+.fa{
+	font-size: 30px;
+}
+
+.side_bar_item{
+	left: 10px;
+	position: absolute;
+}
+
+#side_bar_container input[type=file]{ 
+	opacity:0;
+	z-index: 1;
+	height: 30px;
+	width: 30px;
+	top: 50px;
+}
+
+#calendar_upload_button_icon{
+	top: 	50px;
+}

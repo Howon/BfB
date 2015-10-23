@@ -1,0 +1,82 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto);
+
+table {
+    border-collapse: collapse;
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+
+thead {
+    text-align: center;
+    background-color: rgba(2);
+}
+
+td {
+    width: 12%;
+    padding: 0;
+    margin: 0;
+    vertical-align: top;
+}
+
+.calendar_week_day{
+    height: 30px;
+    background-color: #F1DFEB;
+}
+
+.calendar_week{
+    height: 610px;    
+}
+
+.calendar_day:first-child{
+    padding-left: 1px;
+}
+
+a {
+    text-decoration: none
+}
+
+button {
+    font-size: large;
+}
+
+.calendar_area {
+    position: absolute;
+    top: 80px;    
+    left: calc(16% + 40px);
+    width: 800px;    
+    table-layout: fixed;
+    min-height:200px;
+}
+
+.calendar_course_item {
+    position: absolute;
+    font-family: 'Roboto', sans-serif;
+    font-size: 10px;
+    margin-left: 4px;
+    width: 19%;
+    margin-top: 4px;
+    background-color: #FFD9E2;
+    -webkit-box-shadow: 1px 1px 2px 2px rgba(0,0,0,0.1);
+    -moz-box-shadow: 1px 1px 2px 2px rgba(0,0,0,0.1);
+    box-shadow: 1px 1px 1px 1px rgba(0,0,0,0.1);
+}
+
+#time_bar{
+    position: absolute;
+    height: 640px;
+    top: 80px;
+    left: 16%;  
+    padding: 0;
+    padding-top: 30px;
+    min-width: 40px; 
+    background-color: #F1DFEB;
+    text-align: right;
+}
+
+.time_bar_hour{
+    padding-right: 5px;
+    list-style-type: none;
+    height: 40px;    
+}
+

@@ -1,0 +1,40 @@
+#class_menu_bar {
+	z-index: -10;
+	position: absolute;
+	right: 4%;
+	top: 80px;
+	width: 19%;
+	min-width: 150px;
+	height: 630px;
+	background-color:  #FFFDE7;
+	overflow: auto;
+	-webkit-box-shadow: 1px 1px 2px 2px rgba(0,0,0,0.2);
+	-moz-box-shadow: 1px 1px 2px 2px rgba(0,0,0,0.2);
+	box-shadow: 1px 1px 2px 2px rgba(0,0,0,0.2);
+	padding: 0;
+}
+#class_menu_bar_list{
+	padding: 4px;
+	margin: 0;
+}
+.class_menu_bar_li {
+	padding: 3px;
+	margin-top: 5px;
+	margin-bottom: 10px;	
+	min-height: 120px;
+	width: calc(98%-8px);	
+	height: 15%;
+	background-color: #FFFFFF;
+	overflow: auto;
+	cursor: pointer;
+	-webkit-box-shadow: 1px 1px 2px 2px rgba(0,0,0,0.1);
+	-moz-box-shadow: 1px 1px 2px 2px rgba(0,0,0,0.1);
+	box-shadow: 1px 1px 2px 2px rgba(0,0,0,0.1);
+	border: 1px white solid;
+}
+.class_menu_bar_li:hover {
+	background-color: #FBFBFB;
+	-webkit-box-shadow: 1px 1px 2px 2px rgba(0,0,0,0.15);
+	-moz-box-shadow: 1px 1px 2px 2px rgba(0,0,0,0.15);
+	box-shadow: 1px 1px 2px 2px rgba(0,0,0,0.15);
+}

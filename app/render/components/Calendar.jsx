@@ -1,23 +1,5 @@
-// from alan
-
 import React from "react";  
 
-function formatTime(d) {
-  var timeString = "";
-  var hour = d.getHours();
-
-  timeString += hour % 12 || 12;
-
-  // Humanize minutes.
-  if (d.getMinutes() < 10) {
-    timeString += ":0" + d.getMinutes();
-  }
-  else {
-    timeString += ":" + d.getMinutes();
-  }
-
-  return timeString;
-}
 
 function calenDate(icalStr)  { 
   var strYear = icalStr.substr(0,4);
@@ -27,13 +9,8 @@ function calenDate(icalStr)  {
   var strMin = icalStr.substr(11,2);
   var strSec = icalStr.substr(13,2);
 
-  var oDate =  new Date(strYear,strMonth, strDay, strHour, strMin, strSec)
+  var oDate =  new Date(strYear, strMonth, strDay, strHour, strMin, strSec)
   return oDate;
-}
-
-function AMPM(d) {
-  // Determine whether the time is AM or PM.
-  return d.getHours() < 12 ? "AM" : "PM";
 }
 
 class Course extends React.Component {
@@ -51,9 +28,6 @@ class Course extends React.Component {
         height : classHeight,
         top    : classTopOffset 
     };
-
-    let timeString = formatTime(startTime) + AMPM(startTime);
-    timeString += " \u2013 " + formatTime(endTime) + AMPM(endTime);
 
     return (
       <div className="calendar_course_item" style = { blockStyle }>

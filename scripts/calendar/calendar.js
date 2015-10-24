@@ -24,18 +24,16 @@ module.exports = {
 								return console.log(err);
 							}
 							var classtimes = JSON.parse(calFile)['VCALENDAR'][0]['VEVENT'];
-
 							var id_meetings = {};
-							
+
 							var setupMeetingTimes = function(){
 								for (var i = 0; i < classtimes.length; i++) {
 									var meeting = {
 										"startTime": classtimes[i]['DTSTART'],
 										'endTime': classtimes[i]['DTEND']
 									}
-
 									var id = classtimes[i]['UID'];
-
+									
 									if (id_meetings[id]) {
 										id_meetings[id]['meetings'].push(meeting);
 									} else {
@@ -81,20 +79,19 @@ module.exports = {
 									});																									
 								}
 							}
-	
+
 							var outputResult = function(userCalendar){
 								var output = {
 									uploader : data.uploader,
 									calendar : userCalendar						
 								}
-
 								socket.emit("receive:calendar", output);
 							}
 
-							setupMeetingTimes();
-							cleanTempFiles();	
-						});
-					};
+							setupMeetingTimes();		
+						});					
+						cleanTempFiles();		
+					}
 
 					digest(function(){	
 						fs.unlinkSync(fileNameICS);

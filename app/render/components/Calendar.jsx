@@ -85,9 +85,9 @@ class Week extends React.Component {
 
 class Calendar extends React.Component { 
   render() {
-    var hours = [];
-    for (var i = 8; i < 23; i++){
-      var time = "";
+    let hours = [];
+    for (let i = 8; i < 23; i++){
+      let time = "";
       if (i <= 11){
         time = i + "am";
       } else if (i == 12){

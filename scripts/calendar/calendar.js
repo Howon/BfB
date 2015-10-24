@@ -1,7 +1,6 @@
 var fs = require('fs'),
 	exec = require('child_process').exec,
-	models = require('../models/index'),
-	async = require('async');
+	models = require('../models/index');
 
 module.exports = {
 	parseCal: function(io) {
@@ -19,24 +18,22 @@ module.exports = {
 				exec(execCommand, function (error, stdout, stderr) {
 					if (error) {console.err(error)};
 
-					var digest = function(callback) {
+					var digest = function(cleanTempFiles) {
 						fs.readFile(fileNameJSON, 'utf8', function(err, calFile) {
 							if (err) {
 								return console.log(err);
 							}
 							var classtimes = JSON.parse(calFile)['VCALENDAR'][0]['VEVENT'];
-
 							var id_meetings = {};
-							var userCalendar = [];
-							var setupMeetingTimes = function(setupCourse, outputRes){
+
+							var setupMeetingTimes = function(){
 								for (var i = 0; i < classtimes.length; i++) {
 									var meeting = {
 										"startTime": classtimes[i]['DTSTART'],
 										'endTime': classtimes[i]['DTEND']
 									}
-
 									var id = classtimes[i]['UID'];
-
+									
 									if (id_meetings[id]) {
 										id_meetings[id]['meetings'].push(meeting);
 									} else {
@@ -46,52 +43,55 @@ module.exports = {
 										id_meetings[id].meetings = [];
 										id_meetings[id].meetings.push(meeting);
 									}
-
 								}
-								setupCourse(outputRes);
+
+								setupCourse();
 							}
 							
-							var setupCourse = function(output){
-								for (var course in id_meetings){
-									var checkCourse = function(course){
-										models.Course.findOne({ "classID": course }, function(err, res){
-											if(err){
-												console.error("error: " + err);
-											}
-											if( res != null ){
-												userCalendar.push(course);
-											}
-											else {
-												var newCourse = new models.Course({
-													"classID": course,
-													"meetingTimes": id_meetings[course]['meetings'],
-													"summary": id_meetings[course]['summary'],
-													"location": id_meetings[course]['location']
-												})							
-												newCourse.save();
-												userCalendar.push(course);
-											}
-										});
-									}
-									checkCourse(course);
+							var setupCourse = function(){
+								var userCalendar = [];			
+								var counter = 0;
+								
+								var num_classes = Object.keys(id_meetings).length;
+								
+								for (var courseID in id_meetings){												
+									models.Course.findOne({ "classID" : courseID }, function(err, result){
+										if(err){
+											console.error("error: " + err);
+										}
+										if(result){												
+											userCalendar.push(result);
+										}
+										else {
+											var newCourse = new models.Course({
+												"classID": courseID,
+												"meetingTimes": id_meetings[course]['meetings'],
+												"summary": id_meetings[course]['summary'],
+												"location": id_meetings[course]['location']
+											})							
+											newCourse.save();
+											userCalendar.push(newCourse);
+										}
+										counter++;
+										if(counter == num_classes){
+											outputResult(userCalendar);
+										}	
+									});																									
 								}
-
-								output();
 							}
-	// fix this method.
-							var outputRes = function(){
+
+							var outputResult = function(userCalendar){
 								var output = {
 									uploader : data.uploader,
 									calendar : userCalendar						
 								}
-								console.log(userCalendar);
-								console.log(data.uploader);
 								socket.emit("receive:calendar", output);
 							}
-							setupMeetingTimes(setupCourse,outputRes);
-							
-						});
-					};
+
+							setupMeetingTimes();		
+						});					
+						cleanTempFiles();		
+					}
 
 					digest(function(){	
 						fs.unlinkSync(fileNameICS);

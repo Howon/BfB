@@ -29,7 +29,7 @@ td {
 }
 
 .calendar_day:first-child{
-    padding-left: 1px;
+    padding-left: 3px;
 }
 
 a {
@@ -43,7 +43,7 @@ button {
 .calendar_area {
     position: absolute;
     top: 80px;    
-    left: calc(16% + 40px);
+    left: calc(13% + 40px);
     width: 800px;    
     table-layout: fixed;
     min-height:200px;
@@ -66,7 +66,7 @@ button {
     position: absolute;
     height: 640px;
     top: 80px;
-    left: 16%;  
+    left: 13%;  
     padding: 0;
     padding-top: 30px;
     min-width: 40px; 

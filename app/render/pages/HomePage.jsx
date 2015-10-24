@@ -40,8 +40,8 @@ class Body extends React.Component {
     render(){
       return (
         <div>
-          <SideBar profile = { this.state.profile } />
           <NavBar profile = { this.state.profile } /> 
+          <SideBar profile = {this.state.profile }/>
           <Calendar calendar = { this.state.calendar } />
           <ClassMenuBar notifications = { this.state.classNotifications}/>
         </div>
@@ -49,7 +49,5 @@ class Body extends React.Component {
     }
 }
 
-//<img id = "background" src = '/images/raymond.jpg' />
 
 export default Body;
-

@@ -23,10 +23,10 @@ class Course extends React.Component {
 
     let classHeight = 40.0 * (differenceMin / 60.0);    
     let classTopOffset = Math.floor(40*((startTime.getHours() - 7) + (startTime.getMinutes() / 60.0)));
-
+    console.log(temp);
     let blockStyle = { 
         height : classHeight,
-        top    : classTopOffset 
+        top    : classTopOffset
     };
 
     return (

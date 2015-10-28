@@ -53,10 +53,6 @@ module.exports = function(app, passport) {
 
 	app.get('/test', function(req, res) {
 		var models = require('./models/index');
-		var meeting = new models.Time({
-			"starttime": "test",
-			"endtime": "test2"
-		});
 		var meetings = [meeting];
 		var course = new models.Course({
 			"id": "test",

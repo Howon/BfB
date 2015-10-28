@@ -1,6 +1,8 @@
 var fs = require('fs'),
 	exec = require('child_process').exec,
-	models = require('../models/index');
+	models = require('../models/index'),
+	async = require('async'),
+	crypto = require('crypto');
 
 module.exports = {
 	parseCal: function(io) {
@@ -23,10 +25,10 @@ module.exports = {
 							if (err) {
 								return console.log(err);
 							}
-							var classtimes = JSON.parse(calFile)['VCALENDAR'][0]['VEVENT'];
-							var id_meetings = {};
+							var classtimes = JSON.parse(calFile)['VCALENDAR'][0]['VEVENT'];							
 
 							var setupMeetingTimes = function(){
+								var courseObjList = {};
 								for (var i = 0; i < classtimes.length; i++) {
 									var meeting = {
 										"startTime": classtimes[i]['DTSTART'],
@@ -34,50 +36,57 @@ module.exports = {
 									}
 									var id = classtimes[i]['UID'];
 									
-									if (id_meetings[id]) {
-										id_meetings[id]['meetings'].push(meeting);
+									if (courseObjList[id]) {
+										courseObjList[id]['meetings'].push(meeting);
 									} else {
-										id_meetings[id] = {};
-										id_meetings[id].summary = classtimes[i]['SUMMARY'];
-										id_meetings[id].location = classtimes[i]['LOCATION'];
-										id_meetings[id].meetings = [];
-										id_meetings[id].meetings.push(meeting);
+										courseObjList[id] = {};
+										courseObjList[id].summary = classtimes[i]['SUMMARY'];
+										courseObjList[id].location = classtimes[i]['LOCATION'];
+										courseObjList[id].meetings = [];
+										courseObjList[id].meetings.push(meeting);
 									}
 								}
 
-								setupCourse();
+								setupCourse(courseObjList);
 							}
 							
-							var setupCourse = function(){
+							var setupCourse = function(courseObjList){
 								var userCalendar = [];			
 								var counter = 0;
 								
-								var num_classes = Object.keys(id_meetings).length;
-								
-								for (var courseID in id_meetings){												
-									models.Course.findOne({ "classID" : courseID }, function(err, result){
+								var num_classes = Object.keys(courseObjList).length;
+															
+								var checkDBForClass = function(courseObj){									
+									var classID = crypto.createHash('md5').update(courseObj.summary).digest("hex");	// creates a hash based on the class name
+
+									models.Course.findOne({ "classID" : classID }, function(err, result){
 										if(err){
 											console.error("error: " + err);
 										}
-										if(result){												
+										if(result){						
 											userCalendar.push(result);
 										}
-										else {
+										else {											
 											var newCourse = new models.Course({
-												"classID": courseID,
-												"meetingTimes": id_meetings[course]['meetings'],
-												"summary": id_meetings[course]['summary'],
-												"location": id_meetings[course]['location']
+												"classID"			: classID,
+												"meetingTimes": courseObj.meetings,
+												"summary"			: courseObj.summary,
+												"location"		: courseObj.location
 											})							
 											newCourse.save();
 											userCalendar.push(newCourse);
 										}
-										counter++;
-										if(counter == num_classes){
-											outputResult(userCalendar);
-										}	
-									});																									
-								}
+
+										counter++;	// counts upto the number of classes passed into the method
+										if(counter == num_classes){ // if the number of objects compared matches the parameter length
+											outputResult(userCalendar); // returns it back to the user
+										}
+
+										return;
+									});																																
+								}								
+
+								async.forEach(courseObjList, checkDBForClass);
 							}
 
 							var outputResult = function(userCalendar){

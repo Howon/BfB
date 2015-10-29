@@ -2,7 +2,8 @@ var fs = require('fs'),
 	exec = require('child_process').exec,
 	models = require('../models/index'),
 	async = require('async'),
-	crypto = require('crypto');
+	crypto = require('crypto'),
+	mongoose = require('mongoose');
 
 module.exports = {
 	parseCal: function(io) {
@@ -10,6 +11,13 @@ module.exports = {
 			socket.on('upload:calendar', function(data) {
 				var fileNameICS = data.uploader + '_calendar.ics';
 				var fileNameJSON = data.uploader + '_calendar.json';
+				var user; 				
+				models.User.findOne({"_id" : data.uploader}, function(err, result){
+					if(err){
+						console.err("error: " + err);
+					}									
+					user = result;
+				})
 
 				fs.writeFile(fileNameICS, data.calendarData, function(err) {
 					if (err) return console.log(err);
@@ -51,19 +59,23 @@ module.exports = {
 							}
 							
 							var setupCourse = function(courseObjList){
-								var userCalendar = [];			
-								var counter = 0;
-								
-								var num_classes = Object.keys(courseObjList).length;
-															
+								var userCalendar = [];	
+								var courseIDList = [];		
+								var counter = 0;								
+
+								var courseCount = Object.keys(courseObjList).length;																							
+
 								var checkDBForClass = function(courseObj){									
 									var classID = crypto.createHash('md5').update(courseObj.summary).digest("hex");	// creates a hash based on the class name
 
-									models.Course.findOne({ "classID" : classID }, function(err, result){
+									models.Course.findOne({ "classID" : classID }, function(err, result){										
 										if(err){
 											console.error("error: " + err);
 										}
 										if(result){						
+											result.subscribers.push(user._id);											
+											result.save();
+											courseIDList.push(result._id);
 											userCalendar.push(result);
 										}
 										else {											
@@ -71,15 +83,18 @@ module.exports = {
 												"classID"			: classID,
 												"meetingTimes": courseObj.meetings,
 												"summary"			: courseObj.summary,
-												"location"		: courseObj.location
+												"location"		: courseObj.location,
+												"subscribers" : user._id
 											})							
 											newCourse.save();
+											courseIDList.push(newCourse._id);
 											userCalendar.push(newCourse);
 										}
 
 										counter++;	// counts upto the number of classes passed into the method
-										if(counter == num_classes){ // if the number of objects compared matches the parameter length
+										if(counter == courseCount){ // if the number of objects compared matches the parameter length
 											outputResult(userCalendar); // returns it back to the user
+											saveUserClasses(courseIDList);
 										}
 
 										return;
@@ -97,6 +112,11 @@ module.exports = {
 								socket.emit("receive:calendar", output);
 							}
 
+							var saveUserClasses = function(courseIDList){								
+								user.courses = courseIDList;
+								user.save();
+							}
+
 							setupMeetingTimes();		
 						});					
 						cleanTempFiles();		
@@ -110,7 +130,31 @@ module.exports = {
 			});
 		});
 	},
-	retrieveUserCal: function(userID){
-		// models.Course.findById();
+	retrieveUserCal: function(userID, callback){
+		models.User.findOne({"_id" : userID}, function(err, result){
+			if(err){
+				console.err("error: " + err);
+			}				
+			var userCourseList = result.courses;
+			var courseCount = userCourseList.length;
+			var counter = 0;
+			var outputCourseList = [];
+
+			var getUserCourses = function(classID) {
+				models.Course.findById(classID, function(err1, result){										
+					if(err){
+						console.error("error: " + err1);
+					}
+					outputCourseList.push(result);
+
+					counter++;	// counts upto the number of classes passed into the method
+					if(counter == courseCount){ // if the number of objects compared matches the parameter length
+						callback(outputCourseList);
+					}	
+				});																																
+			}								
+
+			async.forEach(userCourseList, getUserCourses);				
+		})
 	}
 }

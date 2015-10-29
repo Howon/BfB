@@ -10,10 +10,10 @@ import ClassMenuBar from "../components/ClassMenuBar.jsx";
 
 class Body extends React.Component {    
     constructor(props) {
-      super(props);
+      super(props);      
       this.state = {
-        profile : this.props.user_profile,
-        calendar : [],
+        profile : this.props.user_profile.user,
+        calendar : this.props.user_profile.courses,
         classNotifications: ["1", "2", "3", "4", "5", "6"]
       }
     }

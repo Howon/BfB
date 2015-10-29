@@ -13,6 +13,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 var session      = require('express-session');
 
+var calendar = require('./scripts/calendar/calendar');
+
 require('babel/register');
 
 var mongoose = require('mongoose');
@@ -38,10 +40,10 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
-require('./scripts/calendar/calendar').parseCal(io);
+calendar.parseCal(io);
 require('./scripts/chat/chat').chatHandler(io);
 require('./scripts/auth/authenticate')(config, passport);
-require('./scripts/routes')(app, passport);
+require('./scripts/routes')(app, passport, calendar);
 
 // catch 404 and forward to error handler
 console.log("*****************************")

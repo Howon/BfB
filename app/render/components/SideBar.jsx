@@ -12,7 +12,7 @@ class SideBar extends React.Component {
       var file = e.target.files[0];
 
       var jsonObject = {
-          'uploader' : this.props.profile.user.id,
+          'uploader' : this.props.profile.id,
           'calendarData': file
       }
       socket.emit('upload:calendar', jsonObject);

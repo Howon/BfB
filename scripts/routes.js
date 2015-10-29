@@ -1,4 +1,4 @@
-module.exports = function(app, passport) {
+module.exports = function(app, passport, calendar) {
 	app.get('/', function(req, res) {
 		if (req.isAuthenticated()) {
 			res.redirect('/home');
@@ -20,26 +20,31 @@ module.exports = function(app, passport) {
 			res.redirect('/home');
 		}
 	);
+
 	app.get('/chattest', function(req, res) {
 		res.render('chatest',{
 			title: 'Test'
 		});
 	})
+	
 	app.get('/home', function(req, res) {
-		if (req.isAuthenticated()) {
-			var props = {
-				user: {					
-					id : req.user._id,
-					name: req.user.info.name,
-					email: req.user.info.email,
-				}
-			};
-			
-			res.render('home', {
-				title: 'Raymond',
-				user: req.user.info,
-				APP_PROPS: props
-			});
+		if (req.isAuthenticated()) {			
+			var currentCourses = calendar.retrieveUserCal(req.user._id, function(currentCourses){
+				var props = {
+					user: {					
+						id : req.user._id,
+						name: req.user.info.name,
+						email: req.user.info.email,						
+					},
+					courses: currentCourses
+				};
+								
+				res.render('home', {
+					title: 'Raymond',
+					user: req.user.info,
+					APP_PROPS: props				
+				});
+			});			
 		} else {
 			res.redirect('/');
 		}

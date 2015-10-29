@@ -1,4 +1,5 @@
 var mongoose = require('mongoose'),
+	Course = require('./course'),
 	Schema = mongoose.Schema;
 	
 var userSchema = new Schema({
@@ -8,9 +9,7 @@ var userSchema = new Schema({
 		name: String,
 		email: String
 	},
-	classes: [
-
-	]
+	courses: [Course]
 });
 
 module.exports = mongoose.model('User', userSchema);

@@ -2,8 +2,7 @@ var fs = require('fs'),
 	exec = require('child_process').exec,
 	models = require('../models/index'),
 	async = require('async'),
-	crypto = require('crypto'),
-	mongoose = require('mongoose');
+	crypto = require('crypto');	
 
 module.exports = {
 	parseCal: function(io) {

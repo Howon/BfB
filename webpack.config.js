@@ -23,7 +23,7 @@ module.exports = {
   ],
   devServer: {
     contentBase: './public',
-    publicPath: 'http://localhost:8080/build/'
+    publicPath: 'https://localhost:8080/build/'
   },
   module: {
     loaders: [{

@@ -3,6 +3,7 @@ var webpack = require('webpack');
 var node_modules_dir = path.resolve(__dirname, 'node_modules');
 
 module.exports = {
+  devtool: 'source-map',
   entry: {
     home: ['webpack/hot/dev-server', './app/render/homepage.jsx'],    
     chat: ['webpack/hot/dev-server', './app/render/chatpage.jsx']
@@ -11,6 +12,15 @@ module.exports = {
     path: './public/build',
     filename: '[name].js'
   },
+  plugins: [
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.UglifyJsPlugin({
+      minimize: true,
+      compress: {
+        warnings: false
+      }
+    })
+  ],
   devServer: {
     contentBase: './public',
     publicPath: 'http://localhost:8080/build/'

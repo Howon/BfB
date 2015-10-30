@@ -42,7 +42,7 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 
 calendar.parseCal(io);
 require('./scripts/chat/chat').chatHandler(io);
-require('./scripts/auth/authenticate')(config.googleAuthDevelopment, passport);
+require('./scripts/auth/authenticate')(config.googleAuthProduction, passport);
 require('./scripts/routes')(app, passport, calendar);
 
 // catch 404 and forward to error handler

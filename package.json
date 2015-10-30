@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start"  : "node app.js",
+    "start"  : "node server.js",
     "webpack": "./node_modules/.bin/webpack-dev-server"
   },
   "dependencies": {

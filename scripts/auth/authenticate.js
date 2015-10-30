@@ -25,9 +25,9 @@ module.exports = function(config, passport) {
     });
 
     passport.use(new GoogleStrategy({
-      clientID        : config.googleAuth.clientID,
-      clientSecret    : config.googleAuth.clientSecret,
-      callbackURL     : config.googleAuth.callbackURL,
+      clientID        : config.clientID,
+      clientSecret    : config.clientSecret,
+      callbackURL     : config.callbackURL,
     },
 
     function(token, refreshToken, profile, done) {

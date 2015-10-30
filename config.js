@@ -11,9 +11,14 @@ module.exports = {
         local: 'pg://postgres:postgres@localhost:5432/raymond'
     }
     ,
-    googleAuth: {
+    googleAuthDevelopment: {
         clientID      : '710775881141-7ak38p0o3apboethicglem0doh13elrl.apps.googleusercontent.com',
         clientSecret  : 'hrNgv5v3KTubNaaHbjoUGCIn',
         callbackURL   : 'http://localhost:3000/auth/google/callback'
+    },
+    googleAuthProduction: {
+        clientID      : '710775881141-7ak38p0o3apboethicglem0doh13elrl.apps.googleusercontent.com',
+        clientSecret  : 'hrNgv5v3KTubNaaHbjoUGCIn',
+        callbackURL   : 'https://raymond.herokuapp.com/auth/google/callback'
     }
 };

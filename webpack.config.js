@@ -4,6 +4,7 @@ var node_modules_dir = path.resolve(__dirname, 'node_modules');
 
 module.exports = {
   devtool: 'source-map',
+  https: true,
   entry: {
     home: ['webpack/hot/dev-server', './app/render/homepage.jsx'],    
     chat: ['webpack/hot/dev-server', './app/render/chatpage.jsx']

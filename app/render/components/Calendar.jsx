@@ -15,14 +15,16 @@ function calenDate(icalStr)  {
 
 class Course extends React.Component {
   render() {
+    const heightOffset = 40.0;
     let temp = this.props.data;
     let startTime = calenDate(temp.startTime);
     let endTime = calenDate(temp.endTime);
 
     let differenceMin = Math.round((endTime - startTime) / 60000);    
 
-    let classHeight = 40.0 * (differenceMin / 60.0);    
-    let classTopOffset = Math.floor(40*((startTime.getHours() - 7) + (startTime.getMinutes() / 60.0)));
+    let classHeight = heightOffset * (differenceMin / 60.0);    
+    let classTopOffset = Math.floor(heightOffset * ((startTime.getHours() - 7) 
+                                      + (startTime.getMinutes() / 60.0)));
     
     let blockStyle = { 
         height : classHeight,
@@ -95,7 +97,7 @@ class Calendar extends React.Component {
       } else {
         time = i - 12 + "pm";
       }
-      hours.push(<li className = "time_bar_hour">{ time }</li>);
+      hours.push(<li key={ i } className = "time_bar_hour">{ time }</li>);
     }
     return (      
       <div id = "calendar">

@@ -1,14 +1,13 @@
-//kev
 //var ChatRoom = require('../data_schemas/chatRoom');
 
 module.exports = {
     chatHandler : function(io) {
         io.on('connection', function(socket){
             socket.on('send:chat_message', function(data){
-                io.to(socket.room).emit('new:chat_message', data);               
+                socket.broadcast.to(socket.room).emit('new:chat_message', data);               
             });
 
-            socket.on("join:room", function(id) {
+            socket.on("join:class_room", function(id) {
                 socket.room = id;
                 socket.join(id);
                 // ChatRoom.findById(id, function(err, room){

@@ -12,7 +12,7 @@ class Body extends React.Component {
     constructor(props) {
       super(props);      
       this.state = {
-        profile : this.props.user_profile.user,
+        profile : this.props.app_props.user,
         calendar : [],
         classNotifications: ["1", "2", "3", "4", "5", "6"]
       }
@@ -46,7 +46,7 @@ class Body extends React.Component {
       var file = e.target.files[0];
 
       var jsonObject = {
-          'uploader' : this.props.profile.id,
+          'uploader' : this.state.profile.id,
           'calendarData': file
       }
       socket.emit('upload:calendar', jsonObject);
@@ -56,7 +56,7 @@ class Body extends React.Component {
       return (
         <div>
           <NavBar profile = { this.state.profile } /> 
-          <SideBar profile = { this.state.profile } uploadCalendar = { this.uploadCalendar }/>
+          <SideBar profile = { this.state.profile } uploadCalendar = { this.uploadCalendar.bind(this) }/>
           <Calendar calendar = { this.state.calendar } />
           <ClassMenuBar notifications = { this.state.classNotifications}/>
         </div>

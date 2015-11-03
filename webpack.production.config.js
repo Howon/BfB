@@ -8,7 +8,7 @@ var config = {
   devtool: 'source-map',
   entry: {
     home: './app/render/homepage.jsx',  
-    chat: './app/render/chatpage.jsx'
+    class: './app/render/classpage.jsx'
   },
   output: {
     path: buildPath,

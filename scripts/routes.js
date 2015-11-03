@@ -39,7 +39,28 @@ module.exports = function(app, passport) {
 							
 			res.render('home', {
 				title: 'Raymond',
-				user: req.user.info,
+				APP_PROPS: props				
+			});		
+		} else {
+			res.redirect('/');
+		}
+	});
+
+	app.get('/class/:id', function(req, res) {
+		if (req.isAuthenticated()) {						
+			var props = {
+				user: {					
+					id : req.user._id,
+					name: req.user.info.name,
+					email: req.user.info.email,						
+				},		
+				room: {
+					id : req.params.id
+				}
+			};
+							
+			res.render('class', {
+				title: 'Raymond',
 				APP_PROPS: props				
 			});		
 		} else {

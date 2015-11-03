@@ -9,6 +9,6 @@ import HomePage from './pages/HomePage.jsx';
 let mountNode = document.getElementById("mount_point");
 
 React.render(
-  <HomePage user_profile = {window.APP_PROPS}/>,
+  <HomePage app_props = { window.APP_PROPS }/>,
   mountNode
 );

@@ -1,17 +1,18 @@
+var config = require('./config');
 var express = require('express')
 var path = require('path');
 var app = express();
 var http = require('http');
-var httpProxy = require('http-proxy');
-var proxy = httpProxy.createProxyServer({ ws: true });
 var server = http.createServer(app);
 var io = require('socket.io')(server);
-var config = require('./config');
-var webpack = require('webpack');
-var webpackConfig = require('./webpack.config')
 
 const isDeveloping = process.env.NODE_ENV !== 'production';
 const port = isDeveloping ? config.port : process.env.PORT;
+
+var webpack = require('webpack');
+var webpackConfig = require('./webpack.config')
+var httpProxy = require('http-proxy');
+var proxy = httpProxy.createProxyServer({ ws: true });
 
 if (isDeveloping) {
 	var bundle = require('./server/bundle.js');
@@ -38,15 +39,15 @@ if (isDeveloping) {
 	});
 }
 
+var mongoose = require('mongoose');
+mongoose.connect(config.mongoose.url);
+
 var passport = require('passport');
 var flash = require('connect-flash');
 var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
-
-var mongoose = require('mongoose');
-mongoose.connect(config.mongoose.url);
 
 require('babel/register');
 app.set('views', path.join(__dirname, 'app/views'))
@@ -79,7 +80,6 @@ proxy.on('error', function(e) {
 });
 
 server.listen(port, function () {
-	// catch 404 and forward to error handler
 	console.log("*****************************");
 	console.log("* App running at port: " + port + " *");
 	console.log("*****************************");

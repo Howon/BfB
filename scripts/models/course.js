@@ -11,7 +11,8 @@ var courseSchema = new Schema({
 	subscribers  : [{
 		type : Number,
 		ref  : 'User'
-	}]
+	}],
+	chatRoom: String
 });
-
+	
 module.exports = mongoose.model('Course', courseSchema);

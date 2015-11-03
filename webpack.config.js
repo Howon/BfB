@@ -1,29 +1,16 @@
 var path = require('path');
 var webpack = require('webpack');
 var node_modules_dir = path.resolve(__dirname, 'node_modules');
+var buildPath = path.resolve(__dirname, 'public', 'build');
 
 module.exports = {
-  devtool: 'source-map',
-  https: true,
   entry: {
-    home: ['webpack/hot/dev-server', './app/render/homepage.jsx'],    
-    chat: ['webpack/hot/dev-server', './app/render/chatpage.jsx']
+    home: ['webpack/hot/dev-server', 'webpack-dev-server/client?http://localhost:8080', './app/render/homepage.jsx'],    
+    chat: ['webpack/hot/dev-server', 'webpack-dev-server/client?http://localhost:8080', './app/render/chatpage.jsx']    
   },
   output: {
-    path: './public/build',
-    filename: '[name].js'
-  },
-  plugins: [
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.UglifyJsPlugin({
-      minimize: true,
-      compress: {
-        warnings: false
-      }
-    })
-  ],
-  devServer: {
-    contentBase: './public',
+    path: buildPath,
+    filename: '[name].js',
     publicPath: '/build/'
   },
   module: {

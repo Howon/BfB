@@ -1,4 +1,4 @@
-module.exports = function(app, passport, calendar) {
+module.exports = function(app, passport) {
 	app.get('/', function(req, res) {
 		if (req.isAuthenticated()) {
 			res.redirect('/home');
@@ -29,22 +29,19 @@ module.exports = function(app, passport, calendar) {
 	
 	app.get('/home', function(req, res) {
 		if (req.isAuthenticated()) {			
-			var currentCourses = calendar.retrieveUserCal(req.user._id, function(currentCourses){
-				var props = {
-					user: {					
-						id : req.user._id,
-						name: req.user.info.name,
-						email: req.user.info.email,						
-					},
-					courses: currentCourses
-				};
-								
-				res.render('home', {
-					title: 'Raymond',
-					user: req.user.info,
-					APP_PROPS: props				
-				});
-			});			
+			var props = {
+				user: {					
+					id : req.user._id,
+					name: req.user.info.name,
+					email: req.user.info.email,						
+				}			
+			};
+							
+			res.render('home', {
+				title: 'Raymond',
+				user: req.user.info,
+				APP_PROPS: props				
+			});		
 		} else {
 			res.redirect('/');
 		}

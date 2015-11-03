@@ -11,7 +11,7 @@ var webpack = require('webpack');
 var webpackConfig = require('./webpack.config')
 
 const isDeveloping = process.env.NODE_ENV !== 'production';
-const port = isDeveloping ? config.port : 3000;
+const port = isDeveloping ? config.port : process.env.PORT;
 
 if (isDeveloping) {
 	var bundle = require('./server/bundle.js');

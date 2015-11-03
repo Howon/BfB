@@ -1,8 +1,9 @@
 #side_bar_container{
 	position: absolute;
 	width: 50px;
+	top: 50px;
 	background-color: red;
-	height: 100%;
+	height:calc(100% - 50px);
 }
 
 .fa{

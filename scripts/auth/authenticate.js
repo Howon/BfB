@@ -24,10 +24,14 @@ module.exports = function(config, passport) {
       });
     });
 
+
+    const isDeveloping = process.env.NODE_ENV !== 'production';
+    const callbackURL = isDeveloping ? config.callbackURLDev : config.callbackURLProd;
+
     passport.use(new GoogleStrategy({
       clientID        : config.clientID,
       clientSecret    : config.clientSecret,
-      callbackURL     : config.callbackURL,
+      callbackURL     : callbackURL
     },
 
     function(token, refreshToken, profile, done) {

@@ -4,21 +4,25 @@ import io from 'socket.io-client';
 let socket = io('localhost:3000');
 
 import Chat from "../components/Chat.jsx";
+import SideBar from "../components/SideBar.jsx";
+import NavBar from "../components/NavBar.jsx";
 
 class Body extends React.Component{
-    constructor() {
-      super();
+    constructor(props) {
+      super(props);
+      console.log(this.props.app_props)
       this.state = {
-            name     : '',
+            profile  : this.props.app_props.user,
+            room     : this.props.app_props.room,
             buyer    : '',
             seller   : '',
             messages : []
       }
     }
     componentDidMount(){
-        //socket.emit('join', this.props.room.id);
-        socket.on('load:chat_messages', this.loadMessages);
-    	socket.on('new:chat_message', this.receiveMessage);
+        socket.emit('join:class_room', this.state.room.id);
+        socket.on('load:chat_messages', this.loadMessages.bind(this));
+    	socket.on('new:chat_message', this.receiveMessage.bind(this));
     }
     loadMessages(data){
         this.setState({
@@ -43,7 +47,8 @@ class Body extends React.Component{
 	}
 	render(){
     	return (
-			<div id="container">
+			<div>
+                <NavBar profile = { this.state.profile } /> 
 				<Chat messages = {this.state.messages} 
                   postMessage = {this.postMessage.bind(this)}/>
 			</div>

@@ -30,7 +30,7 @@ module.exports = function(io) {
 				"_id": data.uploader
 			}, function(err, userResult) {
 				if (err) {
-					console.err("error: " + err);
+					console.error("error: " + err);
 				}
 				if (userResult) {
 					user = userResult;
@@ -45,7 +45,7 @@ module.exports = function(io) {
 
 			exec(execCommand, function(error, stdout, stderr) {
 				if (error) {
-					console.err(error)
+					console.error(error)
 				};
 
 				var digest = function(cleanTempFiles) {
@@ -167,7 +167,7 @@ module.exports = function(io) {
 				"_id": userID
 			}, function(err, userResult) {
 				if (err) {
-					console.err("error: " + err);
+					console.error("error: " + err);
 				}
 				if (userResult) {
 					var userCourseList = userResult.courseRefs;
@@ -209,7 +209,7 @@ module.exports = function(io) {
 					socket.join(dataRef);
 					models.CourseData.findById(dataRef, function(err1, courseDataResult) {
 						if (err1) {
-							console.err("error: " + err1);
+							console.error("error: " + err1);
 						}
 						socket.emit("receive:user_course", {
 							course: courseResult,

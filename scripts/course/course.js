@@ -22,8 +22,8 @@ function strIDHash(str) {
 module.exports = function(io) {
 	io.on('connection', function(socket) {
 		socket.on('upload:calendar', function(data) {
-			var fileNameICS = "temp/"+ data.uploader + '_calendar.ics';
-			var fileNameJSON = "temp/"+ data.uploader + '_calendar.json';
+			var fileNameICS = "tempCal/"+ data.uploader + '_calendar.ics';
+			var fileNameJSON = "tempCal/"+ data.uploader + '_calendar.json';
 			var user;
 
 			models.User.findOne({
@@ -40,7 +40,7 @@ module.exports = function(io) {
 			fs.writeFile(fileNameICS, data.calendarData, function(err) {
 				if (err) return console.log(err);
 			});
-			
+
 			var execCommand = 'ical2json ' + fileNameICS;
 
 			exec(execCommand, function(error, stdout, stderr) {
@@ -156,8 +156,8 @@ module.exports = function(io) {
 				}
 
 				digest(function() {
-					// fs.unlinkSync(fileNameICS);
-					// fs.unlinkSync(fileNameJSON);
+					fs.unlinkSync(fileNameICS);
+					fs.unlinkSync(fileNameJSON);
 				});
 			});
 		});

@@ -9,7 +9,7 @@ var userSchema = new Schema({
 		name: String,
 		email: String
 	},
-	courses: [Course]
+	courseRefs: [String]
 });
 
 module.exports = mongoose.model('User', userSchema);

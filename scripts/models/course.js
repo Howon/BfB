@@ -1,5 +1,4 @@
 var mongoose = require('mongoose'),
-	User = require('./user'),
 	Schema = mongoose.Schema;
 
 var courseSchema = new Schema({
@@ -12,7 +11,7 @@ var courseSchema = new Schema({
 		type : Number,
 		ref  : 'User'
 	}],
-	chatRoom: String
+	courseDataRef: String
 });
 	
 module.exports = mongoose.model('Course', courseSchema);

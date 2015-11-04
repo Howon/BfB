@@ -1,9 +1,9 @@
 var Course = require('./course'),
 	User = require('./user'),
-	ChatRoom = require('./chatroom');
+	CourseData = require('./coursedata');
 
 module.exports = {
 	"Course"   : Course,
 	"User"	   : User,
-	"ChatRoom" : ChatRoom
+	"CourseData" : CourseData
 };

@@ -1,6 +1,5 @@
 import React from "react";     
 import io from 'socket.io-client';
-    // socket = io('https://anon-message.herokuapp.com/', {secure: true});
 let socket = io(window.location.host);
 
 import SideBar from "../components/SideBar.jsx";
@@ -22,14 +21,19 @@ class Body extends React.Component {
       socket.on("receive:calendar",
         this.receiveCalendar.bind(this)
       );
-      socket.on("receive:classNotification",
+      socket.on("receive:class_notification",
         this.receiveClassNotification.bind(this)
       );
       socket.on("receive:user_courses",
         this.receiveCalendar.bind(this)
       );
+      socket.on("receive:user_course", 
+        this.receiveCourseData.bind(this)
+      );
     }
     receiveCalendar(data){
+      console.log("what")
+      console.log(data)
       this.setState({
         calendar : data.calendar
       });
@@ -51,6 +55,9 @@ class Body extends React.Component {
       }
       socket.emit('upload:calendar', jsonObject);
       reader.readAsBinaryString(file);
+    }
+    receiveCourseData(data){
+      console.log(data)
     }
     render(){
       return (

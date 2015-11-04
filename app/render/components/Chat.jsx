@@ -4,6 +4,7 @@ class Message extends React.Component {
     render(){
       return(
         <li className = "message">
+          <span> {this.props.sender} : </span>      
           {this.props.text}          
         </li>
       )
@@ -12,8 +13,7 @@ class Message extends React.Component {
 
 class MessageList extends React.Component {    
   renderMessage(message, i){
-      console.log(message)
-      return <Message key = {i} text = {message} />
+    return <Message key = {i} sender = { message.sender } text = { message.message } />
   }
   render(){    
     return (
@@ -25,22 +25,25 @@ class MessageList extends React.Component {
 };
 
 class MessageInputForm extends React.Component {    
-    constructor(){      
-        super();        
+    constructor(props){      
+        super(props); 
         this.state = {
-          message: ''
+          sender : this.props.profile.name,
+          message: ''          
         }
     }
     handleChange(evt) {
-      evt.preventDefault();
-            
+      evt.preventDefault();            
       this.setState({
         message: evt.target.value
       });
     }
     handleSubmit(e){
       if(/\S/.test(this.state.message)){
-        this.props.postMessage(this.state.message);    
+        this.props.postMessage({
+          sender  : this.state.sender,
+          message : this.state.message
+        });    
       }
       e.preventDefault();
       this.setState({
@@ -65,8 +68,8 @@ class Chat extends React.Component {
   render() {
     return (
         <div id="chatArea">
-          <MessageList messages = {this.props.messages}/>
-          <MessageInputForm postMessage = {this.props.postMessage}/>
+          <MessageList messages = { this.props.messages }/>
+          <MessageInputForm profile = { this.props.profile } postMessage = { this.props.postMessage }/>
         </div>
     )
   }

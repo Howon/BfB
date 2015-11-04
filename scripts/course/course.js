@@ -66,10 +66,12 @@ module.exports = function(io) {
 									}
 									var id = classtimes[i]['UID'];
 									if (validateCourse(id)) {
+                    var UID = strIDHash(id); // creates a hash based on the class name
 										if (courseObjList[id]) {
 											courseObjList[id]['meetings'].push(meeting);
 										} else {
 											courseObjList[id] = {};
+                      courseObjList[id].classID = UID;
 											courseObjList[id].summary = classtimes[i]['SUMMARY'];
 											courseObjList[id].location = classtimes[i]['LOCATION'];
 											courseObjList[id].meetings = [];
@@ -89,8 +91,7 @@ module.exports = function(io) {
 								var courseCount = Object.keys(courseObjList).length;
 
 								var checkDBForClass = function(courseObj) {
-									var classID = strIDHash(courseObj.summary); // creates a hash based on the class name
-
+									var classID = courseObj.classID; // creates a hash based on the class name                  
 									models.Course.findOne({
 										"classID": classID
 									}, function(err, courseResult) {
@@ -104,11 +105,11 @@ module.exports = function(io) {
 											userCalendar.push(courseResult);
 										} else {
 											var newCourse = new models.Course({
-												"classID": classID,
-												"meetingTimes": courseObj.meetings,
-												"summary": courseObj.summary,
-												"location": courseObj.location,
-												"subscribers": user._id,
+												"classID"      : classID,
+												"meetingTimes" : courseObj.meetings,
+												"summary"      : courseObj.summary,
+												"location"     : courseObj.location,
+												"subscribers"  : user._id,
 											})
 
 											var courseDataID = strIDHash("data_" + classID);

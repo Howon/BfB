@@ -1,7 +1,4 @@
 node_modules
 .DS_Store
-data/
 npm-debug.log
-*.ics
-*.json
 app/build

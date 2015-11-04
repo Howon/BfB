@@ -2,8 +2,8 @@ module.exports = {
     port: process.env.PORT || 3000
     ,
     mongoose:{
-    	url: 'mongodb://testuser:test@ds051833.mongolab.com:51833/raymond',
-        local: 'mongodb://localhost:27017/data/'
+    	dev    : 'mongodb://devroot:raymonddev@ds049754.mongolab.com:49754/raymond_development',        
+        prod : 'mongodb://root:raymondroot@ds049854.mongolab.com:49854/raymond_production'
     }
     ,
     psql: {

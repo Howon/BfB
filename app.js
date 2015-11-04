@@ -39,8 +39,10 @@ if (isDeveloping) {
 	});
 }
 
+mongooseURL = isDeveloping ? config.mongoose.dev : config.mongoose.prod
+
 var mongoose = require('mongoose');
-mongoose.connect(config.mongoose.url);
+mongoose.connect(mongooseURL);
 
 var passport = require('passport');
 var flash = require('connect-flash');

@@ -97,7 +97,7 @@ class Calendar extends React.Component {
       } else {
         time = i - 12 + "pm";
       }
-      hours.push(<li key={ i } className = "time_bar_hour">{ time }</li>);
+      hours.push(<li key = { i } className = "time_bar_hour"> { time } </li>);
     }
     return (      
       <div id = "calendar">

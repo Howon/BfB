@@ -1,76 +1,76 @@
 var fs = require('fs'),
-	exec = require('child_process').exec,
-	models = require('../models/index'),
-	async = require('async'),
-	crypto = require('crypto');
+  exec = require('child_process').exec,
+  models = require('../models/index'),
+  async = require('async'),
+  crypto = require('crypto');
 
 function validateCourse(course) {
-	var re = /^\s*[\w\-\+_]+(\.[\w\-\+_]+)*\@[\w\-\+_]+\.[\w\-\+_]+(\.[\w\-\+_]+)*\s*$/;
-	if (re.test(course)) {
-		if (course.indexOf('@vergil.columbia.edu', course.length - '@vergil.columbia.edu'.length) !== -1) {
-			return true;
-		}
-	} else {
-		return false;
-	}
+  var re = /^\s*[\w\-\+_]+(\.[\w\-\+_]+)*\@[\w\-\+_]+\.[\w\-\+_]+(\.[\w\-\+_]+)*\s*$/;
+  if (re.test(course)) {
+    if (course.indexOf('@vergil.columbia.edu', course.length - '@vergil.columbia.edu'.length) !== -1) {
+      return true;
+    }
+  } else {
+    return false;
+  }
 }
 
 function strIDHash(str) {
-	return crypto.createHash('md5').update(str).digest("hex");
+  return crypto.createHash('md5').update(str).digest("hex");
 }
 
 module.exports = function(io) {
-	io.on('connection', function(socket) {
-		socket.on('upload:calendar', function(data) {
-			var fileNameICS = "tempCal/"+ data.uploader + '_calendar.ics';
-			var fileNameJSON = "tempCal/"+ data.uploader + '_calendar.json';
-			var user;
+  io.on('connection', function(socket) {
+    socket.on('upload:calendar', function(data) {
+      var fileNameICS = "tempCal/" + data.uploader + '_calendar.ics';
+      var fileNameJSON = "tempCal/" + data.uploader + '_calendar.json';
+      var user;
 
-			models.User.findOne({
-				"_id": data.uploader
-			}, function(err, userResult) {
-				if (err) {
-					console.error("error: " + err);
-				}
-				if (userResult) {
-					user = userResult;
-				}
-			})
+      models.User.findOne({
+        "_id": data.uploader
+      }, function(err, userResult) {
+        if (err) {
+          console.error("error: " + err);
+        }
+        if (userResult) {
+          user = userResult;
+        }
+      })
 
-			fs.writeFile(fileNameICS, data.calendarData, function(err) {
-				if (err) return console.log(err);
-			});
+      fs.writeFile(fileNameICS, data.calendarData, function(err) {
+        if (err) return console.log(err);
+      });
 
-			var execCommand = 'ical2json ' + fileNameICS;
+      var execCommand = 'ical2json ' + fileNameICS;
 
-			exec(execCommand, function(error, stdout, stderr) {
-				if (error) {
-					console.error(error)
-				};
+      exec(execCommand, function(error, stdout, stderr) {
+        if (error) {
+          console.error(error)
+        };
 
-				var digest = function(cleanTempFiles) {
-					fs.readFile(fileNameJSON, 'utf8', function(err, calFile) {
-						if (err) {
-							return console.log(err);
-						}
+        var digest = function(cleanTempFiles) {
+          fs.readFile(fileNameJSON, 'utf8', function(err, calFile) {
+            if (err) {
+              return console.log(err);
+            }
 
-						var classtimes = JSON.parse(calFile)['VCALENDAR'][0]['VEVENT'];
+            var classtimes = JSON.parse(calFile)['VCALENDAR'][0]['VEVENT'];
 
-						if (classtimes) {
-							var setupMeetingTimes = function() {
-								var courseObjList = {};
-								for (var i = 0; i < classtimes.length; i++) {
-									var meeting = {
-										"startTime": classtimes[i]['DTSTART'],
-										'endTime': classtimes[i]['DTEND']
-									}
-									var id = classtimes[i]['UID'];
-									if (validateCourse(id)) {
+            if (classtimes) {
+              var setupMeetingTimes = function() {
+                var courseObjList = {};
+                for (var i = 0; i < classtimes.length; i++) {
+                  var meeting = {
+                    "startTime": classtimes[i]['DTSTART'],
+                    'endTime': classtimes[i]['DTEND']
+                  }
+                  var id = classtimes[i]['UID'];
+                  if (validateCourse(id)) {
                     var UID = strIDHash(id); // creates a hash based on the class name
-										if (courseObjList[id]) {
-											courseObjList[id]['meetings'].push(meeting);
-										} else {
-											courseObjList[id] = {};
+                    if (courseObjList[id]) {
+                      courseObjList[id]['meetings'].push(meeting);
+                    } else {
+                      courseObjList[id] = {};
                       courseObjList[id].classID = UID;
 											courseObjList[id].summary = classtimes[i]['SUMMARY'];
 											courseObjList[id].location = classtimes[i]['LOCATION'];
@@ -227,3 +227,4 @@ module.exports = function(io) {
 		});
 	});
 }
+>>>>>>> f44159f0a9a67df69be1ea69fa9bf9a0106117f0

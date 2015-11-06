@@ -7,7 +7,7 @@ function strIDHash(str) {
 
 module.exports = function(io) {
     io.on('connection', function(socket) {
-        socket.on('post:chat_message', function(message) {
+        socket.on('post:announcement', function(announcement) {
             models.CourseData.findOne({
                 "_id": socket.room + ""
             }, function(err, courseDataResult) {
@@ -15,12 +15,11 @@ module.exports = function(io) {
                     console.err("error: " + err);
                 }
                 if (courseDataResult) {
-                    courseDataResult.messages.push(message);
+                    courseDataResult.announcements.push(announcement);
                     courseDataResult.save();
                 }
-            })
-
-            socket.broadcast.to(socket.room).emit('receive:chat_message', message);
+            })            
+            socket.broadcast.to(socket.room).emit('receive:announcement', announcement);
         });
     });
 }

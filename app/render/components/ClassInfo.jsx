@@ -1,5 +1,19 @@
 import React from "react";     
 
+import Chat from "./Chat.jsx";
+
+function calenDate(icalStr)  { 
+  var strYear = icalStr.substr(0,4);
+  var strMonth = parseInt(icalStr.substr(4,2), 10) - 1;
+  var strDay = icalStr.substr(6,2);
+  var strHour = icalStr.substr(9,2);
+  var strMin = icalStr.substr(11,2);
+  var strSec = icalStr.substr(13,2);
+
+  var oDate =  new Date(strYear, strMonth, strDay, strHour, strMin, strSec)
+  return oDate;
+}
+
 class ClassTime extends React.Component {    
   render(){
     return(
@@ -11,19 +25,6 @@ class ClassTime extends React.Component {
   }
 };
 
-class StudentList extends React.Component {    
-  render(){    
-    var renderMessage = function(message, i){
-      return <Message key = { i } sender = { message.sender } text = { message.message } />
-    }
-    return (
-      <ul id="messages" className="chatArea">
-        { this.props.messages.map(renderMessage) } 
-      </ul>
-    );
-  }
-};
-
 class ClassInfo extends React.Component {
   render() {
     return (
@@ -32,6 +33,8 @@ class ClassInfo extends React.Component {
           <p> { this.props.classInfo.summary } </p>
           <p> { this.props.classInfo.location } </p>
         </div>
+        <Chat messages = { this.props.messages } 
+          postMessage = { this.props.postMessage } />
       </div>
     )
   }

@@ -101,7 +101,7 @@ module.exports = function(io) {
 										if (courseResult) {
 											courseResult.subscribers.push(user._id);
 											courseResult.save();
-											courseIDList.push(courseResult._id);
+											courseIDList.push(courseResult._id); // unique subscriber should be added, @kevin lin
 											userCalendar.push(courseResult);
 										} else {
 											var newCourse = new models.Course({

@@ -72,158 +72,162 @@ module.exports = function(io) {
                     } else {
                       courseObjList[id] = {};
                       courseObjList[id].classID = UID;
-											courseObjList[id].summary = classtimes[i]['SUMMARY'];
-											courseObjList[id].location = classtimes[i]['LOCATION'];
-											courseObjList[id].meetings = [];
-											courseObjList[id].meetings.push(meeting);
-										}
-									}
-								}
+                      courseObjList[id].summary = classtimes[i]['SUMMARY'];
+                      courseObjList[id].location = classtimes[i]['LOCATION'];
+                      courseObjList[id].meetings = [];
+                      courseObjList[id].meetings.push(meeting);
+                    }
+                  }
+                }
 
-								setupCourse(courseObjList);
-							}
+                setupCourse(courseObjList);
+              }
 
-							var setupCourse = function(courseObjList) {
-								var userCalendar = [];
-								var courseIDList = [];
-								var counter = 0;
+              var setupCourse = function(courseObjList) {
+                var userCalendar = [];
+                var courseIDList = [];
+                var counter = 0;
+                var courseCount = Object.keys(courseObjList).length;
 
-								var courseCount = Object.keys(courseObjList).length;
+                var checkDBForClass = function(courseObj) {
+                  var classID = courseObj.classID; // creates a hash based on the class name                  
+                  models.Course.findOne({
+                    "classID": classID
+                  }, function(err, courseResult) {
+                    if (err) {
+                      console.error("error: " + err);
+                    }
+                    if (courseResult) {
+                      var subscribers = courseResult.subscribers;
+                      if (!subscribers.includes(user._id)) {
+                        subscribers.push(user._id);
+                        courseResult.save();
+                      }
 
-								var checkDBForClass = function(courseObj) {
-									var classID = courseObj.classID; // creates a hash based on the class name                  
-									models.Course.findOne({
-										"classID": classID
-									}, function(err, courseResult) {
-										if (err) {
-											console.error("error: " + err);
-										}
-										if (courseResult) {
-											courseResult.subscribers.push(user._id);
-											courseResult.save();
-											courseIDList.push(courseResult._id); // unique subscriber should be added, @kevin lin
-											userCalendar.push(courseResult);
-										} else {
-											var newCourse = new models.Course({
-												"classID"      : classID,
-												"meetingTimes" : courseObj.meetings,
-												"summary"      : courseObj.summary,
-												"location"     : courseObj.location,
-												"subscribers"  : user._id,
-											})
+                      courseIDList.push(courseResult._id);
+                      userCalendar.push(courseResult);
+                    } else {
+                      var newCourse = new models.Course({
+                        "classID": classID,
+                        "meetingTimes": courseObj.meetings,
+                        "summary": courseObj.summary,
+                        "location": courseObj.location,
+                        "subscribers": user._id,
+                      })
 
-											var courseDataID = strIDHash("data_" + classID);
-											var newCourseData = new models.CourseData({
-												"_id": courseDataID
-											});
-											newCourseData.save();
-											newCourse.courseDataRef = newCourseData.id;
-											newCourse.save();
-											courseIDList.push(newCourse._id);
-											userCalendar.push(newCourse);
-										}
+                      var courseDataID = strIDHash("data_" + classID);
+                      var newCourseData = new models.CourseData({
+                        "_id": courseDataID
+                      });
+                      newCourseData.save();
+                      newCourse.courseDataRef = newCourseData.id;
+                      newCourse.save();
+                      courseIDList.push(newCourse._id);
+                      userCalendar.push(newCourse);
+                    }
 
-										counter++; // counts upto the number of classes passed into the method
-										if (counter == courseCount) { // if the number of objects compared matches the parameter length
-											outputResult(userCalendar); // returns it back to the user
-											saveUserClasses(courseIDList);
-										}
+                    counter++; // counts upto the number of classes passed into the method
+                    if (counter == courseCount) { // if the number of objects compared matches the parameter length
+                      outputResult(userCalendar); // returns it back to the user
+                      saveUserClasses(courseIDList);
+                    }
 
-										return;
-									});
-								}
+                    return;
+                  });
+                }
 
-								async.forEach(courseObjList, checkDBForClass);
-							}
+                async.forEach(courseObjList, checkDBForClass);
+              }
 
-							var outputResult = function(userCalendar) {
-								var output = {
-									uploader: data.uploader,
-									calendar: userCalendar
-								}
-								socket.emit("receive:calendar", output);
-							}
+              var outputResult = function(userCalendar) {
+                var output = {
+                  uploader: data.uploader,
+                  calendar: userCalendar
+                }
+                socket.emit("receive:calendar", output);
+              }
 
-							var saveUserClasses = function(courseIDList) {
-								user.courseRefs = courseIDList;
-								user.save();
-							}
+              var saveUserClasses = function(courseIDList) {
+                user.courseRefs = courseIDList;
+                user.save();
+              }
 
-							setupMeetingTimes();
+              setupMeetingTimes();
 
-						}
-					});
-					cleanTempFiles();
-				}
+            }
+          });
+          cleanTempFiles();
+        }
 
-				digest(function() {
-					fs.unlinkSync(fileNameICS);
-					fs.unlinkSync(fileNameJSON);
-				});
-			});
-		});
+        digest(function() {
+          fs.unlinkSync(fileNameICS);
+          fs.unlinkSync(fileNameJSON);
+        });
+      });
+    });
 
-		socket.on('get:user_courses', function(userID) {
-			models.User.findOne({
-				"_id": userID
-			}, function(err, userResult) {
-				if (err) {
-					console.error("error: " + err);
-				}
-				if (userResult) {
-					var userCourseList = userResult.courseRefs;
-					var courseCount = userCourseList.length;
-					var counter = 0;
-					var outputCourseList = [];
+    socket.on('get:user_courses', function(userID) {
+      models.User.findOne({
+        "_id": userID
+      }, function(err, userResult) {
+        if (err) {
+          console.error("error: " + err);
+        }
+        if (userResult) {
+          var userCourseList = userResult.courseRefs;
+          var courseCount = userCourseList.length;
+          var counter = 0;
+          var outputCourseList = [];
 
-					var getUserCourses = function(classID) {
-						models.Course.findById(classID, function(err1, courseResult) {
-							if (err1) {
-								console.error("error: " + err1);
-							}
-							if (courseResult) {
-								outputCourseList.push(courseResult);
+          var getUserCourses = function(classID) {
+            models.Course.findById(classID, function(err1, courseResult) {
+              if (err1) {
+                console.error("error: " + err1);
+              }
+              if (courseResult) {
+                outputCourseList.push(courseResult);
 
-								counter++; // counts upto the number of classes passed into the method
-								if (counter == courseCount) { // if the number of objects compared matches the parameter length
-									socket.emit("receive:user_courses", {
-										calendar: outputCourseList
-									});
-								}
-							}
-						});
-					}
+                counter++; // counts upto the number of classes passed into the method
+                if (counter == courseCount) { // if the number of objects compared matches the parameter length
+                  socket.emit("receive:user_courses", {
+                    calendar: outputCourseList
+                  });
+                }
+              }
+            });
+          }
 
-					async.forEach(userCourseList, getUserCourses);
-				}
-			})
-		});
+          async.forEach(userCourseList, getUserCourses);
+        }
+      })
+    });
 
-		socket.on('enter:class_room', function(courseID) {
-			models.Course.findById(courseID, function(err, courseResult) {
-				if (err) {
-					console.error("error: " + err);
-				}
-				if (courseResult) {
-					var dataRef = courseResult.courseDataRef;
-					socket.room = dataRef;
-					socket.join(dataRef);
-					models.CourseData.findById(dataRef, function(err1, courseDataResult) {
-						if (err1) {
-							console.error("error: " + err1);
-						}
-						socket.emit("receive:class_data", {
-							course: courseResult,
-							courseData: courseDataResult
-						});
-					})
-				}
-			});
-		});
+    socket.on('enter:class_room', function(courseID) {
+      models.Course.findById(courseID, function(err, courseResult) {
+        if (err) {
+          console.error("error: " + err);
+        }
+        if (courseResult) {
+          var dataRef = courseResult.courseDataRef;
+          socket.room = dataRef;
+          socket.join(dataRef);
+          models.CourseData.findById(dataRef, function(err1, courseDataResult) {
+            if (err1) {
+              console.error("error: " + err1);
+            }
+            socket.emit("receive:class_data", {
+              course: courseResult,
+              courseData: courseDataResult
+            });
+          })
+        }
+      });
+    });
 
 
-		socket.on('unsubscribe', function(roomID) {
-			socket.leave(roomID);
-		});
-	});
+    socket.on('unsubscribe', function(roomID) {
+      socket.leave(roomID);
+    });
+  });
 }
+>>>>>>> 8fb9f54948b0ab5cb47a6be7d62cfdce73382839

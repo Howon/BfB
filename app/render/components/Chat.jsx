@@ -4,8 +4,8 @@ class Message extends React.Component {
   render(){
     return(
       <li className = "message">
-        <span> { this.props.sender } : </span>      
-        { this.props.text }
+        <span> { this.props.sender } : </span>
+        { this.props.content }
       </li>
     )
   }
@@ -14,7 +14,7 @@ class Message extends React.Component {
 class MessageList extends React.Component {    
   render(){    
     var renderMessage = function(message, i){
-      return <Message key = { i } sender = { message.sender } text = { message.message } />
+      return <Message key = { i } sender = { message.sender } content = { message.content } />
     }
     return (
       <ul id="messages" className="chatArea">
@@ -28,7 +28,6 @@ class MessageInputForm extends React.Component {
   constructor(props){      
     super(props); 
     this.state = {
-      sender : this.props.profile.name,
       message: ''          
     }
   }
@@ -41,8 +40,7 @@ class MessageInputForm extends React.Component {
   handleSubmit(e){
     if(/\S/.test(this.state.message)){
       this.props.postMessage({
-        sender  : this.state.sender,
-        message : this.state.message
+        content : this.state.message
       });    
     }
     e.preventDefault();
@@ -57,10 +55,13 @@ class MessageInputForm extends React.Component {
   }
   render(){
     return (
-      <textarea id="messageInput" type="text" placeholder="Type to chat" className="chatArea"
-       onChange = { this.handleChange.bind(this) } 
-       value = { this.state.message } 
-       onKeyDown = { this.handleKeyDown.bind(this) }>
+      <textarea id="messageInput" 
+        className="chatArea"
+        type = "text" 
+        placeholder = "Type to chat"
+        onChange = { this.handleChange.bind(this) } 
+        value = { this.state.message } 
+        onKeyDown = { this.handleKeyDown.bind(this) }>
       </textarea>
     )
   }

@@ -1,36 +1,20 @@
 import React from "react";     
 
 class Announcement extends React.Component {    
-  constructor(props){
-    super(props);
-    return{
-      upvote : this.props.upvote
-    }
-  }
-  handleVoting(action){
-    socket.emit('vote:announcement', this.props.id, action);
-    this.setState({
-      upvote : this.state.upvote + action
-    })
-  }
-  render(){
+  render(){    
     return (
       <li className = 'announcement_post'>
-        <div className="votingArea"> 
-          <i className = "fa fa-arrow-up" onClick={this.handleVoting.bind(null, 1)}></i>
-          <i className = "fa fa-arrow-down" onClick={this.handleVoting.bind(null, -1)}></i>
-          <p className="announcement_post_rating">{this.state.upvote}</p>
-        </div>
-        <div className="announcement_post_content">{this.props.content}</div>
+        <span> { this.props.announcement.poster } : </span>
+        { this.props.announcement.content }
       </li>
     )
   }
 };
 
-class AnnouncementLit extends React.Component {    
+class AnnouncementList extends React.Component {    
   render(){
     var renderAnnouncement = function(announcement, i){
-      return <Announcement key = { i } id = { announcement._id } upvote = { announcement.upvote } content = { announcement.content }/>
+      return <Announcement key = { i } announcement = { announcement }/>
     }
     return (
       <ul id="announcements" className="announcementArea">
@@ -40,12 +24,12 @@ class AnnouncementLit extends React.Component {
   }
 };
 
-class MessageInputForm extends React.Component {    
+class AnnouncementInputForm extends React.Component {    
   constructor(props){      
     super(props); 
     this.state = {
-      poster : this.props.profile.name,
-      announcement: ''          
+      announcement  : '',
+      showPostInput : false     
     }
   }
   handleChange(evt) {
@@ -54,46 +38,57 @@ class MessageInputForm extends React.Component {
       announcement: evt.target.value
     });
   }
-  handleSubmit(e){
-    if(/\S/.test(this.state.message)){
+  postAnnouncement(e){
+    if(/\S/.test(this.state.announcement)){
       this.props.postAnnouncement({
-        poster       : this.state.poster,
-        announcement : this.state.announcement
+        content : this.state.announcement
       });    
     }
     e.preventDefault();
     this.setState({
+      showPostInput : false,
       announcement: ""
     });
   }
-  handleKeyDown(evt) {
-    if (evt.keyCode == 13 ) {
-      this.handleSubmit(evt);
-    }
+  toggleDisplayStatus(){
+    this.setState({
+      showPostInput : this.state.showPostInput ? false : true
+    })    
   }
   render(){
+    let displayStatus = { 
+        display : this.state.showPostInput ? "block" : "none"
+    };
     return (
       <div>
-        <i id="showAnnouncementPost" className="fa fa-pencil-square-o fa-lg"></i>
-        <i id="cancel_announcement_post" className="fa fa-times"></i>
-        <textarea id="announcementInput" type="text" placeholder="Type to leave an announcement" className="announcementArea"
-        onChange = { this.handleChange.bind(this) } value = { this.state.announcement } onKeyDown = { this.handleKeyDown.bind(this) } ></textarea>
-        <i id="submit_announcement" className="fa fa-check-square-o" onClick = {this.postAnnouncement} ></i>
-        </div>
-      )
-    }
+        <i id="showAnnouncementPost" className = "fa fa-pencil-square-o fa-lg" 
+          onClick = { this.toggleDisplayStatus.bind(this) }></i>        
+        <div  style = { displayStatus }>        
+          <i id="cancel_announcement_post" className = "fa fa-times" 
+            onClick = { this.toggleDisplayStatus.bind(this) } ></i>
+          <i id="submit_announcement" className ="fa fa-check-square-o" 
+            onClick = { this.postAnnouncement.bind(this) } ></i>
+          <textarea id="announcementInput" 
+            className="announcementArea"
+            type = "text" 
+            placeholder = "Type to leave an announcement"
+            onChange = { this.handleChange.bind(this) } 
+            value = { this.state.announcement } ></textarea>
+        </div>  
+      </div>
+    )
   }
 };
 
-class Chat extends React.Component {
+class AnnouncementArea extends React.Component {
   render() {
     return (
         <div id="announcementArea">
           <AnnouncementList announcements = { this.props.announcements }/>
-          <AnnouncementInputForm profile = { this.props.profile } postAnnouncement = { this.props.postAnnouncement } />
+          <AnnouncementInputForm postAnnouncement = { this.props.postAnnouncement } />
         </div>
     )
   }
 };
 
-export default Chat;
+export default AnnouncementArea;

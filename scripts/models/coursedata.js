@@ -3,9 +3,14 @@ var mongoose = require('mongoose'),
 	
 var coursedataSchema = new Schema({
 	_id: String,
+	announcements: [{
+		poster  : String,
+		content : String,
+		time    : Date
+	}],
 	messages: [{
 		sender  : String,
-		message : String
+		content : String
 	}]
 });
 

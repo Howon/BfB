@@ -49,7 +49,6 @@ module.exports = function(io) {
         };
 
         var digest = function(cleanTempFiles) {
-          console.log("digest");
           fs.readFile(fileNameJSON, 'utf8', function(err, calFile) {
             if (err) {
               return console.log(err);

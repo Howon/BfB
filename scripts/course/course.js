@@ -19,6 +19,17 @@ function strIDHash(str) {
 	return crypto.createHash('md5').update(str).digest("hex");
 }
 
+function hasSubscriber(subscribers, id) {
+	subscribers.forEach(function(subscriber, id){
+		if(subscriber == id){
+			return true;
+		}
+	})
+	return false;
+}
+
+
+
 module.exports = function(io) {
 	io.on('connection', function(socket) {
 		socket.on('upload:calendar', function(data) {
@@ -99,8 +110,11 @@ module.exports = function(io) {
 											console.error("error: " + err);
 										}
 										if (courseResult) {
-											courseResult.subscribers.push(user._id);
-											courseResult.save();
+											if (!hasSubscriber(courseResult.subscribers, user._id)) {
+												courseResult.subscribers.push(user._id);
+												courseResult.save();
+											}
+											
 											courseIDList.push(courseResult._id);
 											userCalendar.push(courseResult);
 										} else {

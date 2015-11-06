@@ -23,24 +23,6 @@ module.exports = {
 
                 socket.broadcast.to(socket.room).emit('receive:chat_message', message);
             });
-
-            socket.on("join:class_room", function(id) {
-                // ChatRoom.findById(id, function(err, room){
-                //     if(err){
-                //        return console.error(err)
-                //     }
-                //     io.to(socket.room).emit('load:chat_messages', room);
-                // });              
-            });
         });
-    },
-    getRoom: function(id, callback) {
-        var event = {};
-        // ChatRoom.findById(id, function(err, data){
-        //     if(err){
-        //         return console.error(err)
-        //     }            
-        //     callback(data)
-        // });
     }
 }

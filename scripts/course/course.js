@@ -212,7 +212,7 @@ module.exports = function(io) {
 						if (err1) {
 							console.error("error: " + err1);
 						}
-						socket.emit("receive:user_course", {
+						socket.emit("receive:class_data", {
 							course: courseResult,
 							courseData: courseDataResult
 						});

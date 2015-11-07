@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "deploy": "NODE_ENV=production PORT=80 node app",
     "start": "node app.js",
     "postinstall": "node deploy",
     "webpack": "./node_modules/.bin/webpack-dev-server"

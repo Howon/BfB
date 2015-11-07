@@ -24,7 +24,6 @@ module.exports = function(config, passport) {
       });
     });
 
-
     const isDeveloping = process.env.NODE_ENV !== 'production';
     const callbackURL = isDeveloping ? config.callbackURLDev : config.callbackURLProd;
 

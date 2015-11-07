@@ -15,6 +15,6 @@ module.exports = {
         clientID         : '710775881141-7ak38p0o3apboethicglem0doh13elrl.apps.googleusercontent.com',
         clientSecret     : 'hrNgv5v3KTubNaaHbjoUGCIn',
         callbackURLDev   : 'http://localhost:3000/auth/google/callback',
-        callbackURLProd  : 'https://raymond.herokuapp.com/auth/google/callback'
+        callbackURLProd  : 'http://rayos.xyz/auth/google/callback'
     }
 };

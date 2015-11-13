@@ -15,13 +15,6 @@ tr{
     width: 100%;
 }
 
-td {
-    width: 12%;
-    padding: 0;
-    margin: 0;
-    vertical-align: top;
-}
-
 .calendar_week_day{
     height: 30px;
     background-color: #B0BEC5;

@@ -1,4 +1,3 @@
-require('../stylesheets/style.css');
 require('../stylesheets/chat.css');
 require('../stylesheets/sideBar.css');
 require('../stylesheets/contentArea.css');

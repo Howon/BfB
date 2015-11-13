@@ -1,11 +1,29 @@
 import React from "react";     
 
+class AnnouncementMenu extends React.Component {    
+  render(){    
+    return (
+      <div id = "announcementMenu">
+        <input type="text" placeholder="Search for announcement"
+          id = "searchAnnouncement">
+        </input>
+        <i id = "showAnnouncementPost" className = "fa fa-pencil-square-o fa-lg" 
+          onClick = { this.props.toggleDisplayStatus.bind(this) }></i>        
+      </div>
+    )
+  }
+};
+
 class Announcement extends React.Component {    
   render(){    
     return (
       <li className = 'announcement_post'>
-        <span> { this.props.announcement.poster } : </span>
-        { this.props.announcement.content }
+        <div>
+          { this.props.announcement.content }
+          <div className = 'announcement_post_poster'>
+            Posted by : { this.props.announcement.poster } 
+          </div>
+        </div>
       </li>
     )
   }
@@ -17,7 +35,7 @@ class AnnouncementList extends React.Component {
       return <Announcement key = { i } announcement = { announcement }/>
     }
     return (
-      <ul id="announcements" className="announcementArea">
+      <ul id="announcements" className="announcementAreaComponent">
         { this.props.announcements.map(renderAnnouncement) } 
       </ul>
     )
@@ -50,22 +68,15 @@ class AnnouncementInputForm extends React.Component {
       announcement: ""
     });
   }
-  toggleDisplayStatus(){
-    this.setState({
-      showPostInput : this.state.showPostInput ? false : true
-    })    
-  }
   render(){
     let displayStatus = { 
-        display : this.state.showPostInput ? "block" : "none"
+        display : this.props.showPostInput ? "block" : "none"
     };
     return (
       <div>
-        <i id="showAnnouncementPost" className = "fa fa-pencil-square-o fa-lg" 
-          onClick = { this.toggleDisplayStatus.bind(this) }></i>        
         <div  style = { displayStatus }>        
           <i id="cancel_announcement_post" className = "fa fa-times" 
-            onClick = { this.toggleDisplayStatus.bind(this) } ></i>
+            onClick = { this.props.toggleDisplayStatus.bind(this) } ></i>
           <i id="submit_announcement" className ="fa fa-check-square-o" 
             onClick = { this.postAnnouncement.bind(this) } ></i>
           <textarea id="announcementInput" 
@@ -81,11 +92,23 @@ class AnnouncementInputForm extends React.Component {
 };
 
 class AnnouncementArea extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      showPostInput : false
+    }
+  }
+  toggleDisplayStatus(){
+    this.setState({
+      showPostInput : this.state.showPostInput ? false : true
+    })    
+  }
   render() {
     return (
         <div id="announcementArea">
+          <AnnouncementMenu toggleDisplayStatus = { this.toggleDisplayStatus.bind(this) } />
           <AnnouncementList announcements = { this.props.announcements }/>
-          <AnnouncementInputForm postAnnouncement = { this.props.postAnnouncement } />
+          <AnnouncementInputForm showPostInput = { this.state.showPostInput } postAnnouncement = { this.props.postAnnouncement } toggleDisplayStatus = { this.toggleDisplayStatus.bind(this) } />
         </div>
     )
   }

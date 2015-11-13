@@ -11,6 +11,10 @@ thead {
     text-align: center;
 }
 
+tr{
+    width: 100%;
+}
+
 td {
     width: 12%;
     padding: 0;
@@ -20,7 +24,7 @@ td {
 
 .calendar_week_day{
     height: 30px;
-    background-color: #F1DFEB;
+    background-color: #B0BEC5;
 }
 
 .calendar_week{
@@ -42,36 +46,46 @@ button {
 .calendar_area {
     position: absolute;
     top: 80px;    
-    left: calc(13% + 40px);
-    width: 800px;    
+    left: calc(9% + 50px);
+    width: 850px;    
     table-layout: fixed;
-    min-height:200px;
+    background-color: #FDFDFD;
+    min-height: 200px;
+    -webkit-box-shadow: 2px 3px 3px 1px rgba(0,0,0,0.1);
+    -moz-box-shadow: 2px 3px 3px 1px rgba(0,0,0,0.1);
+    box-shadow: 2px 3px 3px 1px rgba(0,0,0,0.1);
 }
 
 .calendar_course_item {
     position: absolute;
-    font-family: 'Roboto', sans-serif;
     font-size: 11px;    
     width: 19%;
     margin-left: 4px;
     margin-top: 4px;
-    padding: 3px;
-    background-color: #FFD9E2;
-    -webkit-box-shadow: 1px 1px 2px 2px rgba(0,0,0,0.1);
-    -moz-box-shadow: 1px 1px 2px 2px rgba(0,0,0,0.1);
-    box-shadow: 1px 1px 1px 1px rgba(0,0,0,0.1);
+    padding: 5px;
+    background-color: #546E7A;
+    -webkit-box-shadow: 2px 3px 3px 1px rgba(0,0,0,0.1);
+    -moz-box-shadow: 2px 3px 3px 1px rgba(0,0,0,0.1);
+    box-shadow: 2px 3px 3px 1px rgba(0,0,0,0.1);
+}
+
+.calendar_course_item_classUrl{
+    color: #F5F5F5;
 }
 
 #time_bar{
     position: absolute;
     height: 640px;
     top: 80px;
-    left: calc(13% - 1px);  
+    left: 9%;  
     padding: 0;
     padding-top: 30px;
-    min-width: 40px; 
-    background-color: #F1DFEB;
+    width: 50px; 
+    background-color: #B0BEC5;
     text-align: right;
+    -webkit-box-shadow: 1px 1px 2px 2px rgba(0,0,0,0.1);
+    -moz-box-shadow: 1px 1px 2px 2px rgba(0,0,0,0.1);
+    box-shadow: 3px 1px 3px 3px rgba(0,0,0,0.1);
 }
 
 .time_bar_hour{

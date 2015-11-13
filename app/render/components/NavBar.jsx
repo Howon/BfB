@@ -10,12 +10,11 @@ class NavBar extends React.Component {
           <nav className="navbar navbar-inverse navbar-fixed-top">
             <div className="container-fluid">
               <div className="navbar-header">
-                <a className="navbar-brand" href="/">Raymond</a>
+                <a className="navbar-brand" href="/">Rayos</a>
               </div>
               <div id="navbar" className="navbar-collapse collapse">
                 <ul className="nav navbar-nav navbar-right">
                   <li><a href="">{ this.props.profile.name }</a></li>                                  
-                  <li><a href="http://getbootstrap.com/examples/dashboard/#">Settings</a></li>
                   <li><a href="/logout">Logout</a></li>
                 </ul>        
                 <div className="navbar-form navbar-right">        

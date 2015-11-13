@@ -23,8 +23,7 @@ class Course extends React.Component {
     let differenceMin = Math.round((endTime - startTime) / 60000);    
 
     let classHeight = heightOffset * (differenceMin / 60.0);    
-    let classTopOffset = Math.floor(heightOffset * ((startTime.getHours() - 7) 
-                                      + (startTime.getMinutes() / 60.0)));
+    let classTopOffset = Math.floor(heightOffset * ((startTime.getHours() - 7) + (startTime.getMinutes() / 60.0)));
     let classURL = "/class/" + temp.id;
     let blockStyle = { 
         height : classHeight,
@@ -32,8 +31,8 @@ class Course extends React.Component {
     };
 
     return (
-      <div className="calendar_course_item" style = { blockStyle }>
-          <a href = { classURL }>{ temp.className }</a>          
+      <div className="calendar_course_item" style = { blockStyle } >
+          <a className = "calendar_course_item_classUrl" href = { classURL } > { temp.className } </a>          
       </div>
     );
   }

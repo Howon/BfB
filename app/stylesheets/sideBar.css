@@ -2,7 +2,7 @@
 	position: absolute;
 	width: 50px;
 	top: 50px;
-	background-color: red;
+	background-color: #607D8B;
 	height:calc(100% - 50px);
 }
 
@@ -24,5 +24,5 @@
 }
 
 #calendar_upload_button_icon{
-	top: 	50px;
+	top: 50px;
 }

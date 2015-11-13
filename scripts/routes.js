@@ -4,7 +4,7 @@ module.exports = function(app, passport) {
 			res.redirect('/home');
 		} else {
 			res.render('login', {
-				title: 'Raymond'
+				title: 'rayos'
 			});
 		}
 	});
@@ -25,7 +25,7 @@ module.exports = function(app, passport) {
 		res.render('chatest',{
 			title: 'Test'
 		});
-	})
+	});
 	
 	app.get('/home', function(req, res) {
 		if (req.isAuthenticated()) {			
@@ -38,7 +38,7 @@ module.exports = function(app, passport) {
 			};
 							
 			res.render('home', {
-				title: 'Raymond',
+				title: 'rayos',
 				APP_PROPS: props				
 			});		
 		} else {
@@ -60,7 +60,7 @@ module.exports = function(app, passport) {
 			};
 							
 			res.render('class', {
-				title: 'Raymond',
+				title: 'rayos',
 				APP_PROPS: props				
 			});		
 		} else {
@@ -85,7 +85,7 @@ module.exports = function(app, passport) {
 		});
 		course.save();
 		res.render('home', {
-			title: 'Raymond'
+			title: 'rayos'
 		});
-	})
-}
+	});
+};

@@ -61,13 +61,13 @@ app.use(bodyParser.json()); // get information from html forms
 app.use(bodyParser.urlencoded({
 	extended: true
 }));
-app.use(session({
-	secret: 'cookiezcookiezcookiez',
-	name: 'this_cookie',
-	proxy: true,
-	resave: true,
-	saveUninitialized: true
-}));
+app.use(session({ 
+    secret: 'cookiezcookiezcookiez',
+    name: 'this_cookie',
+    proxy: true,
+    resave: true,
+    saveUninitialized: true
+}))
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session

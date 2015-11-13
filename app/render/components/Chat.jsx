@@ -3,9 +3,9 @@ import React from "react";
 class Message extends React.Component {    
   render(){
     return(
-      <li className = "message">
-        <span> { this.props.sender } : </span>
-        { this.props.content }
+      <li className = "message">      
+        <div className = "messageSender"> { this.props.sender } </div>
+        <div className = "messageContent"> { this.props.content } </div>
       </li>
     )
   }
@@ -17,7 +17,7 @@ class MessageList extends React.Component {
       return <Message key = { i } sender = { message.sender } content = { message.content } />
     }
     return (
-      <ul id="messages" className="chatArea">
+      <ul id="messages" className="chatAreaComponent">
         { this.props.messages.map(renderMessage) } 
       </ul>
     );
@@ -56,7 +56,7 @@ class MessageInputForm extends React.Component {
   render(){
     return (
       <textarea id="messageInput" 
-        className="chatArea"
+        className="chatAreaComponent"
         type = "text" 
         placeholder = "Type to chat"
         onChange = { this.handleChange.bind(this) } 

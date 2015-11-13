@@ -5,7 +5,7 @@ let socket = io(window.location.host);
 import SideBar from "../components/SideBar.jsx";
 import NavBar from "../components/NavBar.jsx";
 import Calendar from "../components/Calendar.jsx";
-import ClassMenuBar from "../components/ClassMenuBar.jsx";
+import NotifIcatIonContainer from "../components/Notification.jsx";
 
 class Body extends React.Component {    
     constructor(props) {
@@ -27,13 +27,8 @@ class Body extends React.Component {
       socket.on("receive:user_courses",
         this.receiveCalendar.bind(this)
       );
-      socket.on("receive:user_course", 
-        this.receiveCourseData.bind(this)
-      );
     }
     receiveCalendar(data){
-      console.log("what")
-      console.log(data)
       this.setState({
         calendar : data.calendar
       });
@@ -56,16 +51,13 @@ class Body extends React.Component {
       socket.emit('upload:calendar', jsonObject);
       reader.readAsBinaryString(file);
     }
-    receiveCourseData(data){
-      console.log(data)
-    }
     render(){
       return (
         <div>
           <NavBar profile = { this.state.profile } /> 
           <SideBar profile = { this.state.profile } uploadCalendar = { this.uploadCalendar.bind(this) }/>
           <Calendar calendar = { this.state.calendar } />
-          <ClassMenuBar notifications = { this.state.classNotifications}/>
+          <NotifIcatIonContainer notifications = { this.state.classNotifications}/>
         </div>
       )
     }

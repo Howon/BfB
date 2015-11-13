@@ -58,6 +58,7 @@ class AnnouncementInputForm extends React.Component {
   }
   postAnnouncement(e){
     if(/\S/.test(this.state.announcement)){
+      this.props.toggleDisplayStatus();
       this.props.postAnnouncement({
         content : this.state.announcement
       });    
@@ -76,7 +77,7 @@ class AnnouncementInputForm extends React.Component {
       <div>
         <div  style = { displayStatus }>        
           <i id="cancel_announcement_post" className = "fa fa-times" 
-            onClick = { this.props.toggleDisplayStatus.bind(this) } ></i>
+            onClick = { this.props.toggleDisplayStatus } ></i>
           <i id="submit_announcement" className ="fa fa-check-square-o" 
             onClick = { this.postAnnouncement.bind(this) } ></i>
           <textarea id="announcementInput" 

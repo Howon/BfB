@@ -13,19 +13,20 @@ class Body extends React.Component {
       this.state = {
         profile : this.props.app_props.user,
         calendar : [],
-        classNotifications: ["1", "2", "3", "4", "5", "6"]
+        notifications: ["1", "2", "3", "4", "5", "6"]
       }
     }
     componentDidMount(){    
-      socket.emit("get:user_courses", this.state.profile.id);  
-      socket.on("receive:calendar",
+      socket.emit("get:courses", this.state.profile.id);  
+      socket.emit("get:notifications");
+      socket.on("update:calendar",
         this.receiveCalendar.bind(this)
       );
-      socket.on("receive:class_notification",
-        this.receiveClassNotification.bind(this)
+      socket.on("update:notifications",
+        this.receiveNotifications.bind(this)
       );
-      socket.on("receive:user_courses",
-        this.receiveCalendar.bind(this)
+      socket.on("receive:notification",
+        this.receiveNotification.bind(this)
       );
     }
     receiveCalendar(data){
@@ -33,11 +34,16 @@ class Body extends React.Component {
         calendar : data.calendar
       });
     }
-    receiveClassNotification(message){
-      var newClassNotificationArray = this.state.classNotifications.slice();    
-      newClassNotificationArray.push(message);   
+    receiveNotifications(notifications){
       this.setState({
-        classNotifications: newClassNotificationArray
+        notifications : notifications
+      })
+    }
+    receiveNotification(notification){
+      var newNotificationArray = this.state.notifications.slice();    
+      newNotificationArray.push(notification);   
+      this.setState({
+        notifications: newNotificationArray
       })
     }
     uploadCalendar(e){
@@ -57,7 +63,7 @@ class Body extends React.Component {
           <NavBar profile = { this.state.profile } /> 
           <SideBar profile = { this.state.profile } uploadCalendar = { this.uploadCalendar.bind(this) }/>
           <Calendar calendar = { this.state.calendar } />
-          <NotifIcatIonContainer notifications = { this.state.classNotifications}/>
+          <NotifIcatIonContainer notifications = { this.state.notifications}/>
         </div>
       )
     }

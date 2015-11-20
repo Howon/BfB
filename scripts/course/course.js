@@ -144,7 +144,7 @@ module.exports = function(io) {
                   uploader: data.uploader,
                   calendar: userCalendar
                 }
-                socket.emit("receive:calendar", output);
+                socket.emit("update:calendar", output);
               }
 
               var saveUserClasses = function(courseIDList) {
@@ -166,7 +166,7 @@ module.exports = function(io) {
       });
     });
 
-    socket.on('get:user_courses', function(userID) {
+    socket.on('get:courses', function(userID) {
       models.User.findOne({
         "_id": userID
       }, function(err, userResult) {
@@ -189,7 +189,7 @@ module.exports = function(io) {
 
                 counter++; // counts upto the number of coursees passed into the method
                 if (counter == courseCount) { // if the number of objects compared matches the parameter length
-                  socket.emit("receive:user_courses", {
+                  socket.emit("update:calendar", {
                     calendar: outputCourseList
                   });
                 }
@@ -223,7 +223,6 @@ module.exports = function(io) {
         }
       });
     });
-
 
     socket.on('unsubscribe', function(roomID) {
       socket.leave(roomID);

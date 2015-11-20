@@ -5,27 +5,27 @@ let socket = io(window.location.host);
 import Announcement from "../components/Announcement.jsx";  
 import SideBar from "../components/SideBar.jsx";
 import NavBar from "../components/NavBar.jsx";  
-import ClassInfo from "../components/ClassInfo.jsx";  
+import CourseInfo from "../components/CourseInfo.jsx";  
 
 class Body extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
       profile       : this.props.app_props.user,
-      room          : this.props.app_props.room.id,
-      classInfo     : [],
+      course         : this.props.app_props.course.id,
+      courseInfo     : [],
       announcements : [],
       messages      : []
     }
   }
   componentDidMount(){        
-    socket.emit('get:course_data', this.state.room);
+    socket.emit('get:course_data', this.state.course);
     socket.on('receive:course_data', this.receiveCourseData.bind(this));
   	socket.on('receive:chat_message', this.receiveMessage.bind(this)); 
     socket.on('receive:announcement', this.receiveAnnouncement.bind(this));    
   }
  	receiveMessage(message){        
-    var newMessageArray = this.state.messages.slice();    
+    let newMessageArray = this.state.messages.slice();    
     newMessageArray.push(message);   
     this.setState({
     	messages: newMessageArray
@@ -33,7 +33,7 @@ class Body extends React.Component{
   }
   receiveCourseData(data){    
     this.setState({
-      classInfo      : data.course,
+      courseInfo      : data.course,
       announcements  : data.courseData.announcements,
       messages       : data.courseData.messages    
     })        
@@ -44,24 +44,24 @@ class Body extends React.Component{
 		socket.emit('post:chat_message', message);
 	}
   postAnnouncement(data){
-    var announcement = data;
-    announcement.poster = this.state.profile.name;
+    let announcement = data;
+    announcement.postedBy = this.state.profile.name;
     announcement.time = new Date();
     this.receiveAnnouncement(announcement);
     socket.emit('post:announcement', announcement);
   }
   receiveAnnouncement(announcement){  
-    var newAnnouncementArray = this.state.announcements.slice();    
+    let newAnnouncementArray = this.state.announcements.slice();    
     newAnnouncementArray.push(announcement);   
     this.setState({
       announcements: newAnnouncementArray
     });     
   }
   uploadCalendar(e){
-    var reader = new FileReader();
-    var file = e.target.files[0];
+    let reader = new FileReader();
+    let file = e.target.files[0];
 
-    var jsonObject = {
+    let jsonObject = {
       'uploader' : this.state.profile.id,
       'calendarData': file
     }
@@ -76,7 +76,7 @@ class Body extends React.Component{
         uploadCalendar = { this.uploadCalendar.bind(this) } />
       <NavBar profile = { this.state.profile } /> 
       <div id="contentArea">
-        <ClassInfo classInfo = { this.state.classInfo } 
+        <CourseInfo courseInfo = { this.state.courseInfo } 
           messages = { this.state.messages } 
           postMessage = { this.postMessage.bind(this) } />
         <Announcement announcements = { this.state.announcements } 

@@ -20,8 +20,8 @@ class Announcement extends React.Component {
       <li className = 'announcement_post'>
         <div>
           { this.props.announcement.content }
-          <div className = 'announcement_post_poster'>
-            Posted by : { this.props.announcement.poster } 
+          <div className = 'announcement_post_postedBy'>
+            Posted by : { this.props.announcement.postedBy } 
           </div>
         </div>
       </li>

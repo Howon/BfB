@@ -19,8 +19,8 @@ class Body extends React.Component{
     }
   }
   componentDidMount(){        
-    socket.emit('enter:class_room', this.state.room);
-    socket.on('receive:class_data', this.receiveCourseData.bind(this));
+    socket.emit('get:course_data', this.state.room);
+    socket.on('receive:course_data', this.receiveCourseData.bind(this));
   	socket.on('receive:chat_message', this.receiveMessage.bind(this)); 
     socket.on('receive:announcement', this.receiveAnnouncement.bind(this));    
   }

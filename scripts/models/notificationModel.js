@@ -3,10 +3,12 @@ var mongoose = require('mongoose'),
 	
 var notificationSchema = new Schema({
 	_id: String,
-  notifications: [{
-    course  : String,
-    content : String
-  }]
+    notifications: [{
+      courseID  : String,
+      content : String,
+      time: Date,
+      checked: Boolean
+    }]
 });
 
 module.exports = mongoose.model('Notification', notificationSchema);

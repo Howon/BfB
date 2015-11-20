@@ -50,6 +50,7 @@ module.exports = function(config, passport) {
               newUser.token = token;
               newUser.info.name = profile.displayName;
               newUser.info.email = profile.emails[0].value; // pull the first email
+              newUser.notifications = [];
               // save the user
               newUser.info.save(function(err) {
                 if (err)

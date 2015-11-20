@@ -40,7 +40,7 @@ module.exports = function(app, passport) {
     }
   });
 
-  app.get('/class/:id', function(req, res) {
+  app.get('/course/:id', function(req, res) {
     if (req.isAuthenticated()) {
       var props = {
         user: {
@@ -48,12 +48,12 @@ module.exports = function(app, passport) {
           name: req.user.info.name,
           email: req.user.info.email,
         },
-        room: {
+        course: {
           id: req.params.id
         }
       };
 
-      res.render('class', {
+      res.render('course', {
         title: 'rayos',
         APP_PROPS: props
       });

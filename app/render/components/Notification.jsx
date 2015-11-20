@@ -13,7 +13,7 @@ class Notification extends React.Component {
 
 class NotificationList extends React.Component {
 	render(){
-		var events = this.props.notifications.map(function(message, i) {
+	  let  events = this.props.notifications.map(function(message, i) {
       return <Notification key={ i } data={ message }/>;
     });
 		return (

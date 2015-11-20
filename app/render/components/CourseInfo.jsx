@@ -16,7 +16,7 @@ function calenDate(icalStr)  {
 
 let days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 
-class ClassTime extends React.Component {        
+class CourseTime extends React.Component {        
   render(){
     let times;
     if(this.props.meetingTimes){
@@ -29,21 +29,21 @@ class ClassTime extends React.Component {
       });
     }
     return(
-      <div className = "classTime">
+      <div className = "courseTime">
         { times }   
       </div>
     )
   }
 };
 
-class ClassInfo extends React.Component {
+class CourseInfo extends React.Component {
   render() {
     return (
-      <div id = "classInfo"> 
-        <div id = "classSummary">
-          <p id = "className"> { this.props.classInfo.summary } </p>
-          <p id = "classLocation"> { this.props.classInfo.location } </p>
-          <ClassTime meetingTimes = { this.props.classInfo.meetingTimes }/>
+      <div id = "courseInfo"> 
+        <div id = "courseSummary">
+          <p id = "courseName"> { this.props.courseInfo.summary } </p>
+          <p id = "courseLocation"> { this.props.courseInfo.location } </p>
+          <CourseTime meetingTimes = { this.props.courseInfo.meetingTimes }/>
         </div>
         <Chat messages = { this.props.messages } 
           postMessage = { this.props.postMessage } />
@@ -52,4 +52,4 @@ class ClassInfo extends React.Component {
   }
 };
 
-export default ClassInfo;
+export default CourseInfo;

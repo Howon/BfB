@@ -1,4 +1,4 @@
-#classInfo{
+#courseInfo{
 	float: left;
 	margin: 0;
 	position: relative;
@@ -8,7 +8,7 @@
     background-color: #CFD8DC;
 }
 
-div#classSummary{
+div#courseSummary{
 	background-color: white;
 	position: absolute;
 	left: 8px;
@@ -23,13 +23,13 @@ div#classSummary{
 }
 
 
-#classSummary p{
+#courseSummary p{
 	display: table;
 	font-size: 13px;
 	margin: auto;
 }
 
-#classSummary p#className{
+#courseSummary p#courseName{
 	display: table;
 	margin: auto;
 }

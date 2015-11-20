@@ -2,14 +2,14 @@ import React from "react";
 
 
 function calenDate(icalStr)  { 
-  var strYear = icalStr.substr(0,4);
-  var strMonth = parseInt(icalStr.substr(4,2), 10) - 1;
-  var strDay = icalStr.substr(6,2);
-  var strHour = icalStr.substr(9,2);
-  var strMin = icalStr.substr(11,2);
-  var strSec = icalStr.substr(13,2);
+  let  strYear = icalStr.substr(0,4);
+  let  strMonth = parseInt(icalStr.substr(4,2), 10) - 1;
+  let  strDay = icalStr.substr(6,2);
+  let  strHour = icalStr.substr(9,2);
+  let  strMin = icalStr.substr(11,2);
+  let  strSec = icalStr.substr(13,2);
 
-  var oDate =  new Date(strYear, strMonth, strDay, strHour, strMin, strSec)
+  let  oDate =  new Date(strYear, strMonth, strDay, strHour, strMin, strSec)
   return oDate;
 }
 
@@ -22,17 +22,17 @@ class Course extends React.Component {
 
     let differenceMin = Math.round((endTime - startTime) / 60000);    
 
-    let classHeight = heightOffset * (differenceMin / 60.0);    
-    let classTopOffset = Math.floor(heightOffset * ((startTime.getHours() - 7) + (startTime.getMinutes() / 60.0)));
-    let classURL = "/class/" + temp.id;
+    let courseHeight = heightOffset * (differenceMin / 60.0);    
+    let courseTopOffset = Math.floor(heightOffset * ((startTime.getHours() - 7) + (startTime.getMinutes() / 60.0)));
+    let courseURL = "/course/" + temp.id;
     let blockStyle = { 
-        height : classHeight,
-        top    : classTopOffset
+        height : courseHeight,
+        top    : courseTopOffset
     };
 
     return (
       <div className="calendar_course_item" style = { blockStyle } >
-          <a className = "calendar_course_item_classUrl" href = { classURL } > { temp.className } </a>          
+          <a className = "calendar_course_item_courseUrl" href = { courseURL } > { temp.courseName } </a>          
       </div>
     );
   }
@@ -40,7 +40,7 @@ class Course extends React.Component {
 
 class Day extends React.Component {
   render() {
-    var courses = this.props.courses.map(function(evt, i) {
+    let  courses = this.props.courses.map(function(evt, i) {
       return <Course key = { i } data = { evt }/>;
     });
 
@@ -63,7 +63,7 @@ class Week extends React.Component {
         let day = calenDate(meetingTimes[j].startTime).getDay() - 1;
         let tempCourse = {
           id        : tempCal[i]._id,
-          className : tempCal[i].summary,
+          courseName : tempCal[i].summary,
           location  : tempCal[i].location,
           startTime : meetingTimes[j].startTime,
           endTime   : meetingTimes[j].endTime
@@ -72,7 +72,7 @@ class Week extends React.Component {
       }      
     }
 
-    var days = coursesArr.map(function(courses, i) {
+    let  days = coursesArr.map(function(courses, i) {
       return <Day key={ i } courses = { courses }/> ;
     });
 

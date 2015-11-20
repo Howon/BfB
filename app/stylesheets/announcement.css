@@ -85,7 +85,7 @@ ul#announcements li:nth-child(even){
     width: (100% - 40px);
 }
 
-div.announcement_post_poster{
+div.announcement_post_postedBy{
     position: relative;
     float: right;    
 }

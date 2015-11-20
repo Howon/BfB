@@ -1,7 +1,7 @@
 require('../stylesheets/chat.css');
 require('../stylesheets/sideBar.css');
 require('../stylesheets/contentArea.css');
-require('../stylesheets/classInfo.css');
+require('../stylesheets/courseInfo.css');
 require('../stylesheets/announcement.css');
 
 import React from 'react';

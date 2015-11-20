@@ -26,10 +26,9 @@ module.exports = function(io) {
             }
             if (courseResult) {
 
-              for (var i = 0; i < courseResult.subscribers; i++) {
-                console.log(courseResult.subscribers[i]);
+              for (var i = 0; i < courseResult.subscribers.length; i++) {
                 models.User.findOne({
-                  "_id": subscribers[i] + ""
+                  "_id": courseResult.subscribers[i] + ""
                 }, function(err, userResult) {
 
                   if (err) {
@@ -50,6 +49,10 @@ module.exports = function(io) {
                           time: new Date()
                         }
                         notificationResult.notifications.push(newNotification);
+                        notificationResult.save(function(err){
+                            if (err)
+                                throw err
+                        })
                       }
 
                     })

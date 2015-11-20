@@ -1,5 +1,5 @@
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
-  models = require('../models/index');
+  models = require('../models/index'), mongoose = require('mongoose');
 
 function validateEmail(email) {
   var re = /^\s*[\w\-\+_]+(\.[\w\-\+_]+)*\@[\w\-\+_]+\.[\w\-\+_]+(\.[\w\-\+_]+)*\s*$/;
@@ -50,12 +50,20 @@ module.exports = function(config, passport) {
               newUser.token = token;
               newUser.info.name = profile.displayName;
               newUser.info.email = profile.emails[0].value; // pull the first email
-              newUser.notifications = [];
-              // save the user
-              newUser.info.save(function(err) {
+              // create new notification list for the users.
+              var newNotification = new models.Notification();
+              newNotification.notifications = [];
+              newNotification._id = new mongoose.Types.ObjectId;
+              newUser.notifications = newNotification._id;
+              newNotification.save(function(err) {
                 if (err)
                   throw err;
-                return done(null, newUser);
+                // save the user
+                newUser.info.save(function(err) {
+                  if (err)
+                    throw err;
+                  return done(null, newUser);
+                });    
               });
             } else {
               return done(err);

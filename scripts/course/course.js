@@ -20,7 +20,7 @@ function strIDHash(str) {
 }
 
 module.exports = function(io) {
-  io.on('connection', function(socket) {
+  var courseHandler = io.of("/course").on('connection', function(socket) {
     socket.on('upload:calendar', function(data) {
       var fileNameICS = "tempCal/" + data.uploader + '_calendar.ics';
       var fileNameJSON = "tempCal/" + data.uploader + '_calendar.json';
@@ -38,7 +38,7 @@ module.exports = function(io) {
       })
 
       fs.writeFile(fileNameICS, data.calendarData, function(err) {
-        if (err) return console.log(err);
+        if (err) return console.error(err);
       });
 
       var execCommand = 'ical2json ' + fileNameICS;
@@ -51,7 +51,7 @@ module.exports = function(io) {
         var digest = function(cleanTempFiles) {
           fs.readFile(fileNameJSON, 'utf8', function(err, calFile) {
             if (err) {
-              return console.log(err);
+              return console.error(err);
             }
 
             var courseTimes = JSON.parse(calFile)['VCALENDAR'][0]['VEVENT'];
@@ -91,15 +91,13 @@ module.exports = function(io) {
 
                 var checkDBForClass = function(courseObj) {
                   var courseID = courseObj.courseID; // creates a hash based on the course name                  
-                  models.Course.findOne({
-                    "courseID": courseID
-                  }, function(err, courseResult) {
+                  models.Course.findById(courseID, function(err, courseResult) {
                     if (err) {
                       console.error("error: " + err);
                     }
                     if (courseResult) {
                       var subscribers = courseResult.subscribers;
-                      if (!subscribers.includes(user._id)) {
+                      if (!subscriberRefs.includes(user._id)) {
                         subscribers.push(user._id);
                         courseResult.save();
                       }
@@ -107,21 +105,33 @@ module.exports = function(io) {
                       courseIDList.push(courseResult._id);
                       userCalendar.push(courseResult);
                     } else {
+                      var courseDataID = strIDHash("data_" + courseID);
+                      var channelID = strIDHash("main_" + courseID);
+
                       var newCourse = new models.Course({
-                        "courseID": courseID,
-                        "meetingTimes": courseObj.meetings,
-                        "summary": courseObj.summary,
-                        "location": courseObj.location,
-                        "subscribers": user._id,
+                        "_id": courseID,
+                        "meetingTimes"  : courseObj.meetings,
+                        "summary"       : courseObj.summary,
+                        "location"      : courseObj.location,
+                        "subscriberRefs"   : user._id,
+                        "courseDataRef" : courseDataID
                       })
 
-                      var courseDataID = strIDHash("data_" + courseID);
+                      var newChannel = new models.Channel({
+                        "_id": channelID,
+                      });                      
+                      newChannel.save();
+
                       var newCourseData = new models.CourseData({
-                        "_id": courseDataID
-                      });
+                        "_id": courseDataID,
+                        "channels" : {
+                          name : "main",
+                          ref  : channelID
+                        }
+                      });                                          
                       newCourseData.save();
-                      newCourse.courseDataRef = newCourseData.id;
                       newCourse.save();
+                      
                       courseIDList.push(newCourse._id);
                       userCalendar.push(newCourse);
                     }
@@ -186,7 +196,6 @@ module.exports = function(io) {
               }
               if (courseResult) {
                 outputCourseList.push(courseResult);
-
                 counter++; // counts upto the number of coursees passed into the method
                 if (counter == courseCount) { // if the number of objects compared matches the parameter length
                   socket.emit("update:calendar", {
@@ -209,23 +218,19 @@ module.exports = function(io) {
         }
         if (courseResult) {
           var dataRef = courseResult.courseDataRef;
-          socket.room = dataRef;
-          socket.join(dataRef);
           models.CourseData.findById(dataRef, function(err1, courseDataResult) {
             if (err1) {
               console.error("error: " + err1);
             }
-            socket.emit("receive:course_data", {
-              course: courseResult,
-              courseData: courseDataResult
-            });
+            if(courseDataResult){
+              socket.emit("receive:course_data", {
+                course: courseResult,
+                courseData: courseDataResult            
+              });
+            }        
           })
         }
       });
-    });
-
-    socket.on('unsubscribe', function(roomID) {
-      socket.leave(roomID);
     });
   });
 }

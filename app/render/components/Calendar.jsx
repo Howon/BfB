@@ -31,8 +31,8 @@ class Course extends React.Component {
     };
 
     return (
-      <div className="calendar_course_item" style = { blockStyle } >
-          <a className = "calendar_course_item_courseUrl" href = { courseURL } > { temp.courseName } </a>          
+      <div className="calendar-course-item" style = { blockStyle } >
+          <a className = "calendar-course-item-courseUrl" href = { courseURL } > { temp.courseName } </a>          
       </div>
     );
   }
@@ -45,7 +45,7 @@ class Day extends React.Component {
     });
 
     return (
-      <td className="calendar_day">
+      <td className="calendar-day">
         { courses }
       </td>
     );
@@ -62,11 +62,11 @@ class Week extends React.Component {
       for(let j = 0; j < meetingTimes.length; j++){
         let day = calenDate(meetingTimes[j].startTime).getDay() - 1;
         let tempCourse = {
-          id        : tempCal[i]._id,
+          id         : tempCal[i]._id,
           courseName : tempCal[i].summary,
-          location  : tempCal[i].location,
-          startTime : meetingTimes[j].startTime,
-          endTime   : meetingTimes[j].endTime
+          location   : tempCal[i].location,
+          startTime  : meetingTimes[j].startTime,
+          endTime    : meetingTimes[j].endTime
         }     
         coursesArr[day].push(tempCourse);
       }      
@@ -77,7 +77,7 @@ class Week extends React.Component {
     });
 
     return (
-      <tr className = "calendar_week">
+      <tr className = "calendar-week">
           { days }
       </tr>
     );
@@ -96,20 +96,20 @@ class Calendar extends React.Component {
       } else {
         time = i - 12 + "pm";
       }
-      hours.push(<li key = { i } className = "time_bar_hour"> { time } </li>);
+      hours.push(<li key = { i } className = "time-bar-hour"> { time } </li>);
     }
     return (      
       <div id = "calendar">
-        <ul id = "time_bar"> 
+        <ul id = "time-bar"> 
           { hours } 
         </ul>
-        <table className="calendar_area">        
+        <table className="calendar-area">        
           <thead>          
-            <td className = "calendar_week_day"> Monday </td>
-            <td className = "calendar_week_day"> Tuesday </td>
-            <td className = "calendar_week_day"> Wednesday </td>
-            <td className = "calendar_week_day"> Thursday </td>
-            <td className = "calendar_week_day"> Friday </td>
+            <td className = "calendar-week-day"> Monday </td>
+            <td className = "calendar-week-day"> Tuesday </td>
+            <td className = "calendar-week-day"> Wednesday </td>
+            <td className = "calendar-week-day"> Thursday </td>
+            <td className = "calendar-week-day"> Friday </td>
           </thead>
           <Week calendar = {this.props.calendar} />
         </table>

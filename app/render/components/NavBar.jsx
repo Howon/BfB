@@ -12,7 +12,7 @@ class NavBar extends React.Component {
               <div className="navbar-header">
                 <a className="navbar-brand" href="/">Rayos</a>
               </div>
-              <div id="navbar" className="navbar-collapse collapse">
+              <div id="navbar" className="navbar-collapse collapse">              
                 <ul className="nav navbar-nav navbar-right">
                   <li><a href="">{ this.props.profile.name }</a></li>                                  
                   <li><a href="/logout">Logout</a></li>
@@ -28,3 +28,14 @@ class NavBar extends React.Component {
 }
 
 export default NavBar
+
+// <input id = "calendar_upload_button" 
+//                   className = "side_bar_item"
+//                   type = "file" 
+//                   accept =".ics" 
+//                   ref = "calendar_upload_button"
+//                   onChange = { this.props.uploadCalendar }>
+//                   <i id = "calendar_upload_button_icon"                        
+//                       className = "fa fa-calendar fa side_bar_item">
+//                   </i>
+//                 </input>

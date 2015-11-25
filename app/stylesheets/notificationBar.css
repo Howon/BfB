@@ -1,4 +1,4 @@
-#notification_bar {
+#notification-bar {
 	position: absolute;
 	right: 4%;
 	top: 80px;
@@ -13,12 +13,12 @@
 	box-shadow: 1px 1px 2px 2px rgba(0,0,0,0.2);
 }
 
-#notification_bar_list{
+#notification-bar-list{
 	padding: 3px 4px;
 	margin: 0;
 }
 
-#notification_bar li{
+#notification-bar li{
 	padding: 3px;
 	margin-top: 5px;
 	margin-bottom: 10px;	
@@ -35,7 +35,7 @@
 	border: 1px white solid;
 }
 
-#notification_bar li:hover{
+#notification-bar li:hover{
 	background-color: #FBFBFB;
 	-webkit-box-shadow: 1px 1px 2px 2px rgba(0,0,0,0.15);
 	-moz-box-shadow: 1px 1px 2px 2px rgba(0,0,0,0.15);

@@ -74,7 +74,7 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 
 require('./scripts/course/course')(io);
 require('./scripts/chat/chat')(io);
-require('./scripts/announcement/announcement')(io);
+require('./scripts/thread/thread')(io);
 require('./scripts/auth/authenticate')(config.googleAuth, passport);
 require('./scripts/routes')(app, passport);
 

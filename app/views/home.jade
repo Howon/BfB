@@ -1,7 +1,7 @@
 extends layout
 
 block body
-  div#mount_point= body
+  div#mount-point= body
   script(type='text/javascript').
     var APP_PROPS = !{JSON.stringify(APP_PROPS)};
   script(type = 'text/javascript' src="/build/home.js")

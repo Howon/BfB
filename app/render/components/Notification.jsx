@@ -4,7 +4,7 @@ import io from 'socket.io-client';
 class Notification extends React.Component {
 	render(){
 		return(
-			<li className = "notification_bar_item">
+			<li className = "notification-bar-item">
 				{ this.props.data }
 			</li>
 		)
@@ -17,8 +17,8 @@ class NotificationList extends React.Component {
       return <Notification key={ i } data={ message }/>;
     });
 		return (
-			<div id = "notification_bar">
-				<ul id = "notification_bar_list">
+			<div id = "notification-bar">
+				<ul id = "notification-bar-list">
 				  { events }			
 				</ul>
 			</div>

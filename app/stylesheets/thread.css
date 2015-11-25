@@ -1,0 +1,146 @@
+#thread-area{
+    position: absolute;
+    margin-left: 70%;
+    width: 30%;
+    height: 100%;
+    float: left;
+    padding: 0;
+    background-color: #B0BEC5;
+    border-left: 1px solid #90A4AE;
+}
+
+.thread-area-component{
+    position: absolute;
+    width: 100%;
+    background-color: white;
+    margin: 0;
+}
+
+#thread-menu{
+    margin: 0;
+    height: 40px;
+    background-color: #CFD8DC;
+    border-bottom: 1px solid #90A4AE;
+}
+
+#show-thread-post{
+	cursor: pointer;
+	float: right;
+    right: 10px;
+    margin-top: 13px;
+    margin-right: 10px;
+	font-size: 25px;
+}
+
+#show-thread-post:hover{
+    margin-top: 11px;
+    font-size: 28px;
+}
+
+#show-google-docs{
+    cursor: pointer;
+    margin-top: 12px;
+    margin-left: 10px;
+    font-size: 24px;
+}
+
+#show-google-docs:hover{
+    margin-top: 12px;
+    font-size: 26px;
+}
+
+#search-thread{
+    outline: none;
+    position: absolute;
+    margin-top: 6px;
+    height: 29px;
+    width: 200px;
+    float: right;
+    right: 50px;
+    padding: 2px;
+    border-radius: 3px;
+    border: 1px solid #616161;
+}
+
+ul#threads-area{ 
+    list-style-type: none;     
+    background-color: #ECEFF1;
+    top: 40px;
+    height: calc(100% - 40px);
+    overflow: auto;
+    z-index: 1;
+}
+
+ul#threads-area li{ 
+    word-break: break-all;
+    width: 100%;
+    padding: 5px;
+    margin: 0;    
+    min-height: 10%;
+    background-color: #FFFFFF;
+    border-bottom: 1px solid #90A4AE;
+    cursor: pointer;
+}
+
+ul#threads-area li:hover{
+    background-color: #FAFAFA;
+} 
+
+.thread-post-content{
+    position: absolute;
+    top: 14px;   
+    margin-left: 40px;
+    width: (100% - 40px);
+}
+
+div.thread-post-postedBy{
+    position: relative;
+    float: right;    
+}
+
+textarea#threadInput{
+    z-index: 2;
+    padding: 3px;
+    position: absolute;
+    bottom: 15px;
+    height: 80px;
+    resize: none;
+    outline: none;
+    left: 10px;
+    width: calc(100% - 20px);
+    border: 1px #BABABA solid;
+}
+
+#submit-thread{
+    z-index: 3;
+    position: absolute;
+    float: right;
+    right: 15px;
+    bottom: 20px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+#submit-thread:hover{
+    font-size: 23px;
+    bottom: 18px;
+}
+
+.fa.fa-check-square-o{
+    margin-left: 10px;
+}
+
+#cancel-thread-post{
+    z-index: 3;
+    position: absolute;
+    float: right;
+    right: 17px;
+    bottom: 100px;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+#cancel-thread-post:hover{
+    font-size: 25px;
+    bottom: 98px;
+}

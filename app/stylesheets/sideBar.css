@@ -1,4 +1,4 @@
-#side_bar_container{
+#side-bar-container{
 	position: absolute;
 	width: 50px;
 	top: 50px;
@@ -10,12 +10,12 @@
 	font-size: 30px;
 }
 
-.side_bar_item{
+.side-bar-item{
 	left: 10px;
 	position: absolute;
 }
 
-#side_bar_container input[type=file]{ 
+#side-bar-container input[type=file]{ 
 	opacity:0;
 	z-index: 1;
 	height: 30px;
@@ -23,6 +23,6 @@
 	top: 50px;
 }
 
-#calendar_upload_button_icon{
+#calendar-upload-button-icon{
 	top: 50px;
 }

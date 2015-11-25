@@ -1,7 +1,7 @@
 import React from "react";     
 import io from 'socket.io-client';
 let socket = io(window.location.host);
-
+let courseSock = io(window.location.host + "/course")
 import SideBar from "../components/SideBar.jsx";
 import NavBar from "../components/NavBar.jsx";
 import Calendar from "../components/Calendar.jsx";
@@ -17,9 +17,9 @@ class Body extends React.Component {
       }
     }
     componentDidMount(){    
-      socket.emit("get:courses", this.state.profile.id);  
+      courseSock.emit("get:courses", this.state.profile.id);  
       socket.emit("get:notifications");
-      socket.on("update:calendar",
+      courseSock.on("update:calendar",
         this.receiveCalendar.bind(this)
       );
       socket.on("update:notifications",
@@ -54,20 +54,21 @@ class Body extends React.Component {
           'uploader' : this.state.profile.id,
           'calendarData': file
       }
-      socket.emit('upload:calendar', jsonObject);
+      courseSock.emit('upload:calendar', jsonObject);
       reader.readAsBinaryString(file);
     }
     render(){
       return (
         <div>
-          <NavBar profile = { this.state.profile } /> 
-          <SideBar profile = { this.state.profile } uploadCalendar = { this.uploadCalendar.bind(this) }/>
+          <NavBar profile = { this.state.profile } 
+            uploadCalendar = { this.uploadCalendar.bind(this) } /> 
+          <SideBar profile = { this.state.profile } 
+            uploadCalendar = { this.uploadCalendar.bind(this) }/>
           <Calendar calendar = { this.state.calendar } />
           <NotifIcatIonContainer notifications = { this.state.notifications}/>
         </div>
       )
     }
 }
-
 
 export default Body;

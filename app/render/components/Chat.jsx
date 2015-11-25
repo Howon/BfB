@@ -1,11 +1,51 @@
 import React from "react";     
 
+class Channel extends React.Component {
+  switchChannel(){
+    this.props.switchChannel(this.props.channel.name)
+  }
+  render(){
+    return ( 
+      <li className = "channels-list-item"
+        onClick = { this.switchChannel.bind(this) }> 
+        { this.props.channel.name } 
+      </li>
+    )
+  }
+}
+
+class Channels extends React.Component {
+  switchChannel(channelID){
+    this.props.switchChannel(channelID);
+  }
+  render() {   
+    let channels = [];
+    let that = this;
+    this.props.channels.forEach(function(channel, i){
+      channels.push(<Channel key = { i } channel = { channel } switchChannel = { that.props.switchChannel }/>);
+    });
+    return( 
+      <div id = "channels-area">
+        <div id = "channels-menu">
+          <span id = "channel-menu-title">
+            channels            
+          </span>
+          <i id = "channel-add-button" className = "fa fa-plus"></i> 
+        </div>
+        <ul id = "channels-list">
+          { channels }
+        </ul>
+      </div>
+    )
+  }
+}
+
 class Message extends React.Component {    
   render(){
     return(
       <li className = "message">      
-        <div className = "messageSender"> { this.props.sender } </div>
-        <div className = "messageContent"> { this.props.content } </div>
+        <div className = "message-sender"> { this.props.sender } </div>
+        <div className = "message-content"> { this.props.content } </div>
       </li>
     )
   }
@@ -17,7 +57,7 @@ class MessageList extends React.Component {
       return <Message key = { i } sender = { message.sender } content = { message.content } />
     }
     return (
-      <ul id="messages" className="chatAreaComponent">
+      <ul id = "messages-area" className = "chat-area-component">
         { this.props.messages.map(renderMessage) } 
       </ul>
     );
@@ -55,14 +95,18 @@ class MessageInputForm extends React.Component {
   }
   render(){
     return (
-      <textarea id="messageInput" 
-        className="chatAreaComponent"
-        type = "text" 
-        placeholder = "Type to chat"
-        onChange = { this.handleChange.bind(this) } 
-        value = { this.state.message } 
-        onKeyDown = { this.handleKeyDown.bind(this) }>
-      </textarea>
+      <div id = "message-input-area" className = "chat-area-component">
+        <textarea id = "message-input-text" 
+          type = "text" 
+          placeholder = "Type to chat"
+          onChange = { this.handleChange.bind(this) } 
+          value = { this.state.message } 
+          onKeyDown = { this.handleKeyDown.bind(this) }>
+        </textarea>
+        <i id = "message-input-button" className = "fa fa-paper-plane-o"
+          onClick = { this.handleSubmit.bind(this) }>
+        </i>
+      </div>
     )
   }
 };
@@ -70,10 +114,11 @@ class MessageInputForm extends React.Component {
 class Chat extends React.Component {
   render() {
     return (
-        <div id="chatArea">
-          <MessageList messages = { this.props.messages }/>
-          <MessageInputForm profile = { this.props.profile } postMessage = { this.props.postMessage }/>
-        </div>
+      <div id = "chat-area">
+        <Channels channels = { this.props.channels } switchChannel = { this.props.switchChannel }/>
+        <MessageList messages = { this.props.messages }/>
+        <MessageInputForm profile = { this.props.profile } postMessage = { this.props.postMessage }/>
+      </div>
     )
   }
 };

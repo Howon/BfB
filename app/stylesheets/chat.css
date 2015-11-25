@@ -1,63 +1,111 @@
-#chatArea{
-    position: relative;
-    top: 100px;
-    width: calc(100% - 16px);
-    height: calc(100% - 108px);
-    padding: 0;
-    left: 8px;
-}
-
-.chatAreaComponent{
-    z-index: 1;
+#chat-area{
     position: absolute;
-    width: 100%;
-    border: 0;
-    -webkit-box-shadow: 1px 1px 2px 2px rgba(0,0,0,0.2);
-    -moz-box-shadow: 1px 1px 2px 2px rgba(0,0,0,0.2);
-    box-shadow: 0px 1px 2px 2px rgba(0,0,0,0.2);
+    width: 70%;
+    height: 100%;    
+    padding: 0;
+    background-color: #CFD8DC;
 }
 
-ul#messages{     
+.chat-area-component{
+    position: absolute;
+    left: 200px;
+    width: calc(100% - 200px);
+    border: 0;
+}
+
+#channels-area{    
+    position: absolute;
+    width: 200px;
+    height: 100%;
+    background-color: #ECEFF1;
+    border-right: 1px solid #90A4AE;
+}
+
+#channels-menu{
+    height: 40px;
+    width: 100%;
+    background-color: #CFD8DC;
+    border-bottom: 1px solid #90A4AE;   
+}
+
+#channel-menu-title{
+    float: left;
+    margin: 7px 0 0 7px;
+    font-size: 21px;
+}
+
+#channel-add-button{
+    float: right;
+    margin: 8px 7px 0 0;
+    cursor: pointer;
+    font-size: 27px;
+}
+
+#channel-add-button:hover{
+    margin-top : 7px;
+    font-size: 29px;
+}
+
+ul#channels-list li{
+    margin: 0 10px 0 10px;
+    list-style-type: none; 
+    font-size: 21px;
+}
+
+ul#messages-area{     
     background-color: white;
     list-style-type: none; 
-    margin: 0;
-    height: calc(94% - 12px);
+    height: calc(100% - 50px);
     overflow: auto;
-    width: 100%;
     padding: 1%;
     overflow-y: auto;
     background-color: #FAFAFA;
 }
 
-ul#messages li{
-    min-height: 5%;
+ul#messages-area li{
+    min-height: 2%;
 }
 
-ul#messages div{ 
+ul#messages-area div{ 
     display: inline-block;
     padding: 0; 
 }
 
-ul#messages div.messageSender{
+ul#messages-area div.message-sender{
     color: #5F8BAF;
     float: left;
-    width: 30%;
+    width: 100px;
 } 
 
-ul#messages div.messageContent{
+ul#messages-area div.message-content{
     overflow: auto;
     color: #B59484;
     padding: 0; 
-    width: 70%;
+    width: calc(100% - 100px);
     word-break: break-all;
 } 
 
-textarea#messageInput{
-    padding-top: 0.5%;
-    padding-left: 1%;
-    height: 6%; 
+#message-input-area{
+    height: 50px; 
     float: bottom;
     bottom: 0px;
+    border-top: 1px solid #90A4AE;
+}
+
+textarea#message-input-text{
+    position: absolute;
+    padding: 0.5% 1% 0 1%;
+    height: 100%; 
     resize: none;
     outline: none;
+    border: 0;
+    border-right: 1px solid #90A4AE;
+    width: calc(100% - 60px);
+}
+
+#message-input-button{
+    position: absolute;
+    float: bottom;
+    bottom: 10px;
+    right: 18px;
 }

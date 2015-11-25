@@ -15,16 +15,16 @@ tr{
     width: 100%;
 }
 
-.calendar_week_day{
+.calendar-week-day{
     height: 30px;
     background-color: #B0BEC5;
 }
 
-.calendar_week{
+.calendar-week{
     height: 610px;    
 }
 
-.calendar_day:first-child{
+.calendar-day:first-child{
     padding-left: 3px;
 }
 
@@ -36,7 +36,7 @@ button {
     font-size: large;
 }
 
-.calendar_area {
+.calendar-area {
     position: absolute;
     top: 80px;    
     left: calc(9% + 50px);
@@ -49,7 +49,7 @@ button {
     box-shadow: 2px 3px 3px 1px rgba(0,0,0,0.1);
 }
 
-.calendar_course_item {
+.calendar-course-item {
     position: absolute;
     font-size: 11px;    
     width: 19%;
@@ -62,11 +62,11 @@ button {
     box-shadow: 2px 3px 3px 1px rgba(0,0,0,0.1);
 }
 
-.calendar_course_item_courseUrl{
+.calendar-course-item-courseUrl{
     color: #F5F5F5;
 }
 
-#time_bar{
+#time-bar{
     position: absolute;
     height: 640px;
     top: 80px;
@@ -81,7 +81,7 @@ button {
     box-shadow: 3px 1px 3px 3px rgba(0,0,0,0.1);
 }
 
-.time_bar_hour{
+.time-bar-hour{
     padding-right: 5px;
     list-style-type: none;
     height: 40px;    

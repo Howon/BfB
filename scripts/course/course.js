@@ -118,13 +118,14 @@ module.exports = function(io) {
                       })
 
                       var newChannel = new models.Channel({
-                        "_id": channelID,
+                        "_id"  : channelID,
+                        "desc" : "main channel"
                       });                      
                       newChannel.save();
 
                       var newCourseData = new models.CourseData({
                         "_id": courseDataID,
-                        "channels" : {
+                        "channelRefs" : {
                           name : "main",
                           ref  : channelID
                         }
@@ -212,6 +213,8 @@ module.exports = function(io) {
     });
 
     socket.on('get:course_data', function(courseID) {
+      socket.room = courseID;
+      socket.join(courseID);
       models.Course.findById(courseID, function(err, courseResult) {
         if (err) {
           console.error("error: " + err);

@@ -6,7 +6,7 @@
     float: left;
     padding: 0;
     background-color: #B0BEC5;
-    border-left: 1px solid #90A4AE;
+    border-left: 1px solid #607D8B;
 }
 
 .thread-area-component{
@@ -19,8 +19,8 @@
 #thread-menu{
     margin: 0;
     height: 40px;
-    background-color: #CFD8DC;
-    border-bottom: 1px solid #90A4AE;
+    background-color: #80CBC4;
+    border-bottom: 1px solid #607D8B;
 }
 
 #show-thread-post{
@@ -33,7 +33,8 @@
 }
 
 #show-thread-post:hover{
-    margin-top: 11px;
+    margin-top: 12px;
+    margin-right: 8px;
     font-size: 28px;
 }
 
@@ -46,7 +47,8 @@
 
 #show-google-docs:hover{
     margin-top: 12px;
-    font-size: 26px;
+    margin-left: 8px; 
+    font-size: 27px;
 }
 
 #search-thread{
@@ -78,7 +80,7 @@ ul#threads-area li{
     margin: 0;    
     min-height: 10%;
     background-color: #FFFFFF;
-    border-bottom: 1px solid #90A4AE;
+    border-bottom: 1px solid #607D8B;
     cursor: pointer;
 }
 
@@ -98,7 +100,7 @@ div.thread-post-postedBy{
     float: right;    
 }
 
-textarea#threadInput{
+textarea#thread-input{
     z-index: 2;
     padding: 3px;
     position: absolute;
@@ -108,7 +110,7 @@ textarea#threadInput{
     outline: none;
     left: 10px;
     width: calc(100% - 20px);
-    border: 1px #BABABA solid;
+    border: 1px #607D8B solid;
 }
 
 #submit-thread{
@@ -122,8 +124,9 @@ textarea#threadInput{
 }
 
 #submit-thread:hover{
-    font-size: 23px;
-    bottom: 18px;
+    font-size: 25px;
+    bottom: 17px;
+    right: 13px;
 }
 
 .fa.fa-check-square-o{
@@ -141,6 +144,7 @@ textarea#threadInput{
 }
 
 #cancel-thread-post:hover{
-    font-size: 25px;
-    bottom: 98px;
+    font-size: 27px;
+    bottom: 97px;
+    right: 15px;
 }

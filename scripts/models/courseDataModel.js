@@ -8,7 +8,7 @@ var coursedataSchema = new Schema({
 		content : String,
 		time    : Date
 	}],
-	channels: [{
+	channelRefs: [{
 		name : String,
 		ref : String
 	}]

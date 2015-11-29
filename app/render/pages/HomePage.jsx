@@ -1,7 +1,9 @@
 import React from "react";     
 import io from 'socket.io-client';
+
 let socket = io(window.location.host);
 let courseSock = io(window.location.host + "/course")
+
 import SideBar from "../components/SideBar.jsx";
 import NavBar from "../components/NavBar.jsx";
 import Calendar from "../components/Calendar.jsx";

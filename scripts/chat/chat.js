@@ -21,20 +21,56 @@ module.exports = function(io) {
       socket.broadcast.to(socket.room).emit('receive:chat_message', message);
     });
 
-    socket.on("join:chat_pace", function(channelInfo) {
+    socket.on("join:channel", function(channelInfo) {
       var channelID = strIDHash((channelInfo.channel + "_" + channelInfo.course));
       socket.room = channelID
       socket.join(channelID);
+
       models.Channel.findById(channelID, function(err2, channelResult){
         if(err2){
           console.error("error: " + err2);
         }
         if(channelResult){
           socket.emit("load:channel", {
-            messages : channelResult.messages
+            channelName : channelInfo.channel,
+            messages    : channelResult.messages
           });
         }
       });
     });
+
+    socket.on("make:new_channel", function(newChannelData){
+      var channelID = strIDHash((newChannelData.name + "_" + newChannelData.course));
+      socket.room = channelID;
+      socket.join(channelID);
+
+      models.Channel.findById(channelID, function(err, channelResult){
+        if(err){
+          console.error("error: " + err);
+        }
+        if(!channelResult){
+          var newChannel = new models.Channel({
+            "_id"  : channelID,
+            "name" : newChannelData.name,
+            "desc" : newChannelData.desc
+          })
+          newChannel.save();
+          var courseDataID = strIDHash("data_" + newChannelData.course);
+          models.CourseData.findById(courseDataID, function(err1, courseDataResult){
+            if(err1){
+              console.error("error: " + err1);
+            }
+            if(courseDataResult){
+              courseDataResult.channelRefs.push({
+                name : newChannelData.name,
+                ref  : channelID
+              });
+              courseDataResult.save();
+              // io.to("/course").broadcast.to(newChannelData.course).emit("receive:new_channel", newChannelData);          
+            }
+          })
+        }
+      });
+    })
   });
 }

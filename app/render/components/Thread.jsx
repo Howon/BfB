@@ -47,8 +47,7 @@ class ThreadInputForm extends React.Component {
   constructor(props){      
     super(props); 
     this.state = {
-      thread  : '',
-      showPostInput : false     
+      thread  : ''    
     }
   }
   handleChange(evt) {
@@ -76,14 +75,14 @@ class ThreadInputForm extends React.Component {
     };
     return (
       <div>
-        <div  style = { displayStatus }>        
+        <div style = { displayStatus }>        
           <i id = "cancel-thread-post" className = "fa fa-times" 
             onClick = { this.props.toggleDisplayStatus } ></i>
           <i id = "submit-thread" className = "fa fa-check-square-o" 
             onClick = { this.postThread.bind(this) } ></i>
           <textarea id = "thread-input" className = "thread-area"
             type = "text" 
-            placeholder = "Type to leave an thread"
+            placeholder = "Type to post a thread"
             onChange = { this.handleChange.bind(this) } 
             value = { this.state.thread } ></textarea>
         </div>  

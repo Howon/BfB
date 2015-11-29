@@ -13,17 +13,18 @@ class Body extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
-      profile       : this.props.app_props.user,
-      course        : this.props.app_props.course.id,
-      courseInfo    : [],
-      threads       : [],
-      messages      : [],
-      channels      : []
+      profile        : this.props.app_props.user,
+      course         : this.props.app_props.course.id,
+      courseInfo     : [],
+      threads        : [],
+      messages       : [],
+      currentChannel : "main", 
+      channels       : []
     }
   }
   componentDidMount(){      
     courseSock.emit('get:course_data', this.state.course);
-    chatSock.emit('join:chat_pace', {
+    chatSock.emit('join:channel', {
       channel : "main",
       course  : this.state.course
     });
@@ -32,6 +33,7 @@ class Body extends React.Component{
     courseSock.on('receive:course_data', this.receiveCourseData.bind(this));
   	chatSock.on('receive:chat_message', this.receiveMessage.bind(this)); 
     chatSock.on('load:channel', this.loadChannel.bind(this));    
+    courseSock.on('receive:new_channel', this.receiveChannel.bind(this));
     threadSock.on('receive:thread', this.receiveThread.bind(this));  
   }
  	receiveMessage(message){        
@@ -45,8 +47,9 @@ class Body extends React.Component{
     this.setState({
       courseInfo : data.course,
       threads    : data.courseData.threads,
-      channels   : data.courseData.channels
+      channels   : data.courseData.channelRefs
     });
+    console.log(data.courseDatRefs)
   }
 	postMessage(message){        
     message.sender = this.state.profile.name,
@@ -67,18 +70,28 @@ class Body extends React.Component{
       threads: newThreadArray
     });     
   }
-  makeChannel(newChannel){
-
+  receiveChannel(channel){  
+    let newChannelArray = this.state.channels.slice();
+    newChannelArray.push(channel);   
+    this.setState({
+      channels: newChannelArray
+    });     
   }
-  switchChannel(channelID){
-    chatSock.emit('join:chatSpace', {
-      channel : channelID,
+  makeChannel(newChannelData){
+    newChannelData.course = this.state.course;
+    this.receiveChannel(newChannelData);
+    chatSock.emit("make:new_channel", newChannelData);
+  }
+  switchChannel(channelName){
+    chatSock.emit('join:channel', {
+      channel : channelName,
       course  : this.state.course
     });
   }
   loadChannel(data){
     this.setState({
-      messages : data.messages
+      channelName : data.channelName,
+      messages    : data.messages
     });
   }
   uploadCalendar(e){
@@ -103,7 +116,9 @@ class Body extends React.Component{
             postThread = { this.postThread.bind(this) } />          
           <Chat messages = { this.state.messages } 
             postMessage = { this.postMessage.bind(this) }
+            currentChannel = { this.state.currentChannel }
             channels = { this.state.channels }
+            makeChannel = { this.makeChannel.bind(this) }
             switchChannel = { this.switchChannel.bind(this) } />
         </div>
   		</div>

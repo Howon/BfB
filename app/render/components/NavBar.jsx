@@ -16,10 +16,7 @@ class NavBar extends React.Component {
                 <ul className="nav navbar-nav navbar-right">
                   <li><a href="">{ this.props.profile.name }</a></li>                                  
                   <li><a href="/logout">Logout</a></li>
-                </ul>        
-                <div className="navbar-form navbar-right">        
-                  <input type="text" className="form-control" placeholder="Search..."></input>
-                </div>
+                </ul>   
               </div>
             </div>
           </nav>

@@ -3,6 +3,7 @@ var mongoose = require('mongoose'),
 	
 var channelSchema = new Schema({
 	_id: String,
+	desc: String,
 	messages: [{
 		sender  : String,
 		content : String

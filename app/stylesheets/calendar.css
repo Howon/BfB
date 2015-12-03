@@ -44,9 +44,6 @@ button {
     table-layout: fixed;
     background-color: #FDFDFD;
     min-height: 200px;
-    -webkit-box-shadow: 2px 3px 3px 1px rgba(0,0,0,0.1);
-    -moz-box-shadow: 2px 3px 3px 1px rgba(0,0,0,0.1);
-    box-shadow: 2px 3px 3px 1px rgba(0,0,0,0.1);
 }
 
 .calendar-course-item {

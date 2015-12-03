@@ -90,7 +90,7 @@ class Body extends React.Component{
   }
   loadChannel(data){
     this.setState({
-      channelName : data.channelName,
+      currentChannel : data.channelName,
       messages    : data.messages
     });
   }

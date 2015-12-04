@@ -66,11 +66,34 @@ module.exports = function(io) {
                 ref  : channelID
               });
               courseDataResult.save();
-              // io.to("/course").broadcast.to(newChannelData.course).emit("receive:new_channel", newChannelData);          
             }
           })
         }
       });
-    })
+    });
+
+    socket.on('fetch:channels', function(courseID) {
+      socket.room = courseID;
+      socket.join(courseID);
+      models.Course.findById(courseID, function(err, courseResult) {
+        if (err) {
+          console.error("error: " + err);
+        }
+        if (courseResult) {
+          var dataRef = courseResult.courseDataRef;
+          models.CourseData.findById(dataRef, function(err1, courseDataResult) {
+            if (err1) {
+              console.error("error: " + err1);
+            }
+            if(courseDataResult){
+              socket.emit("receive:course_data", {
+                course: courseResult,
+                courseData: courseDataResult            
+              });
+            }        
+          })
+        }
+      });
+    });
   });
 }

@@ -37,39 +37,6 @@ module.exports = function(io) {
           });
         }
       });
-    });
-
-    socket.on("make:new_channel", function(newChannelData){
-      var channelID = strIDHash((newChannelData.name + "_" + newChannelData.course));
-      socket.room = channelID;
-      socket.join(channelID);
-
-      models.Channel.findById(channelID, function(err, channelResult){
-        if(err){
-          console.error("error: " + err);
-        }
-        if(!channelResult){
-          var newChannel = new models.Channel({
-            "_id"  : channelID,
-            "name" : newChannelData.name,
-            "desc" : newChannelData.desc
-          })
-          newChannel.save();
-          var courseDataID = strIDHash("data_" + newChannelData.course);
-          models.CourseData.findById(courseDataID, function(err1, courseDataResult){
-            if(err1){
-              console.error("error: " + err1);
-            }
-            if(courseDataResult){
-              courseDataResult.channelRefs.push({
-                name : newChannelData.name,
-                ref  : channelID
-              });
-              courseDataResult.save();
-            }
-          })
-        }
-      });
-    });
+    });    
   });
 }

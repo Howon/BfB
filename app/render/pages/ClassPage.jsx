@@ -80,7 +80,7 @@ class Body extends React.Component{
     this.receiveChannel(newChannelData);
     chatSock.emit("make:new_channel", newChannelData);
   }
-  switchChannel(channelName){
+  joinChannel(channelName){
     chatSock.emit('join:channel', {
       channel : channelName,
       course  : this.state.course
@@ -111,13 +111,13 @@ class Body extends React.Component{
           uploadCalendar = { this.uploadCalendar.bind(this) } /> 
         <div id="content-area">        
           <Thread threads = { this.state.threads } 
-            postThread = { this.postThread.bind(this) } />          
+            postThread = { this.postThread.bind(this) } />
           <Chat messages = { this.state.messages } 
             postMessage = { this.postMessage.bind(this) }
             currentChannel = { this.state.currentChannel }
             channels = { this.state.channels }
             makeChannel = { this.makeChannel.bind(this) }
-            switchChannel = { this.switchChannel.bind(this) } />
+            joinChannel = { this.joinChannel.bind(this) } />
         </div>
   		</div>
    	)

@@ -67,4 +67,8 @@ module.exports = function(app, passport) {
     req.logout();
     res.redirect('/');
   });
+
+  app.get('/test', function(req, res){
+    res.render('displaydocs');
+  })
 };

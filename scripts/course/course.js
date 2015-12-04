@@ -196,8 +196,8 @@ module.exports = function(io) {
               }
               if (courseResult) {
                 outputCourseList.push(courseResult);
-                counter++; // counts upto the number of coursees passed into the method
-                if (counter == courseCount) { // if the number of objects compared matches the parameter length
+                counter++;
+                if (counter == courseCount) {
                   socket.emit("update:calendar", {
                     calendar: outputCourseList
                   });
@@ -212,16 +212,29 @@ module.exports = function(io) {
     });
 
     socket.on('get:course_data', function(courseID) {
-      socket.room = courseID;
-      socket.join(courseID);
       var courseDataID = strIDHash("data_" + courseID);
       models.CourseData.findById(courseDataID, function(err, courseDataResult) {
         if (err) {
-          console.error("error: " + err1);
+          console.error("error: " + err);
         }
-        if(courseDataResult){
+        if(courseDataResult){          
           socket.emit("receive:course_data", {
             courseData: courseDataResult            
+          });
+        }        
+      })
+    });
+
+
+    socket.on('refresh:channels', function(courseID) {
+      var courseDataID = strIDHash("data_" + courseID);
+      models.CourseData.findById(courseDataID, function(err, courseDataResult) {
+        if (err) {
+          console.error("error: " + err);
+        }
+        if(courseDataResult){          
+          socket.emit("refresh:channels", {
+            channels: courseDataResult.channelRefs
           });
         }        
       })

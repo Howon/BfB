@@ -97,6 +97,7 @@ class Channels extends React.Component {
     this.props.makeChannel(newChannelData);
   }
   render() {   
+    console.log(this.props.channels)
     let channels = this.props.channels.map(function(channel, i){
       return (
         <Channel key = { i } channel = { channel } switchChannel = { this.switchChannel.bind(this) }/>

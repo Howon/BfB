@@ -29,10 +29,18 @@ class Body extends React.Component{
     });
     threadSock.emit('join:thread_space', this.state.course);
 
+    let course = this.state.course;
+
+    setInterval(function(){
+      courseSock.emit("refresh:channels", course);
+    }, 10000);
+
     courseSock.on('receive:course_data', this.receiveCourseData.bind(this));
+    courseSock.on('refresh:channels', this.refreshChannels.bind(this));
+
   	chatSock.on('receive:chat_message', this.receiveMessage.bind(this)); 
     chatSock.on('load:channel', this.loadChannel.bind(this));    
-    courseSock.on('receive:new_channel', this.receiveChannel.bind(this));
+    
     threadSock.on('receive:thread', this.receiveThread.bind(this));  
   }
  	receiveMessage(message){        
@@ -47,7 +55,6 @@ class Body extends React.Component{
       threads    : data.courseData.threads,
       channels   : data.courseData.channelRefs
     });
-    console.log(data.courseDatRefs)
   }
 	postMessage(message){        
     message.sender = this.state.profile.name,
@@ -68,16 +75,15 @@ class Body extends React.Component{
       threads: newThreadArray
     });     
   }
-  receiveChannel(channel){  
-    let newChannelArray = this.state.channels.slice();
-    newChannelArray.push(channel);   
-    this.setState({
-      channels: newChannelArray
-    });     
-  }
   makeChannel(newChannelData){
     newChannelData.course = this.state.course;
-    this.receiveChannel(newChannelData);
+
+    let newChannelArray = this.state.channels.slice();
+    newChannelArray.push(newChannelData);   
+    this.setState({
+      channels: newChannelArray
+    });  
+    
     chatSock.emit("make:new_channel", newChannelData);
   }
   switchChannel(channelName){
@@ -90,6 +96,11 @@ class Body extends React.Component{
     this.setState({
       currentChannel : data.channelName,
       messages    : data.messages
+    });
+  }
+  refreshChannels(newChannels){
+    this.setState({
+      channels : newChannels.channels
     });
   }
   uploadCalendar(e){

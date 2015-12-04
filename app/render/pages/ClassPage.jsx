@@ -15,7 +15,6 @@ class Body extends React.Component{
     this.state = {
       profile        : this.props.app_props.user,
       course         : this.props.app_props.course.id,
-      courseInfo     : [],
       threads        : [],
       messages       : [],
       currentChannel : "main", 
@@ -45,7 +44,6 @@ class Body extends React.Component{
   }
   receiveCourseData(data){    
     this.setState({
-      courseInfo : data.course,
       threads    : data.courseData.threads,
       channels   : data.courseData.channelRefs
     });

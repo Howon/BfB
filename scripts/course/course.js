@@ -96,9 +96,8 @@ module.exports = function(io) {
                       console.error("error: " + err);
                     }
                     if (courseResult) {
-                      var subscribers = courseResult.subscribers;
-                      if (!subscriberRefs.includes(user._id)) {
-                        subscribers.push(user._id);
+                      if (!courseResult.subscriberRefs.includes(user._id)) {
+                        courseResult.subscriberRefs.push(user._id);
                         courseResult.save();
                       }
 
@@ -215,25 +214,17 @@ module.exports = function(io) {
     socket.on('get:course_data', function(courseID) {
       socket.room = courseID;
       socket.join(courseID);
-      models.Course.findById(courseID, function(err, courseResult) {
+      var courseDataID = strIDHash("data_" + courseID);
+      models.CourseData.findById(courseDataID, function(err, courseDataResult) {
         if (err) {
-          console.error("error: " + err);
+          console.error("error: " + err1);
         }
-        if (courseResult) {
-          var dataRef = courseResult.courseDataRef;
-          models.CourseData.findById(dataRef, function(err1, courseDataResult) {
-            if (err1) {
-              console.error("error: " + err1);
-            }
-            if(courseDataResult){
-              socket.emit("receive:course_data", {
-                course: courseResult,
-                courseData: courseDataResult            
-              });
-            }        
-          })
-        }
-      });
+        if(courseDataResult){
+          socket.emit("receive:course_data", {
+            courseData: courseDataResult            
+          });
+        }        
+      })
     });
   });
 }

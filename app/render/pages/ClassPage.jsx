@@ -31,16 +31,12 @@ class Body extends React.Component{
 
     let course = this.state.course;
 
-    setInterval(function(){
-      courseSock.emit("refresh:channels", course);
-    }, 10000);
-
     courseSock.on('receive:course_data', this.receiveCourseData.bind(this));
-    courseSock.on('refresh:channels', this.refreshChannels.bind(this));
+    courseSock.on('receive:new_channel', this.receiveChannel.bind(this));
 
   	chatSock.on('receive:chat_message', this.receiveMessage.bind(this)); 
-    chatSock.on('load:channel', this.loadChannel.bind(this));    
-    
+    chatSock.on('load:channel', this.loadChannel.bind(this)); 
+
     threadSock.on('receive:thread', this.receiveThread.bind(this));  
   }
  	receiveMessage(message){        
@@ -76,17 +72,12 @@ class Body extends React.Component{
     });     
   }
   makeChannel(newChannelData){
-    newChannelData.course = this.state.course;
-
-    let newChannelArray = this.state.channels.slice();
-    newChannelArray.push(newChannelData);   
-    this.setState({
-      channels: newChannelArray
-    });  
-    
-    chatSock.emit("make:new_channel", newChannelData);
+    newChannelData.course = this.state.course;    
+    courseSock.emit("make:new_channel", newChannelData);
+    this.joinChannel(newChannelData.name);
+    this.receiveChannel(newChannelData);
   }
-  switchChannel(channelName){
+  joinChannel(channelName){
     chatSock.emit('join:channel', {
       channel : channelName,
       course  : this.state.course
@@ -98,10 +89,12 @@ class Body extends React.Component{
       messages    : data.messages
     });
   }
-  refreshChannels(newChannels){
+  receiveChannel(newChannel){
+    let newChannelArray = this.state.channels.slice();
+    newChannelArray.push(newChannel);   
     this.setState({
-      channels : newChannels.channels
-    });
+      channels: newChannelArray
+    });  
   }
   uploadCalendar(e){
     let reader = new FileReader();
@@ -128,7 +121,7 @@ class Body extends React.Component{
             currentChannel = { this.state.currentChannel }
             channels = { this.state.channels }
             makeChannel = { this.makeChannel.bind(this) }
-            switchChannel = { this.switchChannel.bind(this) } />
+            joinChannel = { this.joinChannel.bind(this) } />
         </div>
   		</div>
    	)

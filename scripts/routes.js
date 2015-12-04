@@ -63,6 +63,12 @@ module.exports = function(app, passport) {
     }
   });
 
+  app.get('/test', function(req, res){
+    res.render('test', {
+      title: 'test'
+    });
+  });
+
   app.get('/logout', function(req, res) {
     req.logout();
     res.redirect('/');

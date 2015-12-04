@@ -212,6 +212,9 @@ module.exports = function(io) {
     });
 
     socket.on('get:course_data', function(courseID) {
+      socket.room = courseID;
+      socket.join(courseID);
+      
       var courseDataID = strIDHash("data_" + courseID);
       models.CourseData.findById(courseDataID, function(err, courseDataResult) {
         if (err) {
@@ -225,19 +228,38 @@ module.exports = function(io) {
       })
     });
 
-
-    socket.on('refresh:channels', function(courseID) {
-      var courseDataID = strIDHash("data_" + courseID);
-      models.CourseData.findById(courseDataID, function(err, courseDataResult) {
-        if (err) {
+    socket.on("make:new_channel", function(newChannelData){
+      var channelID = strIDHash((newChannelData.name + "_" + newChannelData.course));      
+      
+      models.Channel.findById(channelID, function(err, channelResult){
+        if(err){
           console.error("error: " + err);
         }
-        if(courseDataResult){          
-          socket.emit("refresh:channels", {
-            channels: courseDataResult.channelRefs
-          });
-        }        
-      })
+        if(!channelResult){
+          var newChannel = new models.Channel({
+            "_id"  : channelID,
+            "name" : newChannelData.name,
+            "desc" : newChannelData.desc
+          })
+          newChannel.save();
+
+          var courseDataID = strIDHash("data_" + newChannelData.course);
+          models.CourseData.findById(courseDataID, function(err1, courseDataResult){
+            if(err1){
+              console.error("error: " + err1);
+            }
+            if(courseDataResult){
+              courseDataResult.channelRefs.push({
+                name : newChannelData.name,
+                ref  : channelID
+              });
+
+              courseDataResult.save();
+              socket.to(socket.room).emit('receive:new_channel', newChannelData);
+            }
+          })
+        }
+      });
     });
   });
 }

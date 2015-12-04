@@ -1,12 +1,12 @@
 import React from "react";     
 
 class Channel extends React.Component {
-  switchChannel(){
-    this.props.switchChannel(this.props.channel.name);
+  joinChannel(){
+    this.props.joinChannel(this.props.channel.name);
   }
   render(){
     return ( 
-      <li className = "channels-list-item" onClick = { this.switchChannel.bind(this) } > 
+      <li className = "channels-list-item" onClick = { this.joinChannel.bind(this) } > 
         { this.props.channel.name } 
       </li>
     )
@@ -85,8 +85,8 @@ class Channels extends React.Component {
       showChannelForm : false
     }
   }
-  switchChannel(channelName){
-    this.props.switchChannel(channelName);
+  joinChannel(channelName){
+    this.props.joinChannel(channelName);
   }
   toggleChannelForm(){
     this.setState({
@@ -97,10 +97,9 @@ class Channels extends React.Component {
     this.props.makeChannel(newChannelData);
   }
   render() {   
-    console.log(this.props.channels)
     let channels = this.props.channels.map(function(channel, i){
       return (
-        <Channel key = { i } channel = { channel } switchChannel = { this.switchChannel.bind(this) }/>
+        <Channel key = { i } channel = { channel } joinChannel = { this.joinChannel.bind(this) }/>
       );
     }, this); 
     
@@ -204,7 +203,7 @@ class Chat extends React.Component {
         <Channels currentChannel = { this.props.currentChannel }
           channels = { this.props.channels }
           makeChannel = { this.props.makeChannel.bind(this) } 
-          switchChannel = { this.props.switchChannel }/>
+          joinChannel = { this.props.joinChannel }/>
         <MessageList messages = { this.props.messages } />
         <MessageInputForm profile = { this.props.profile } 
           postMessage = { this.props.postMessage } />

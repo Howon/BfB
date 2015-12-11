@@ -1,7 +1,7 @@
 #thread-area{
     position: absolute;
-    margin-left: 70%;
-    width: 30%;
+    margin-left: 60%;
+    width: 40%;
     height: 100%;
     float: left;
     padding: 0;
@@ -47,7 +47,7 @@
 
 #show-google-docs:hover{
     margin-top: 12px;
-    margin-left: 8px; 
+    margin-left: 8px;
     font-size: 27px;
 }
 
@@ -64,8 +64,8 @@
     border: 1px solid #616161;
 }
 
-ul#threads-area{ 
-    list-style-type: none;     
+ul#threads-area{
+    list-style-type: none;
     background-color: #ECEFF1;
     top: 40px;
     height: calc(100% - 40px);
@@ -73,11 +73,11 @@ ul#threads-area{
     z-index: 1;
 }
 
-ul#threads-area li{ 
+ul#threads-area li{
     word-break: break-all;
     width: 100%;
     padding: 5px;
-    margin: 0;    
+    margin: 0;
     min-height: 10%;
     background-color: #FFFFFF;
     border-bottom: 1px solid #607D8B;
@@ -86,18 +86,18 @@ ul#threads-area li{
 
 ul#threads-area li:hover{
     background-color: #FAFAFA;
-} 
+}
 
 .thread-post-content{
     position: absolute;
-    top: 14px;   
+    top: 14px;
     margin-left: 40px;
     width: (100% - 40px);
 }
 
 div.thread-post-postedBy{
     position: relative;
-    float: right;    
+    float: right;
 }
 
 textarea#thread-input{

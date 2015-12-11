@@ -90,7 +90,7 @@ module.exports = function(io) {
                 var courseCount = Object.keys(courseObjList).length;
 
                 var checkDBForClass = function(courseObj) {
-                  var courseID = courseObj.courseID; // creates a hash based on the course name                  
+                  var courseID = courseObj.courseID; // creates a hash based on the course name
                   models.Course.findById(courseID, function(err, courseResult) {
                     if (err) {
                       console.error("error: " + err);
@@ -119,19 +119,24 @@ module.exports = function(io) {
                       var newChannel = new models.Channel({
                         "_id"  : channelID,
                         "desc" : "main channel"
-                      });                      
+                      });
                       newChannel.save();
 
                       var newCourseData = new models.CourseData({
                         "_id": courseDataID,
+                        "threads" : {
+                          "postedBy" : "Rayos",
+                          "content"  : "Welcome to Rayos!",
+                          "time"     : new Date()
+                        },
                         "channelRefs" : {
                           name : "main",
                           ref  : channelID
                         }
-                      });                                          
+                      });
                       newCourseData.save();
                       newCourse.save();
-                      
+
                       courseIDList.push(newCourse._id);
                       userCalendar.push(newCourse);
                     }
@@ -214,23 +219,23 @@ module.exports = function(io) {
     socket.on('get:course_data', function(courseID) {
       socket.room = courseID;
       socket.join(courseID);
-      
+
       var courseDataID = strIDHash("data_" + courseID);
       models.CourseData.findById(courseDataID, function(err, courseDataResult) {
         if (err) {
           console.error("error: " + err);
         }
-        if(courseDataResult){          
+        if(courseDataResult){
           socket.emit("receive:course_data", {
-            courseData: courseDataResult            
+            courseData: courseDataResult
           });
-        }        
+        }
       })
     });
 
     socket.on("make:new_channel", function(newChannelData){
-      var channelID = strIDHash((newChannelData.name + "_" + newChannelData.course));      
-      
+      var channelID = strIDHash((newChannelData.name + "_" + newChannelData.course));
+
       models.Channel.findById(channelID, function(err, channelResult){
         if(err){
           console.error("error: " + err);

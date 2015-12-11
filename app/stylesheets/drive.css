@@ -1,0 +1,10 @@
+#driveArea{
+	position: absolute;
+	border:0;
+  height: 100%;
+  left: 200px;
+  width: calc(60% - 200px);
+	z-index: 15;
+	background-color: white;
+	padding: 10px 0 10px 0;
+}

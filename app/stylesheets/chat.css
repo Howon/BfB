@@ -1,7 +1,7 @@
 #chat-area{
     position: absolute;
-    width: 70%;
-    height: 100%;    
+    width: 60%;
+    height: 100%;
     padding: 0;
     background-color: #37474F;
 }
@@ -13,132 +13,9 @@
     border: 0;
 }
 
-#channels-area{    
-    position: absolute;
-    width: 200px;
-    height: 100%;
-    background-color: #FBFBFB;
-    border-right: 1px solid #455A64;
-}
-
-#channels-menu{
-    height: 50px;
-    width: 100%;
-    background-color: #E53935;
-    border-bottom: 1px solid #455A64;   
-}
-
-#channel-current-channel{
-    float: left;
-    margin: 5px 0 0 7px;
-    font-size: 24px;
-    font-style: italic;
-    font-weight: bold;
-    opacity: 0.87;
-}
-
-#channel-add-button{
-    float: right;
-    margin: 8px 7px 0 0;
-    cursor: pointer;
-    font-size: 27px;
-}
-
-#channel-add-button:hover{
-    margin-top : 7px;
-    font-size: 29px;
-}
-
-#channel-form-shader{
-    position: fixed;
-    height: 100%;
-    width: 100%;
-    background-color: #37474F;
-    opacity: 0.3;
-    z-index: 4;
-}
-
-#channel-form{
-    position: fixed;
-    z-index: 5;
+ul#messages-area{
     background-color: white;
-    height: 400px;
-    width: 500px;
-    left: 0;
-    right: 0;
-    top: 20%;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 30px;
-    border: 1px #F44336 solid;
-    text-align: center;
-    font-family: 'Lato', sans-serif;
-    font-size: 20px;
-}
-
-#close-channel-form{
-    opacity: 0.3;
-    position: absolute;
-    top: 10px;
-    right: 16px;
-    cursor: pointer;
-}
-
-#close-channel-form:hover{
-    opacity: 0.9;
-}
-
-#submit-channel-form{
-    opacity: 0.3;
-    position: absolute;
-    bottom: 10px;
-    right: 15px;
-    cursor: pointer;
-    font-size: 28px;
-}
-
-#submit-channel-form:hover{
-    opacity: 0.9;
-}
-
-.channel-input-form{
-    padding: 3px;
-    position: absolute;
-    left: 50px;
-}
-
-#channel-name-input{    
-    top: 100px;
-    height: 40px;
-    resize: none;
-    outline: none;
-    width: calc(100% - 100px);
-    border: 1px #607D8B solid;
-}
-
-#channel-desc-input{    
-    top: 170px;
-    height: 80px;
-    resize: none;
-    outline: none;
-    left: 50px;
-    width: calc(100% - 100px);
-    border: 1px #607D8B solid;
-}
-
-
-ul#channels-list li{
-    margin: 0 10px 0 10px;
-    list-style-type: none; 
-    font-size: 21px;
-    color: #455A64;
-    opacity: 0.87;
-    cursor: pointer;
-}
-
-ul#messages-area{     
-    background-color: white;
-    list-style-type: none; 
+    list-style-type: none;
     height: calc(100% - 50px);
     overflow: auto;
     padding: 15px;
@@ -150,27 +27,27 @@ ul#messages-area li{
     min-height: 2%;
 }
 
-ul#messages-area div{ 
+ul#messages-area div{
     display: inline-block;
-    padding: 0; 
+    padding: 0;
 }
 
 ul#messages-area div.message-sender{
     color: #5F8BAF;
     float: left;
     width: 100px;
-} 
+}
 
 ul#messages-area div.message-content{
     overflow: auto;
     color: #B59484;
-    padding: 0; 
+    padding: 0;
     width: calc(100% - 100px);
     word-break: break-all;
-} 
+}
 
 #message-input-area{
-    height: 50px; 
+    height: 50px;
     float: bottom;
     bottom: 0px;
     border-top: 1px solid #90A4AE;
@@ -179,7 +56,7 @@ ul#messages-area div.message-content{
 textarea#message-input-text{
     position: absolute;
     padding: 0.5% 1% 0 1%;
-    height: 100%; 
+    height: 100%;
     resize: none;
     outline: none;
     border: 0;
@@ -194,5 +71,4 @@ textarea#message-input-text{
     right: 18px;
     cursor: pointer;
     color: #F44336;
-    /*opacity: 0.87;*/
 }

@@ -7,8 +7,8 @@ var config = {
   // We change to normal source mapping
   devtool: 'source-map',
   entry: {
-    home: './app/render/homepage.jsx',  
-    class: './app/render/classpage.jsx'
+    home: './app/render/homepage.jsx',
+    course: './app/render/coursepage.jsx'
   },
   output: {
     path: buildPath,

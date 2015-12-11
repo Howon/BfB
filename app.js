@@ -1,4 +1,4 @@
-var config = require('./config');
+var config = require('./config/config');
 var express = require('express')
 var path = require('path');
 var app = express();
@@ -14,9 +14,35 @@ var webpackConfig = require('./webpack.config')
 var httpProxy = require('http-proxy');
 var proxy = httpProxy.createProxyServer({ ws: true });
 
+var google = require('googleapis');
+var OAuth2 = google.auth.OAuth2;
+
+var REDIRECT_URL = isDeveloping ? config.googleAuth.callbackURLDev : config.googleAuth.callbackURLDev;
+
+var oauth2Client = new OAuth2(config.googleAuth.clientID, config.googleAuth.clientSecret, REDIRECT_URL);
+var drive = google.drive({ version: 'v2', auth: oauth2Client });
+var fs = require('fs');
+
+var testUpload = function(callback){
+  drive.files.update({
+    fileId: '0B-skmV2m1Arna1lZSGFHNWx6YXc',
+    media: {
+      mimeType: 'text/plain',
+      body: 'Hello World updated with metadata'
+    },
+      auth: oauth2Client
+    }, function(err, response) {
+      console.log('error:', err);
+  });
+}
+
+testUpload(function(){
+  console.log("hello");
+})
+
 if (isDeveloping) {
 	var bundle = require('./server/bundle.js');
-	bundle();  
+	bundle();
 
 	app.all('/build/*', function (req, res) {
 		proxy.web(req, res, {
@@ -39,7 +65,7 @@ if (isDeveloping) {
 	});
 }
 
-mongooseURL = isDeveloping ? config.mongoose.dev : config.mongoose.prod
+var mongooseURL = isDeveloping ? config.mongoose.dev : config.mongoose.prod
 
 var mongoose = require('mongoose');
 mongoose.connect(mongooseURL);
@@ -61,7 +87,7 @@ app.use(bodyParser.json()); // get information from html forms
 app.use(bodyParser.urlencoded({
 	extended: true
 }));
-app.use(session({ 
+app.use(session({
     secret: 'cookiezcookiezcookiez',
     name: 'this_cookie',
     proxy: true,

@@ -11,7 +11,8 @@ class ThreadMenu extends React.Component {
           id = "search-thread">
         </input>
         <i id = "show-thread-post" className = "fa fa-pencil-square-o fa-lg"
-          onClick = { this.props.toggleDisplayStatus.bind(this) }></i>
+          onClick = { this.props.toggleDisplayStatus.bind(this) }>
+        </i>
       </div>
     )
   }
@@ -111,7 +112,9 @@ class ThreadArea extends React.Component {
           <ThreadMenu toggleDisplayStatus = { this.toggleDisplayStatus.bind(this) }
             toggleDriveArea = { this.props.toggleDriveArea.bind(this) } />
           <ThreadList threads = { this.props.threads }/>
-          <ThreadInputForm showPostInput = { this.state.showPostInput } postThread = { this.props.postThread } toggleDisplayStatus = { this.toggleDisplayStatus.bind(this) } />
+          <ThreadInputForm showPostInput = { this.state.showPostInput }
+            postThread = { this.props.postThread }
+            toggleDisplayStatus = { this.toggleDisplayStatus.bind(this) } />
         </div>
     )
   }

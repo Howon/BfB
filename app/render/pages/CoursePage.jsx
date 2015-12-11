@@ -10,6 +10,8 @@ import NavBar from "../components/NavBar.jsx";
 import Chat from "../components/Chat.jsx";
 import Drive from "../components/Drive.jsx";
 
+let Transition = React.TransitionGroup;
+
 class Body extends React.Component{
   constructor(props) {
     super(props);
@@ -68,7 +70,7 @@ class Body extends React.Component{
   }
   receiveThread(thread){
     let newThreadArray = this.state.threads.slice();
-    newThreadArray.push(thread);
+    newThreadArray.unshift(thread);
     this.setState({
       threads: newThreadArray
     });

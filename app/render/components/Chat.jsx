@@ -74,13 +74,24 @@ class MessageInputForm extends React.Component {
 };
 
 class Chat extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      displayChannels : false
+    }
+  }
+  toggleDisplayChannels(){
+    this.setState({
+      displayChannels : this.props.showPostInput ? false : true
+    })
+  }
   render() {
     return (
       <div id = "chat-area">
         <ChannelArea currentChannel = { this.props.currentChannel }
           channels = { this.props.channels }
           makeChannel = { this.props.makeChannel.bind(this) }
-          joinChannel = { this.props.joinChannel }/>
+          joinChannel = { this.props.joinChannel } />
         <MessageList messages = { this.props.messages } />
         <MessageInputForm profile = { this.props.profile }
           postMessage = { this.props.postMessage } />

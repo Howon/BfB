@@ -3,13 +3,14 @@ require('../stylesheets/sideBar.css');
 require('../stylesheets/contentArea.css');
 require('../stylesheets/thread.css');
 require('../stylesheets/drive.css');
+require('../stylesheets/channel.css')
 
 import React from 'react';
-import ChatPage from './pages/ClassPage.jsx';
+import CoursePage from './pages/CoursePage.jsx';
 
 let mountNode = document.getElementById("mount-point");
 
 React.render(
-  <ChatPage app_props = { window.APP_PROPS }/>,
+  <CoursePage app_props = { window.APP_PROPS }/>,
   mountNode
 );

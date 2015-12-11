@@ -16,7 +16,7 @@ module.exports = function(io) {
           console.err("error: " + err);
         }
         if (courseDataResult) {
-          courseDataResult.threads.push(thread);
+          courseDataResult.threads.unshift(thread);
           courseDataResult.save();
 
           models.Course.findById(courseID, function(err, courseResult) {
@@ -41,7 +41,7 @@ module.exports = function(io) {
                           content  : thread.content,
                           time     : thread.time
                         }
-                        notificationResult.notifications.push(newNotification);
+                        notificationResult.notifications.unshift(newNotification);
                         notificationResult.save(function(err) {
                           if (err)
                             throw err

@@ -16,15 +16,9 @@ class ThreadMenu extends React.Component {
 };
 
 class ThreadModal extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      displayModal : false,
-    }
-  }
   render(){
     let displayStatus = { 
-        display : this.state.displayModal ? "block" : "none"
+        display : this.props.displayModal ? "block" : "none"
     };
     return  (
       <div id="openModal" className="modalDialog" style = { displayStatus }  >
@@ -43,7 +37,6 @@ class ThreadModal extends React.Component {
 class Thread extends React.Component {    
   render(){    
     return (
-      <div onClick = { this.props.showModal(this.props.thread) }>
         <li className = 'thread-post'>
           <div>
             { this.props.thread.content }
@@ -52,7 +45,6 @@ class Thread extends React.Component {
             </div>
           </div>
        </li>
-      </div>
     )
   }
 };
@@ -60,11 +52,15 @@ class Thread extends React.Component {
 class ThreadList extends React.Component {    
   render(){
     var renderThread = function(thread, i){
-      return <Thread key = { i } thread = { thread } />
+      return ( 
+          <div onClick = { this.props.onModal.bind(undefined, thread) }> 
+            <Thread key = { i } thread = { thread }/>
+          </div>
+      )
     }
     return (
       <ul id="threads-area" className="thread-area-component">
-        { this.props.threads.map(renderThread) } 
+        { this.props.threads.map(renderThread.bind(this)) } 
       </ul>
     )
   }
@@ -136,20 +132,29 @@ class ThreadArea extends React.Component {
       showPostInput : this.state.showPostInput ? false : true
     })    
   }
-  showModal(data){
+  onModal(data){
     this.setState({
       currentThreadModal: data,
       displayModal: true
     })
   }
+  offModal(){
+    if (this.state.displayModal){
+      this.setState({
+        displayModal: false
+      })
+    }
+  }
   render() {
     return (
+      <div onClick = { this.offModal.bind(this) }> 
         <div id="thread-area">
           <ThreadModal currentThreadModal = { this.state.currentThreadModal } displayModal = { this.state.displayModal } />
           <ThreadMenu toggleDisplayStatus = { this.toggleDisplayStatus.bind(this) } />
-          <ThreadList threads = { this.props.threads } showModal = { this.showModal.bind(this) } />
+          <ThreadList threads = { this.props.threads } onModal = { this.onModal.bind(this) } />
           <ThreadInputForm showPostInput = { this.state.showPostInput } postThread = { this.props.postThread } toggleDisplayStatus = { this.toggleDisplayStatus.bind(this) } />
         </div>
+      </div>
     )
   }
 };

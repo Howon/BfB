@@ -139,7 +139,7 @@ class ThreadArea extends React.Component {
     })
   }
   offModal(){
-    if (this.state.displayModal){
+    if (this.state.displayModal){ 
       this.setState({
         displayModal: false
       })

@@ -140,11 +140,14 @@ module.exports = function(io) {
 
                       drive.createCourseFolder(courseObj.summary, function(folderRef) {
                         newCourseData.driveFolderRef = folderRef;
-                        drive.updatePermission(folderRef);
-                        newCourseData.save();
+                        drive.createFile(courseObj.summary, "doc", folderRef, function(argument) {
+                          // body...
+                          console.log(argument)
+                        });
+                        // newCourseData.save();
                       });
 
-                      newCourse.save();
+                      // newCourse.save();
                       courseIDList.push(newCourse._id);
                       userCalendar.push(newCourse);
 

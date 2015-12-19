@@ -13,7 +13,11 @@ var TOKEN_DIR = (process.env.HOME || process.env.HOMEPATH ||
 var TOKEN_PATH = TOKEN_DIR + 'drive-nodejs-quickstart.json';
 
 var driveClient;
-var isUsed = 0;
+
+var mimeSelector = {
+  doc : 'text/plain',
+  sheet : 'application/vnd.google-apps.spreadsheet'
+}
 
 module.exports = {
   setClient: function(config) {
@@ -93,11 +97,11 @@ module.exports = {
       getFolderRef(res.id);
     });
   },
-  createDoc: function(docName, folderID, callBack) {
+  createFile: function(docName, fileType, folderID, callBack) {
     driveClient.files.insert({
       resource: {
         title: docName,
-        mimeType: 'text/plain'
+        mimeType: mimeSelector[fileType]
       },
       parents: [{
         kind: 'drive#fileLink',

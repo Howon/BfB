@@ -29,6 +29,7 @@
     "ical2json": "^0.2.0",
     "jade": "~1.11.0",
     "jsx-loader": "^0.13.2",
+    "kerberos": "0.0.17",
     "mongodb": "^2.0.52",
     "mongoose": "^4.1.8",
     "morgan": "^1.5.3",

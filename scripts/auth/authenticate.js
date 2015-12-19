@@ -1,11 +1,14 @@
+"use strict";
+
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
   models = require('../models/index'),
-  mongoose = require('mongoose');
+  mongoose = require('mongoose'),
+  drive = require('../drive/drive');
 
 function validateEmail(email) {
   var re = /^\s*[\w\-\+_]+(\.[\w\-\+_]+)*\@[\w\-\+_]+\.[\w\-\+_]+(\.[\w\-\+_]+)*\s*$/;
   if (re.test(email)) {
-    if ((email.indexOf('@columbia.edu', email.length - '@columbia.edu'.length) !== -1) || email.indexOf('@barnard.edu', email.length - '@barnard.edu'.length) !== -1) {
+    if ((email.indexOf('@columbia.edu', email.length - '@columbia.edu'.length) !== -1) || (email.indexOf('@barnard.edu', email.length - '@barnard.edu'.length) !== -1)) {
       return true;
     }
   } else {
@@ -42,6 +45,8 @@ module.exports = function(config, passport) {
           }
           if (user) {
             // if a user is found, log them in
+            user.token = token;
+            user.save();
             return done(null, user);
           } else {
             if (validateEmail(profile.emails[0].value)) {
@@ -52,10 +57,9 @@ module.exports = function(config, passport) {
               newUser.info.name = profile.displayName;
               newUser.info.email = profile.emails[0].value; // pull the first email
               // save the user
-              
               var newNotification = new models.Notification();
               newNotification._id = new mongoose.Types.ObjectId;
-              
+
               newUser.notificationsRef = newNotification._id;
 
               newNotification.save(function(err) {
@@ -68,7 +72,7 @@ module.exports = function(config, passport) {
                     }
                     return done(null, newUser);
                   });
-                }    
+                }
               });
             } else {
               return done(err);

@@ -1,3 +1,5 @@
+"use strict";
+
 var models = require('../models/index')
 
 module.exports = function(io) {
@@ -28,4 +30,4 @@ module.exports = function(io) {
     // socket.broadcast.to(socket.room).emit('receive:chat_message', message);
     // });
     // });
-} 
+}

@@ -13,6 +13,8 @@ module.exports = {
         callbackURLProd  : 'http://rayos.xyz/auth/google/callback'
     },
     drive : {
-        appID : '1018715897513'
+        clientID: "1018715897513-t8hnik2a4p7ick0ockilk55rapb6gi5q.apps.googleusercontent.com",
+        clientSecret: "WmSAKJdPNBGLm2CMo53HCiZF",
+        redirectURL: "urn:ietf:wg:oauth:2.0:oob"
     }
 };

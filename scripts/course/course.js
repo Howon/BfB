@@ -1,8 +1,11 @@
+"use strict";
+
 var fs = require('fs'),
   exec = require('child_process').exec,
   models = require('../models/index'),
   async = require('async'),
-  crypto = require('crypto');
+  crypto = require('crypto'),
+  drive = require('../drive/drive');
 
 function validateCourse(course) {
   var re = /^\s*[\w\-\+_]+(\.[\w\-\+_]+)*\@[\w\-\+_]+\.[\w\-\+_]+(\.[\w\-\+_]+)*\s*$/;
@@ -120,7 +123,7 @@ module.exports = function(io) {
                         "_id"  : channelID,
                         "desc" : "main channel"
                       });
-                      newChannel.save();
+                      // newChannel.save();
 
                       var newCourseData = new models.CourseData({
                         "_id": courseDataID,
@@ -134,8 +137,10 @@ module.exports = function(io) {
                           ref  : channelID
                         }
                       });
-                      newCourseData.save();
-                      newCourse.save();
+                      // newCourseData.save();
+                      // newCourse.save();
+
+                      drive.createCourseFolder();
 
                       courseIDList.push(newCourse._id);
                       userCalendar.push(newCourse);

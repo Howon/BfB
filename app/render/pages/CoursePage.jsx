@@ -20,6 +20,7 @@ class Body extends React.Component{
       course         : this.props.app_props.course.id,
       threads        : [],
       messages       : [],
+      driveFolder    : "",
       currentChannel : "main",
       channels       : [],
       showDriveArea  : false
@@ -52,8 +53,9 @@ class Body extends React.Component{
   }
   receiveCourseData(data){
     this.setState({
-      threads    : data.courseData.threads,
-      channels   : data.courseData.channelRefs
+      threads     : data.courseData.threads,
+      channels    : data.courseData.channelRefs,
+      driveFolder : data.courseData.driveFolderRef
     });
   }
 	postMessage(message){
@@ -87,10 +89,10 @@ class Body extends React.Component{
       course  : this.state.course
     });
   }
-  loadChannel(data){
+  loadChannel(channelData){
     this.setState({
-      currentChannel : data.channelName,
-      messages    : data.messages
+      currentChannel : channelData.channelName,
+      messages    : channelData.messages
     });
   }
   receiveChannel(newChannel){
@@ -133,6 +135,7 @@ class Body extends React.Component{
             makeChannel = { this.makeChannel.bind(this) }
             joinChannel = { this.joinChannel.bind(this) } />
           <Drive showDriveArea = { this.state.showDriveArea }
+            driveFolder = { this.state.driveFolder }
             toggleDriveArea = { this.toggleDriveArea.bind(this) } />
         </div>
   		</div>

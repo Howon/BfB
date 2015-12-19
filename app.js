@@ -1,3 +1,5 @@
+"use strict";
+
 var config = require('./config/config');
 var express = require('express')
 var path = require('path');
@@ -14,55 +16,29 @@ var webpackConfig = require('./webpack.config')
 var httpProxy = require('http-proxy');
 var proxy = httpProxy.createProxyServer({ ws: true });
 
-var google = require('googleapis');
-var OAuth2 = google.auth.OAuth2;
-
-var REDIRECT_URL = isDeveloping ? config.googleAuth.callbackURLDev : config.googleAuth.callbackURLDev;
-
-var oauth2Client = new OAuth2(config.googleAuth.clientID, config.googleAuth.clientSecret, REDIRECT_URL);
-var drive = google.drive({ version: 'v2', auth: oauth2Client });
-var fs = require('fs');
-
-var testUpload = function(callback){
-  drive.files.update({
-    fileId: '0B-skmV2m1Arna1lZSGFHNWx6YXc',
-    media: {
-      mimeType: 'text/plain',
-      body: 'Hello World updated with metadata'
-    },
-      auth: oauth2Client
-    }, function(err, response) {
-      console.log('error:', err);
-  });
-}
-
-testUpload(function(){
-  console.log("hello");
-})
-
 if (isDeveloping) {
-	var bundle = require('./server/bundle.js');
-	bundle();
+  var bundle = require('./server/bundle.js');
+  bundle();
 
-	app.all('/build/*', function (req, res) {
-		proxy.web(req, res, {
-		    target: 'http://localhost:8080'
-		});
-	});
+  app.all('/build/*', function (req, res) {
+    proxy.web(req, res, {
+        target: 'http://localhost:8080'
+    });
+  });
 
-	app.get('/socket.io/*', function(req, res) {
-	  console.log("proxying GET request", req.url);
-	  proxy.web(req, res, { target: 'http://localhost:8080'});
-	});
+  app.get('/socket.io/*', function(req, res) {
+    console.log("proxying GET request", req.url);
+    proxy.web(req, res, { target: 'http://localhost:8080'});
+  });
 
-	app.post('/socket.io/*', function(req, res) {
-	  console.log("proxying POST request", req.url);
-	  proxy.web(req, res, { target: 'http://localhost:8080'});
-	});
+  app.post('/socket.io/*', function(req, res) {
+    console.log("proxying POST request", req.url);
+    proxy.web(req, res, { target: 'http://localhost:8080'});
+  });
 
-	app.on('upgrade', function (req, socket, head) {
-	  proxy.ws(req, socket, head);
-	});
+  app.on('upgrade', function (req, socket, head) {
+    proxy.ws(req, socket, head);
+  });
 }
 
 var mongooseURL = isDeveloping ? config.mongoose.dev : config.mongoose.prod
@@ -102,6 +78,7 @@ require('./scripts/course/course')(io);
 require('./scripts/chat/chat')(io);
 require('./scripts/thread/thread')(io);
 require('./scripts/auth/authenticate')(config.googleAuth, passport);
+require('./scripts/drive/drive').setClient(config.drive);
 require('./scripts/routes')(app, passport);
 
 proxy.on('error', function(e) {
@@ -110,14 +87,6 @@ proxy.on('error', function(e) {
 
 server.listen(port, function () {
 	console.log("*****************************");
-	console.log("* App running at port: " + port + " *");
+	console.log("* Rayos running at port: " + port + " *");
 	console.log("*****************************");
 });
-
-
-
-
-
-
-
-

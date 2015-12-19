@@ -1,8 +1,11 @@
+"use strict";
+
 var fs = require('fs'),
   exec = require('child_process').exec,
   models = require('../models/index'),
   async = require('async'),
-  crypto = require('crypto');
+  crypto = require('crypto'),
+  drive = require('../drive/drive');
 
 function validateCourse(course) {
   var re = /^\s*[\w\-\+_]+(\.[\w\-\+_]+)*\@[\w\-\+_]+\.[\w\-\+_]+(\.[\w\-\+_]+)*\s*$/;
@@ -109,42 +112,51 @@ module.exports = function(io) {
 
                       var newCourse = new models.Course({
                         "_id": courseID,
-                        "meetingTimes"  : courseObj.meetings,
-                        "summary"       : courseObj.summary,
-                        "location"      : courseObj.location,
-                        "subscriberRefs"   : user._id,
-                        "courseDataRef" : courseDataID
+                        "meetingTimes": courseObj.meetings,
+                        "summary": courseObj.summary,
+                        "location": courseObj.location,
+                        "subscriberRefs": user._id,
+                        "courseDataRef": courseDataID
                       })
 
                       var newChannel = new models.Channel({
-                        "_id"  : channelID,
-                        "desc" : "main channel"
+                        "_id": channelID,
+                        "desc": "main channel"
                       });
-                      newChannel.save();
+                      // newChannel.save();
 
                       var newCourseData = new models.CourseData({
                         "_id": courseDataID,
-                        "threads" : {
-                          "postedBy" : "Rayos",
-                          "content"  : "Welcome to Rayos!",
-                          "time"     : new Date()
+                        "threads": {
+                          "postedBy": "Rayos",
+                          "content": "Welcome to Rayos!",
+                          "time": new Date()
                         },
-                        "channelRefs" : {
-                          name : "main",
-                          ref  : channelID
+                        "channelRefs": {
+                          name: "main",
+                          ref: channelID
                         }
                       });
-                      newCourseData.save();
-                      newCourse.save();
 
+                      drive.createCourseFolder(courseObj.summary, function(folderRef) {
+                        newCourseData.driveFolderRef = folderRef;
+                        drive.createFile(courseObj.summary, "doc", folderRef, function(argument) {
+                          // body...
+                          console.log(argument)
+                        });
+                        // newCourseData.save();
+                      });
+
+                      // newCourse.save();
                       courseIDList.push(newCourse._id);
                       userCalendar.push(newCourse);
-                    }
 
-                    counter++; // counts upto the number of coursees passed into the method
-                    if (counter == courseCount) { // if the number of objects compared matches the parameter length
-                      outputResult(userCalendar); // returns it back to the user
-                      saveUserClasses(courseIDList);
+                      counter++; // counts upto the number of coursees passed into the method
+
+                      if (counter == courseCount) { // if the number of objects compared matches the parameter length
+                        outputResult(userCalendar); // returns it back to the user
+                        saveUserClasses(courseIDList);
+                      }
                     }
 
                     return;
@@ -225,7 +237,7 @@ module.exports = function(io) {
         if (err) {
           console.error("error: " + err);
         }
-        if(courseDataResult){
+        if (courseDataResult) {
           socket.emit("receive:course_data", {
             courseData: courseDataResult
           });
@@ -233,30 +245,30 @@ module.exports = function(io) {
       })
     });
 
-    socket.on("make:new_channel", function(newChannelData){
+    socket.on("make:new_channel", function(newChannelData) {
       var channelID = strIDHash((newChannelData.name + "_" + newChannelData.course));
 
-      models.Channel.findById(channelID, function(err, channelResult){
-        if(err){
+      models.Channel.findById(channelID, function(err, channelResult) {
+        if (err) {
           console.error("error: " + err);
         }
-        if(!channelResult){
+        if (!channelResult) {
           var newChannel = new models.Channel({
-            "_id"  : channelID,
-            "name" : newChannelData.name,
-            "desc" : newChannelData.desc
+            "_id": channelID,
+            "name": newChannelData.name,
+            "desc": newChannelData.desc
           })
           newChannel.save();
 
           var courseDataID = strIDHash("data_" + newChannelData.course);
-          models.CourseData.findById(courseDataID, function(err1, courseDataResult){
-            if(err1){
+          models.CourseData.findById(courseDataID, function(err1, courseDataResult) {
+            if (err1) {
               console.error("error: " + err1);
             }
-            if(courseDataResult){
+            if (courseDataResult) {
               courseDataResult.channelRefs.push({
-                name : newChannelData.name,
-                ref  : channelID
+                name: newChannelData.name,
+                ref: channelID
               });
 
               courseDataResult.save();

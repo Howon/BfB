@@ -53,7 +53,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 
-require('babel/register');
+require('babel-core/register');
 app.set('views', path.join(__dirname, 'app/views'))
 app.set('view engine', 'jade')
 app.use(express.static(path.join(__dirname, 'app')))

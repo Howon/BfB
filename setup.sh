@@ -19,5 +19,7 @@ if ! type "node" > /dev/null
 fi
 
 sudo npm install
-sudo npm install -g ical2json
+npm install pm2 -g
+npm install -g ical2json
+
 echo 'node modules downloaded'

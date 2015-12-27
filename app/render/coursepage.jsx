@@ -7,11 +7,12 @@ require('../stylesheets/drive.css');
 require('../stylesheets/channel.css')
 
 import React from 'react';
+import ReactDom from 'react-dom'
 import CoursePage from './pages/CoursePage.jsx';
 
 let mountNode = document.getElementById("mount-point");
 
-React.render(
+ReactDom.render(
   <CoursePage app_props = { window.APP_PROPS }/>,
   mountNode
 );

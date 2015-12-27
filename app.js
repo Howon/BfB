@@ -9,7 +9,7 @@ var server = http.createServer(app);
 var io = require('socket.io')(server);
 
 const isDeveloping = process.env.NODE_ENV !== 'production';
-const port = isDeveloping ? config.port : process.env.PORT;
+const port = isDeveloping ? config.appPort.dev : config.appPort.deploy;
 
 var webpack = require('webpack');
 var webpackConfig = require('./webpack.config')

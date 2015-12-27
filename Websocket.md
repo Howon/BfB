@@ -45,7 +45,7 @@ Class
 User
 ```bash
 {
-	token: String,	
+	token: String,
 	info: {
 		name: String,
 		email: String

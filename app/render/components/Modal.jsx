@@ -11,11 +11,15 @@ class Modal extends React.Component {
     return  (
       <div id="openModal" className="modalDialog" style = { displayStatus }  >
         <div>
-          { this.props.modalContent }
+          { this.props.modalThread.content }
           <div className = 'thread-post-postedBy'>
-            Posted by : { this.props.modalPostedBy }
+            Posted by : { this.props.modalThread.postedBy }
           </div>
         </div>
+
+        <ul>
+
+        </ul>
       </div>
     )
   }

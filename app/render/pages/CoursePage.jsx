@@ -26,8 +26,10 @@ class Body extends React.Component{
       channels       : [],
       showDriveArea  : false,
       showModal      : false,
-      modalContent   : "",
-      modalPostedBy  : ""
+      modalThread    : {
+        content  : "",
+        postedBy : ""
+      }
     }
   }
   componentDidMount(){
@@ -127,8 +129,7 @@ class Body extends React.Component{
     if (!this.state.showModal){
       this.setState({
         showModal : !this.state.showModal,
-        modalContent : thread.content,
-        modalPostedBy: thread.postedBy
+        modalThread : thread
       })
     }
   }
@@ -143,8 +144,7 @@ class Body extends React.Component{
   	return (
   		<div onClick = { this.offModal.bind(this) } >
         <Modal showModal = { this.state.showModal }
-          modalContent = { this.state.modalContent }
-          modalPostedBy = { this.state.modalPostedBy } />
+          modalThread = { this.state.modalThread } />
         <NavBar profile = { this.state.profile }
           uploadCalendar = { this.uploadCalendar.bind(this) } />
         <div id="content-area">

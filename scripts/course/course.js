@@ -100,11 +100,11 @@ module.exports = function(io) {
                       console.error("error: " + err);
                     }
                     if (courseResult) {
-                      if (courseResult.subscriberRefs.indexOf(user._id) >= 0) {
+                      if (courseResult.subscriberRefs.indexOf(user._id) < 0) {
                         courseResult.subscriberRefs.push(user._id);
                         courseResult.save();
                       }
-
+                      // drive.insertPermission(folderRef, user.info.email);
                       courseIDList.push(courseResult._id);
                       userCalendar.push(courseResult);
                     } else {
@@ -126,13 +126,6 @@ module.exports = function(io) {
                       });
                       newChannel.save();
 
-                      var newThread = new models.Thread({
-                        "_id": newCourseData["threads"][0]["_id"],
-                        "comments": []
-                      })
-
-                      newThread.save();
-
                       var newCourseData = new models.CourseData({
                         "_id": courseDataID,
                         "threads": {
@@ -147,12 +140,18 @@ module.exports = function(io) {
                         }
                       });
 
+                      var newThread = new models.Thread({
+                        "_id": newCourseData["threads"][0]["_id"],
+                        "comments": []
+                      })
+
+                      newThread.save();
+
                       drive.createCourseFolder(courseObj.summary, function(folderRef) {
                         newCourseData.driveFolderRef = folderRef;
                         drive.createFile(courseObj.summary, "doc", folderRef, function(fileID) {
                           drive.insertPermission(folderRef, user.info.email);
                         });
-                        newCourseData.driveFolderRef = folderRef;
                         newCourseData.save();
                       });
 

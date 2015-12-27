@@ -9,6 +9,7 @@ import SideBar from "../components/SideBar.jsx";
 import NavBar from "../components/NavBar.jsx";
 import Chat from "../components/Chat.jsx";
 import Drive from "../components/Drive.jsx";
+import Modal from "../components/Modal.jsx";
 
 let Transition = React.TransitionGroup;
 
@@ -23,7 +24,10 @@ class Body extends React.Component{
       driveFolder    : "",
       currentChannel : "main",
       channels       : [],
-      showDriveArea  : false
+      showDriveArea  : false,
+      showModal      : false,
+      modalContent   : "",
+      modalPostedBy  : ""
     }
   }
   componentDidMount(){
@@ -119,6 +123,15 @@ class Body extends React.Component{
       showDriveArea : this.state.showDriveArea ? false : true
     })
   }
+  toggleModal(thread){
+    if (!this.state.showModal){
+      this.setState({
+        showModal : !showModal,
+        modalContent : thread.content,
+        modalPostedBy: thread.postedBy
+      })
+    }
+  }
 	render(){
   	return (
   		<div>
@@ -128,6 +141,10 @@ class Body extends React.Component{
           <Thread threads = { this.state.threads }
             postThread = { this.postThread.bind(this) }
             toggleDriveArea = { this.toggleDriveArea.bind(this) } />
+          <Modal toggleModal = { this.toggleModal.bind(this) } 
+            showModal = { this.state.showModal }
+            modalContent = { this.state.modalContent }
+            modalPostedBy = { this.state.modalPostedBy } />
           <Chat messages = { this.state.messages }
             postMessage = { this.postMessage.bind(this) }
             currentChannel = { this.state.currentChannel }

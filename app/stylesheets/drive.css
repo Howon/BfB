@@ -2,9 +2,13 @@
 	position: absolute;
 	border:0;
   height: 100%;
-  left: 200px;
-  width: calc(60% - 200px);
+  margin-left: 60%;
+  width: 40%;
+  top: 40%;
+  height: 60%;
 	z-index: 5;
 	background-color: white;
 	padding: 10px 0 10px 0;
+  border-left: 1px solid #607D8B;
+  border-top: 1px solid #607D8B;
 }

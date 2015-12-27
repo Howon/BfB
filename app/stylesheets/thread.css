@@ -40,15 +40,16 @@
 
 #show-google-docs{
     cursor: pointer;
-    margin-top: 12px;
-    margin-left: 10px;
-    font-size: 24px;
+    margin-top: 6px;
+    margin-left: 6px;
+    z-index: 10;
+    width: 27px;
 }
 
 #show-google-docs:hover{
-    margin-top: 12px;
-    margin-left: 8px;
-    font-size: 27px;
+    margin-top: 6px;
+    margin-left: 6px;
+    width: 28px;
 }
 
 #search-thread{

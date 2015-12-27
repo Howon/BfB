@@ -4,9 +4,9 @@ class ThreadMenu extends React.Component {
   render(){
     return (
       <div id = "thread-menu">
-        <i id = "show-google-docs" className="fa fa-files-o fa-lg"
+        <img src = "/images/google-drive-icon.png" id = "show-google-docs"
           onClick = { this.props.toggleDriveArea.bind(this) } >
-        </i>
+        </img>
         <input type="text" placeholder="Search for thread"
           id = "search-thread">
         </input>
@@ -20,7 +20,7 @@ class ThreadMenu extends React.Component {
 
 class ThreadModal extends React.Component {
   render(){
-    let displayStatus = { 
+    let displayStatus = {
         display : this.props.displayModal ? "block" : "none"
     };
     return  (
@@ -36,14 +36,14 @@ class ThreadModal extends React.Component {
   }
 }
 
-class Thread extends React.Component {    
-  render(){    
+class Thread extends React.Component {
+  render(){
     return (
         <li className = 'thread-post'>
           <div>
             { this.props.thread.content }
             <div className = 'thread-post-postedBy'>
-              Posted by : { this.props.thread.postedBy } 
+              Posted by : { this.props.thread.postedBy }
             </div>
           </div>
        </li>
@@ -54,8 +54,8 @@ class Thread extends React.Component {
 class ThreadList extends React.Component {
   render(){
     var renderThread = function(thread, i){
-      return ( 
-          <div onClick = { this.props.onModal.bind(undefined, thread) }> 
+      return (
+          <div onClick = { this.props.onModal.bind(undefined, thread) }>
             <Thread key = { i } thread = { thread }/>
           </div>
       )
@@ -141,7 +141,7 @@ class ThreadArea extends React.Component {
     })
   }
   offModal(){
-    if (this.state.displayModal){ 
+    if (this.state.displayModal){
       this.setState({
         displayModal: false
       })
@@ -149,13 +149,13 @@ class ThreadArea extends React.Component {
   }
   render() {
     return (
-      <div onClick = { this.offModal.bind(this) }> 
+      <div onClick = { this.offModal.bind(this) }>
         <div id="thread-area">
           <ThreadModal currentThreadModal = { this.state.currentThreadModal } displayModal = { this.state.displayModal } />
           <ThreadMenu toggleDisplayStatus = { this.toggleDisplayStatus.bind(this) }
             toggleDriveArea = { this.props.toggleDriveArea.bind(this) } />
           <ThreadList threads = { this.props.threads } onModal = { this.onModal.bind(this) } />
-          <ThreadInputForm showPostInput = { this.state.showPostInput } postThread = { this.props.postThread } toggleDisplayStatus = { this.toggleDisplayStatus.bind(this) } />      
+          <ThreadInputForm showPostInput = { this.state.showPostInput } postThread = { this.props.postThread } toggleDisplayStatus = { this.toggleDisplayStatus.bind(this) } />
         </div>
       </div>
     )

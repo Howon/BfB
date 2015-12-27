@@ -101,20 +101,21 @@ module.exports = function(io) {
                       console.error("error: " + err);
                     }
                     if (courseResult) {
-                      if (courseResult.subscriberRefs.indexOf(user._id) < 0) {
+                      if (courseResult.subscriberRefs.indexOf(user._id) < 0) { //if user is not in the subscriber list
                         courseResult.subscriberRefs.push(user._id);
                         courseResult.save();
-                        models.CourseData.findById(courseDataID, function(err2, courseDataResult){
-                          if(err2){
-                            console.error("error: " + err2);
-                          }
-                          if(courseDataResult){
-                            drive.insertPermission(courseDataResult.folderRef, user.info.email, function(){
-
-                            });
-                          }
-                        })
                       }
+                      models.CourseData.findById(courseDataID, function(err2, courseDataResult){
+                        if(err2){
+                          console.error("error: " + err2);
+                        }
+                        if(courseDataResult){
+                          console.log(courseDataResult.folderRef)
+                          drive.insertPermission(courseDataResult.folderRef, user.info.email, function(){
+
+                          });
+                        }
+                      })
                       courseIDList.push(courseResult._id);
                       userCalendar.push(courseResult);
 

@@ -39,7 +39,7 @@ module.exports = {
 
       fs.readFile(TOKEN_PATH, function(err, token) {
         if (err) {
-          getNewToken(oauth2Client, setClient);
+          getNewToken(oauth2Client, setOauthClient);
         } else {
           oauth2Client.credentials = JSON.parse(token);
           setOauthClient(oauth2Client);

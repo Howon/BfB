@@ -1,4 +1,6 @@
-var config = require('./config');
+"use strict";
+
+var config = require('./config/config');
 var express = require('express')
 var path = require('path');
 var app = express();
@@ -15,31 +17,31 @@ var httpProxy = require('http-proxy');
 var proxy = httpProxy.createProxyServer({ ws: true });
 
 if (isDeveloping) {
-	var bundle = require('./server/bundle.js');
-	bundle();  
+  var bundle = require('./server/bundle.js');
+  bundle();
 
-	app.all('/build/*', function (req, res) {
-		proxy.web(req, res, {
-		    target: 'http://localhost:8080'
-		});
-	});
+  app.all('/build/*', function (req, res) {
+    proxy.web(req, res, {
+        target: 'http://localhost:8080'
+    });
+  });
 
-	app.get('/socket.io/*', function(req, res) {
-	  console.log("proxying GET request", req.url);
-	  proxy.web(req, res, { target: 'http://localhost:8080'});
-	});
+  app.get('/socket.io/*', function(req, res) {
+    console.log("proxying GET request", req.url);
+    proxy.web(req, res, { target: 'http://localhost:8080'});
+  });
 
-	app.post('/socket.io/*', function(req, res) {
-	  console.log("proxying POST request", req.url);
-	  proxy.web(req, res, { target: 'http://localhost:8080'});
-	});
+  app.post('/socket.io/*', function(req, res) {
+    console.log("proxying POST request", req.url);
+    proxy.web(req, res, { target: 'http://localhost:8080'});
+  });
 
-	app.on('upgrade', function (req, socket, head) {
-	  proxy.ws(req, socket, head);
-	});
+  app.on('upgrade', function (req, socket, head) {
+    proxy.ws(req, socket, head);
+  });
 }
 
-mongooseURL = isDeveloping ? config.mongoose.dev : config.mongoose.prod
+var mongooseURL = isDeveloping ? config.mongoose.dev : config.mongoose.prod
 
 var mongoose = require('mongoose');
 mongoose.connect(mongooseURL);
@@ -51,7 +53,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 
-require('babel/register');
+require('babel-core/register');
 app.set('views', path.join(__dirname, 'app/views'))
 app.set('view engine', 'jade')
 app.use(express.static(path.join(__dirname, 'app')))
@@ -61,7 +63,7 @@ app.use(bodyParser.json()); // get information from html forms
 app.use(bodyParser.urlencoded({
 	extended: true
 }));
-app.use(session({ 
+app.use(session({
     secret: 'cookiezcookiezcookiez',
     name: 'this_cookie',
     proxy: true,
@@ -76,6 +78,7 @@ require('./scripts/course/course')(io);
 require('./scripts/chat/chat')(io);
 require('./scripts/thread/thread')(io);
 require('./scripts/auth/authenticate')(config.googleAuth, passport);
+require('./scripts/drive/drive').setClient(config.drive);
 require('./scripts/routes')(app, passport);
 
 proxy.on('error', function(e) {
@@ -84,14 +87,6 @@ proxy.on('error', function(e) {
 
 server.listen(port, function () {
 	console.log("*****************************");
-	console.log("* App running at port: " + port + " *");
+	console.log("* Rayos running at port: " + port + " *");
 	console.log("*****************************");
 });
-
-
-
-
-
-
-
-

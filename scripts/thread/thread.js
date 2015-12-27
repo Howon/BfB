@@ -1,3 +1,5 @@
+"use strict";
+
 var models = require('../models/index'),
   crypto = require('crypto');
 
@@ -9,14 +11,14 @@ module.exports = function(io) {
   var threadHandler = io.of("/thread").on('connection', function(socket) {
     socket.on('post:thread', function(thread) {
       var courseID = socket.room + "";
-      var courseDataID = strIDHash("data_" + courseID); 
+      var courseDataID = strIDHash("data_" + courseID);
 
       models.CourseData.findById(courseDataID, function(err, courseDataResult) {
         if (err) {
           console.err("error: " + err);
         }
         if (courseDataResult) {
-          courseDataResult.threads.push(thread);
+          courseDataResult.threads.unshift(thread);
           courseDataResult.save();
 
           models.Course.findById(courseID, function(err, courseResult) {
@@ -35,13 +37,13 @@ module.exports = function(io) {
                       if (err) {
                         console.err("error: " + err);
                       }
-                      if (notificationResult) {                      
+                      if (notificationResult) {
                         var newNotification = {
                           courseID : courseResult._id,
                           content  : thread.content,
                           time     : thread.time
                         }
-                        notificationResult.notifications.push(newNotification);
+                        notificationResult.notifications.unshift(newNotification);
                         notificationResult.save(function(err) {
                           if (err)
                             throw err

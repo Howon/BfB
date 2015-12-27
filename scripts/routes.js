@@ -1,3 +1,5 @@
+"use strict";
+
 module.exports = function(app, passport) {
   app.get('/', function(req, res) {
     if (req.isAuthenticated()) {
@@ -61,6 +63,12 @@ module.exports = function(app, passport) {
     } else {
       res.redirect('/');
     }
+  });
+
+  app.get('/test', function(req, res){
+    res.render('test', {
+      title: 'test'
+    });
   });
 
   app.get('/logout', function(req, res) {

@@ -1,0 +1,127 @@
+#display-channel{
+    width: 50px;
+    height: 100%;
+    background-color: #E53935;
+}
+
+#channels-area{
+    position: absolute;
+    width: 200px;
+    height: 100%;
+    background-color: #FBFBFB;
+    border-right: 1px solid #455A64;
+}
+
+#channels-menu{
+    height: 50px;
+    width: 100%;
+    background-color: #E53935;
+    border-bottom: 1px solid #455A64;
+}
+
+#channel-current-channel{
+    float: left;
+    margin: 5px 0 0 7px;
+    font-size: 24px;
+    font-style: italic;
+    font-weight: bold;
+    opacity: 0.87;
+}
+
+#channel-add-button{
+    float: right;
+    margin: 8px 7px 0 0;
+    cursor: pointer;
+    font-size: 27px;
+}
+
+#channel-add-button:hover{
+    margin-top : 7px;
+    font-size: 29px;
+}
+
+#channel-form-shader{
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background-color: #37474F;
+    opacity: 0.3;
+    z-index: 15;
+}
+
+#channel-form{
+    position: fixed;
+    z-index: 15;
+    background-color: white;
+    height: 400px;
+    width: 500px;
+    left: 0;
+    right: 0;
+    top: 20%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 30px;
+    border: 1px #F44336 solid;
+    text-align: center;
+    font-family: 'Lato', sans-serif;
+    font-size: 20px;
+}
+
+#close-channel-form{
+    opacity: 0.3;
+    position: absolute;
+    top: 10px;
+    right: 16px;
+    cursor: pointer;
+}
+
+#close-channel-form:hover{
+    opacity: 0.9;
+}
+
+#submit-channel-form{
+    opacity: 0.3;
+    position: absolute;
+    bottom: 10px;
+    right: 15px;
+    cursor: pointer;
+    font-size: 28px;
+}
+
+#submit-channel-form:hover{
+    opacity: 0.9;
+}
+
+.channel-input-form{
+    padding: 3px;
+    position: absolute;
+    left: 50px;
+}
+
+#channel-name-input{
+    top: 100px;
+    height: 40px;
+    resize: none;
+    outline: none;
+    width: calc(100% - 100px);
+    border: 1px #607D8B solid;
+}
+
+#channel-desc-input{
+    top: 170px;
+    height: 80px;
+    resize: none;
+    outline: none;
+    left: 50px;
+    width: calc(100% - 100px);
+    border: 1px #607D8B solid;
+}
+
+ul#channels-list li{
+    margin: 0 10px 0 10px;
+    list-style-type: none;
+    font-size: 21px;
+    color: #455A64;
+    opacity: 0.87;
+    cursor: pointer;
+}

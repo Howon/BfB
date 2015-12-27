@@ -1,8 +1,7 @@
 var models = require('../models/index')
 
 module.exports = function(io) {
-    // io.on('connection', function(socket) {
-    // socket.on('post:notification', function(data) {
+
     var testNotification = {
         courseID: "test",
         content: "test",
@@ -25,8 +24,4 @@ module.exports = function(io) {
         }
     })
 
-    // socket.broadcast.to(socket.room).emit('receive:chat_message', message);
-    // });
-    // });
 } 
-

@@ -65,8 +65,15 @@ module.exports = function(io) {
       socket.join(roomID);
     });
 
-    socket.on("post:thread_comment", function(thread) {
-      
+    socket.on("post:thread_comment", function(comment) {
+      // 
+      models.thread.findById(threadId, function(err, threadResult){
+        if (err) {
+          console.err("error: " + err);
+        }
+        threadResult.save();
+
+      });
 
     });
   });

@@ -64,5 +64,10 @@ module.exports = function(io) {
       socket.room = roomID;
       socket.join(roomID);
     });
+
+    socket.on("post:thread_comment", function(thread) {
+      
+
+    });
   });
 }

@@ -29,7 +29,8 @@ class Body extends React.Component{
       modalThread    : {
         content  : "",
         postedBy : ""
-      }
+      },
+      modalComments  : []
     }
   }
   componentDidMount(){
@@ -44,6 +45,7 @@ class Body extends React.Component{
 
     courseSock.on('receive:course_data', this.receiveCourseData.bind(this));
     courseSock.on('receive:new_channel', this.receiveChannel.bind(this));
+    courseSock.on('receive:comments', this.receiveComments.bind(this));
 
   	chatSock.on('receive:chat_message', this.receiveMessage.bind(this));
     chatSock.on('load:channel', this.loadChannel.bind(this));
@@ -63,6 +65,11 @@ class Body extends React.Component{
       channels    : data.courseData.channelRefs,
       driveFolder : data.courseData.driveFolderRef
     });
+  }
+  receiveComments(data){
+    this.setState({
+      modalComments : data.thread.comments
+    })
   }
 	postMessage(message){
     message.sender = this.state.profile.name,
@@ -131,6 +138,7 @@ class Body extends React.Component{
         showModal : !this.state.showModal,
         modalThread : thread
       })
+      courseSock.emit('get:comments', thread._id);
     }
   }
   offModal(){
@@ -144,6 +152,7 @@ class Body extends React.Component{
   	return (
   		<div onClick = { this.offModal.bind(this) } >
         <Modal showModal = { this.state.showModal }
+          modalComments = { this.state.modalComments }
           modalThread = { this.state.modalThread } />
         <NavBar profile = { this.state.profile }
           uploadCalendar = { this.uploadCalendar.bind(this) } />

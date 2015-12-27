@@ -55,9 +55,9 @@ class ThreadList extends React.Component {
   render(){
     var renderThread = function(thread, i){
       return (
-          <div onClick = { this.props.onModal.bind(undefined, thread) }>
-            <Thread key = { i } thread = { thread }/>
-          </div>
+        <div onClick = { this.props.toggleModal.bind(undefined, thread) }>
+          <Thread key = { i } thread = { thread }/>
+        </div>
       )
     }
     return (
@@ -134,29 +134,13 @@ class ThreadArea extends React.Component {
       showPostInput : this.state.showPostInput ? false : true
     })
   }
-  onModal(data){
-    this.setState({
-      currentThreadModal: data,
-      displayModal: true
-    })
-  }
-  offModal(){
-    if (this.state.displayModal){
-      this.setState({
-        displayModal: false
-      })
-    }
-  }
   render() {
     return (
-      <div onClick = { this.offModal.bind(this) }>
-        <div id="thread-area">
-          <ThreadModal currentThreadModal = { this.state.currentThreadModal } displayModal = { this.state.displayModal } />
-          <ThreadMenu toggleDisplayStatus = { this.toggleDisplayStatus.bind(this) }
-            toggleDriveArea = { this.props.toggleDriveArea.bind(this) } />
-          <ThreadList threads = { this.props.threads } onModal = { this.onModal.bind(this) } />
-          <ThreadInputForm showPostInput = { this.state.showPostInput } postThread = { this.props.postThread } toggleDisplayStatus = { this.toggleDisplayStatus.bind(this) } />
-        </div>
+      <div id="thread-area">
+        <ThreadMenu toggleDisplayStatus = { this.toggleDisplayStatus.bind(this) }
+          toggleDriveArea = { this.props.toggleDriveArea.bind(this) } />
+        <ThreadList threads = { this.props.threads } toggleModal = { this.props.toggleModal } />
+        <ThreadInputForm showPostInput = { this.state.showPostInput } postThread = { this.props.postThread } toggleDisplayStatus = { this.toggleDisplayStatus.bind(this) } />
       </div>
     )
   }

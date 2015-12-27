@@ -138,14 +138,14 @@ module.exports = function(io) {
                         }
                       });
 
-                      drive.createCourseFolder(courseObj.summary, function(folderRef) {
-                        newCourseData.driveFolderRef = folderRef;
-                        drive.createFile(courseObj.summary, "doc", folderRef, function(argument) {
-                          // body...
-                          console.log(argument)
-                        });
-                        // newCourseData.save();
-                      });
+                      // drive.createCourseFolder(courseObj.summary, function(folderRef) {
+                      //   newCourseData.driveFolderRef = folderRef;
+                      //   drive.createFile(courseObj.summary, "doc", folderRef, function(argument) {
+                      //     // body...
+                      //     console.log(argument)
+                      //   });
+                      //   // newCourseData.save();
+                      // });
 
                       // newCourse.save();
                       courseIDList.push(newCourse._id);

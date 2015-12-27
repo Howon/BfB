@@ -18,17 +18,35 @@ class ThreadMenu extends React.Component {
   }
 };
 
-class Thread extends React.Component {
+class ThreadModal extends React.Component {
   render(){
-    return (
-      <li className = 'thread-post'>
+    let displayStatus = { 
+        display : this.props.displayModal ? "block" : "none"
+    };
+    return  (
+      <div id="openModal" className="modalDialog" style = { displayStatus }  >
         <div>
-          { this.props.thread.content }
+          { this.props.currentThreadModal.content }
           <div className = 'thread-post-postedBy'>
-            Posted by : { this.props.thread.postedBy }
+            Posted by : { this.props.currentThreadModal.postedBy }
           </div>
         </div>
-      </li>
+      </div>
+    )
+  }
+}
+
+class Thread extends React.Component {    
+  render(){    
+    return (
+        <li className = 'thread-post'>
+          <div>
+            { this.props.thread.content }
+            <div className = 'thread-post-postedBy'>
+              Posted by : { this.props.thread.postedBy } 
+            </div>
+          </div>
+       </li>
     )
   }
 };
@@ -36,11 +54,15 @@ class Thread extends React.Component {
 class ThreadList extends React.Component {
   render(){
     var renderThread = function(thread, i){
-      return <Thread key = { i } thread = { thread }/>
+      return ( 
+          <div onClick = { this.props.onModal.bind(undefined, thread) }> 
+            <Thread key = { i } thread = { thread }/>
+          </div>
+      )
     }
     return (
       <ul id="threads-area" className="thread-area-component">
-        { this.props.threads.map(renderThread) }
+        { this.props.threads.map(renderThread.bind(this)) }
       </ul>
     )
   }
@@ -97,8 +119,14 @@ class ThreadInputForm extends React.Component {
 class ThreadArea extends React.Component {
   constructor(props){
     super(props);
+    var emptyThread = {
+      content: "",
+      postedBy: ""
+    }
     this.state = {
-      showPostInput : false
+      showPostInput : false,
+      currentThreadModal : emptyThread,
+      displayModal   : false
     }
   }
   toggleDisplayStatus(){
@@ -106,16 +134,30 @@ class ThreadArea extends React.Component {
       showPostInput : this.state.showPostInput ? false : true
     })
   }
+  onModal(data){
+    this.setState({
+      currentThreadModal: data,
+      displayModal: true
+    })
+  }
+  offModal(){
+    if (this.state.displayModal){ 
+      this.setState({
+        displayModal: false
+      })
+    }
+  }
   render() {
     return (
+      <div onClick = { this.offModal.bind(this) }> 
         <div id="thread-area">
+          <ThreadModal currentThreadModal = { this.state.currentThreadModal } displayModal = { this.state.displayModal } />
           <ThreadMenu toggleDisplayStatus = { this.toggleDisplayStatus.bind(this) }
             toggleDriveArea = { this.props.toggleDriveArea.bind(this) } />
-          <ThreadList threads = { this.props.threads }/>
-          <ThreadInputForm showPostInput = { this.state.showPostInput }
-            postThread = { this.props.postThread }
-            toggleDisplayStatus = { this.toggleDisplayStatus.bind(this) } />
+          <ThreadList threads = { this.props.threads } onModal = { this.onModal.bind(this) } />
+          <ThreadInputForm showPostInput = { this.state.showPostInput } postThread = { this.props.postThread } toggleDisplayStatus = { this.toggleDisplayStatus.bind(this) } />      
         </div>
+      </div>
     )
   }
 };

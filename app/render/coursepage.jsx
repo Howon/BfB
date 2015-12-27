@@ -2,6 +2,7 @@ require('../stylesheets/chat.css');
 require('../stylesheets/sideBar.css');
 require('../stylesheets/contentArea.css');
 require('../stylesheets/thread.css');
+require('../stylesheets/modal.css');
 require('../stylesheets/drive.css');
 require('../stylesheets/channel.css')
 

@@ -156,7 +156,11 @@ module.exports = function(io) {
 
                       var newThread = new models.Thread({
                         "_id": newCourseData["threads"][0]["_id"],
-                        "comments": []
+                        "comments": [{
+                          "content" : "example comment",
+                          "postedBy" : "Rayos",
+                          "time" :  new Date()
+                        }]
                       })
 
                       newThread.save();
@@ -262,6 +266,19 @@ module.exports = function(io) {
         if (courseDataResult) {
           socket.emit("receive:course_data", {
             courseData: courseDataResult
+          });
+        }
+      })
+    });
+
+    socket.on('get:comments', function(threadID) {
+      models.Thread.findById(threadID, function(err, threadResult) {
+        if (err) {
+          console.error("error: " + err);
+        }
+        if (threadResult){
+          socket.emit("receive:comments", {
+            thread : threadResult
           });
         }
       })

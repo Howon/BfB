@@ -71,7 +71,7 @@ module.exports = function(io) {
       //   content : String,
       //   time    : Date
       // }
-      models.thread.findById(threadId, function(err, threadResult){
+      models.Thread.findById(threadId, function(err, threadResult){
         if (err) {
           console.err("error: " + err);
         }

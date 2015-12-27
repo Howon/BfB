@@ -9,6 +9,7 @@ import SideBar from "../components/SideBar.jsx";
 import NavBar from "../components/NavBar.jsx";
 import Chat from "../components/Chat.jsx";
 import Drive from "../components/Drive.jsx";
+import Modal from "../components/Modal.jsx";
 
 let Transition = React.TransitionGroup;
 
@@ -23,7 +24,13 @@ class Body extends React.Component{
       driveFolder    : "",
       currentChannel : "main",
       channels       : [],
-      showDriveArea  : false
+      showDriveArea  : false,
+      showModal      : false,
+      modalThread    : {
+        content  : "",
+        postedBy : ""
+      },
+      modalComments  : []
     }
   }
   componentDidMount(){
@@ -38,6 +45,7 @@ class Body extends React.Component{
 
     courseSock.on('receive:course_data', this.receiveCourseData.bind(this));
     courseSock.on('receive:new_channel', this.receiveChannel.bind(this));
+    courseSock.on('receive:comments', this.receiveComments.bind(this));
 
   	chatSock.on('receive:chat_message', this.receiveMessage.bind(this));
     chatSock.on('load:channel', this.loadChannel.bind(this));
@@ -57,6 +65,11 @@ class Body extends React.Component{
       channels    : data.courseData.channelRefs,
       driveFolder : data.courseData.driveFolderRef
     });
+  }
+  receiveComments(data){
+    this.setState({
+      modalComments : data.thread.comments
+    })
   }
 	postMessage(message){
     message.sender = this.state.profile.name,
@@ -119,13 +132,33 @@ class Body extends React.Component{
       showDriveArea : this.state.showDriveArea ? false : true
     })
   }
+  toggleModal(thread){
+    if (!this.state.showModal){
+      this.setState({
+        showModal : !this.state.showModal,
+        modalThread : thread
+      })
+      courseSock.emit('get:comments', thread._id);
+    }
+  }
+  offModal(){
+    if (this.state.showModal){
+      this.setState({
+        showModal : !this.state.showModal
+      })
+    }
+  }
 	render(){
   	return (
-  		<div>
+  		<div onClick = { this.offModal.bind(this) } >
+        <Modal showModal = { this.state.showModal }
+          modalComments = { this.state.modalComments }
+          modalThread = { this.state.modalThread } />
         <NavBar profile = { this.state.profile }
           uploadCalendar = { this.uploadCalendar.bind(this) } />
         <div id="content-area">
           <Thread threads = { this.state.threads }
+            toggleModal = { this.toggleModal.bind(this) }
             postThread = { this.postThread.bind(this) }
             toggleDriveArea = { this.toggleDriveArea.bind(this) } />
           <Chat messages = { this.state.messages }

@@ -138,6 +138,7 @@ module.exports = function(io) {
                         }
                       });
 
+<<<<<<< HEAD
                       drive.createCourseFolder(courseObj.summary, function(folderRef) {
                         newCourseData.driveFolderRef = folderRef;
                         drive.createFile(courseObj.summary, "doc", folderRef, function(fileID) {
@@ -145,6 +146,16 @@ module.exports = function(io) {
                         });
                         // newCourseData.save();
                       });
+=======
+                      // drive.createCourseFolder(courseObj.summary, function(folderRef) {
+                      //   newCourseData.driveFolderRef = folderRef;
+                      //   drive.createFile(courseObj.summary, "doc", folderRef, function(argument) {
+                      //     // body...
+                      //     console.log(argument)
+                      //   });
+                      //   // newCourseData.save();
+                      // });
+>>>>>>> 71192813e622841595dca7e420376a14a42591fb
 
                       // newCourse.save();
                       courseIDList.push(newCourse._id);

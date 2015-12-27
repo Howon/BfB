@@ -16,7 +16,8 @@ var driveClient;
 
 var mimeSelector = {
   doc : 'text/plain',
-  sheet : 'application/vnd.google-apps.spreadsheet'
+  sheet : 'application/vnd.google-apps.spreadsheet',
+
 }
 
 module.exports = {
@@ -102,26 +103,26 @@ module.exports = {
       resource: {
         title: docName,
         mimeType: mimeSelector[fileType]
-      },
-      parents: [{
-        kind: 'drive#fileLink',
-        id: folderID
-      }]
+      }
     }, function(err, res) {
       callBack(res.id);
     });
   },
-  updatePermission: function(fileID){
+  insertPermission: function(fileID, userEmail){
+    console.log(fileID + " " + userEmail);
+
+    var permissionObject = {
+      value : userEmail,
+      type  : 'anyone',
+      role  : 'writer'
+    }
+
     driveClient.permissions.insert({
-      resource: {
-        value: 'rayosapp@gmail.com',
-        type: 'anyone',
-        role: 'owner'
-      },
+      resource: permissionObject,
       fileId: fileID,
       kind: "drive#permission"
     }, function(err, res) {
-      console.log(err + " " + res);
+      console.dir(res);
     });
   },
   listDrive: function() {

@@ -19,7 +19,7 @@ module.exports = function () {
   // time it took. Nice to have
   compiler.plugin('done', function() {
     console.log('Bundled in ' + (Date.now() - bundleStart) + 'ms!');
-  });     
+  });
 
   var bundler = new WebpackDevServer(compiler, {
     // We need to tell Webpack to serve our bundled application

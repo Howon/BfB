@@ -1,5 +1,8 @@
 module.exports = {
-    port: process.env.PORT || 3000
+    appPort: {
+        dev: 3000,
+        deploy: 80.1
+    }
     ,
     mongoose:{
     	dev    : 'mongodb://devroot:raymonddev@ds049754.mongolab.com:49754/raymond_development',

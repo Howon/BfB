@@ -96,6 +96,7 @@ module.exports = function(io) {
                 var checkDBForClass = function(courseObj) {
                   var courseID = courseObj.courseID; // creates a hash based on the course name
                   models.Course.findById(courseID, function(err, courseResult) {
+                    var courseDataID = strIDHash("data_" + courseID);
                     if (err) {
                       console.error("error: " + err);
                     }
@@ -104,11 +105,17 @@ module.exports = function(io) {
                         courseResult.subscriberRefs.push(user._id);
                         courseResult.save();
                       }
-                      // drive.insertPermission(folderRef, user.info.email);
+                      models.CourseData.findById(courseDataID, function(err2, courseDataResult){
+                        if(err2){
+                          console.error("error: " + err2);
+                        }
+                        if(courseDataResult){
+                          drive.insertPermission(courseDataResult.folderRef, user.info.email);
+                        }
+                      })
                       courseIDList.push(courseResult._id);
                       userCalendar.push(courseResult);
                     } else {
-                      var courseDataID = strIDHash("data_" + courseID);
                       var channelID = strIDHash("main_" + courseID);
 
                       var newCourse = new models.Course({

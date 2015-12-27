@@ -104,17 +104,22 @@ module.exports = function(io) {
                       if (courseResult.subscriberRefs.indexOf(user._id) < 0) {
                         courseResult.subscriberRefs.push(user._id);
                         courseResult.save();
+                        models.CourseData.findById(courseDataID, function(err2, courseDataResult){
+                          if(err2){
+                            console.error("error: " + err2);
+                          }
+                          if(courseDataResult){
+                            drive.insertPermission(courseDataResult.folderRef, user.info.email);
+                          }
+                        })
                       }
-                      models.CourseData.findById(courseDataID, function(err2, courseDataResult){
-                        if(err2){
-                          console.error("error: " + err2);
-                        }
-                        if(courseDataResult){
-                          drive.insertPermission(courseDataResult.folderRef, user.info.email);
-                        }
-                      })
                       courseIDList.push(courseResult._id);
                       userCalendar.push(courseResult);
+
+                      if (++counter == courseCount) { // if the number of objects compared matches the parameter length
+                        outputResult(userCalendar); // returns it back to the user
+                        saveUserClasses(courseIDList);
+                      }
                     } else {
                       var channelID = strIDHash("main_" + courseID);
 
@@ -167,14 +172,11 @@ module.exports = function(io) {
                       courseIDList.push(newCourse._id);
                       userCalendar.push(newCourse);
 
-                      counter++; // counts upto the number of coursees passed into the method
-
-                      if (counter == courseCount) { // if the number of objects compared matches the parameter length
+                      if (++counter == courseCount) { // if the number of objects compared matches the parameter length
                         outputResult(userCalendar); // returns it back to the user
                         saveUserClasses(courseIDList);
                       }
                     }
-
                     return;
                   });
                 }

@@ -39,7 +39,7 @@ module.exports = {
 
       fs.readFile(TOKEN_PATH, function(err, token) {
         if (err) {
-          getNewToken(oauth2Client, setOauthClient);
+          getNewToken(oauth2Client, seto);
         } else {
           oauth2Client.credentials = JSON.parse(token);
           setOauthClient(oauth2Client);
@@ -118,9 +118,10 @@ module.exports = {
     driveClient.permissions.insert({
       resource : permissionObject,
       fileId : fileID,
-      kind : "drive#permission"
+      kind : "drive#permission",
+      sendNotificationEmails : false
     }, function(err, res) {
-      console.dir(res);
+      // console.dir(res);
     });
   },
   listDrive: function() {

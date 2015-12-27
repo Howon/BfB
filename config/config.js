@@ -5,7 +5,7 @@ module.exports = {
     }
     ,
     mongoose:{
-    	dev    : 'mongodb://devroot:raymonddev@ds049754.mongolab.com:49754/raymond_development',
+    	dev    : 'mongodb://devroot:raymonddev@ds033145.mongolab.com:33145/raymond_development',
         prod : 'mongodb://root:raymondroot@ds049854.mongolab.com:49854/raymond_production'
     }
     ,

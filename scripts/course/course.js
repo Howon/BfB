@@ -99,7 +99,7 @@ module.exports = function(io) {
                       console.error("error: " + err);
                     }
                     if (courseResult) {
-                      if (!courseResult.subscriberRefs.includes(user._id)) {
+                      if (courseResult.subscriberRefs.indexOf(user._id) >= 0) {
                         courseResult.subscriberRefs.push(user._id);
                         courseResult.save();
                       }
@@ -123,7 +123,7 @@ module.exports = function(io) {
                         "_id": channelID,
                         "desc": "main channel"
                       });
-                      // newChannel.save();
+                      newChannel.save();
 
                       var newCourseData = new models.CourseData({
                         "_id": courseDataID,
@@ -141,13 +141,13 @@ module.exports = function(io) {
                       drive.createCourseFolder(courseObj.summary, function(folderRef) {
                         newCourseData.driveFolderRef = folderRef;
                         drive.createFile(courseObj.summary, "doc", folderRef, function(fileID) {
-                          drive.insertPermission(fileID, user.info.email);
+                          drive.insertPermission(folderRef, user.info.email);
                         });
-                        // newCourseData.save();
+                        newCourseData.driveFolderRef = folderRef;
+                        newCourseData.save();
                       });
 
-                      //
-                      // newCourse.save();
+                      newCourse.save();
                       courseIDList.push(newCourse._id);
                       userCalendar.push(newCourse);
 

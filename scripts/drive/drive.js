@@ -15,9 +15,9 @@ var TOKEN_PATH = TOKEN_DIR + 'drive-nodejs-quickstart.json';
 var driveClient;
 
 var mimeSelector = {
-  doc : 'text/plain',
+  doc : 'application/vnd.google-apps.document',
   sheet : 'application/vnd.google-apps.spreadsheet',
-
+  sheet : 'application/vnd.google-apps.slide',
 }
 
 module.exports = {
@@ -29,7 +29,7 @@ module.exports = {
       });
     });
 
-    function authorize(config, setClient) {
+    function authorize(config, setOauthClient) {
       var clientID = config.clientID;
       var clientSecret = config.clientSecret;
       var redirectURL = config.redirectURL;
@@ -42,7 +42,7 @@ module.exports = {
           getNewToken(oauth2Client, setClient);
         } else {
           oauth2Client.credentials = JSON.parse(token);
-          setClient(oauth2Client);
+          setOauthClient(oauth2Client);
         }
       });
     }
@@ -105,22 +105,20 @@ module.exports = {
         mimeType: mimeSelector[fileType]
       }
     }, function(err, res) {
-      callBack(res.id);
+      callBack(res ? res.id : null);
     });
   },
   insertPermission: function(fileID, userEmail){
-    console.log(fileID + " " + userEmail);
-
     var permissionObject = {
       value : userEmail,
-      type  : 'anyone',
+      type  : 'user',
       role  : 'writer'
     }
 
     driveClient.permissions.insert({
-      resource: permissionObject,
-      fileId: fileID,
-      kind: "drive#permission"
+      resource : permissionObject,
+      fileId : fileID,
+      kind : "drive#permission"
     }, function(err, res) {
       console.dir(res);
     });
@@ -138,7 +136,7 @@ module.exports = {
         console.log('Files:');
         for (var i = 0; i < files.length; i++) {
           var file = files[i];
-          console.log('%s (%s)', file.title, file.id);
+          console.log('%s (%s)', file);
         }
       }
     })

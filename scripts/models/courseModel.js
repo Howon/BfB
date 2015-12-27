@@ -9,5 +9,5 @@ var courseSchema = new Schema({
 	subscriberRefs : [String],
 	courseDataRef  : String
 });
-	
+
 module.exports = mongoose.model('Course', courseSchema);

@@ -110,7 +110,7 @@ module.exports = {
     }, function(err, res) {
     });
   },
-  insertPermission: function(fileID, userEmail, callback){
+  insertPermission: function(fileID, userEmail, callBack){
     var permissionObject = {
       value : userEmail,
       type  : 'user',
@@ -123,7 +123,7 @@ module.exports = {
       kind : "drive#permission",
       sendNotificationEmails : false
     }, function(err, res) {
-      callback();
+      callBack();
     });
   },
   listDrive: function() {

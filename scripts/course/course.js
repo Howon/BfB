@@ -5,7 +5,8 @@ var fs = require('fs'),
   models = require('../models/index'),
   async = require('async'),
   crypto = require('crypto'),
-  drive = require('../drive/drive');
+  drive = require('../drive/drive'),
+  mongoose = require('mongoose');
 
 function validateCourse(course) {
   var re = /^\s*[\w\-\+_]+(\.[\w\-\+_]+)*\@[\w\-\+_]+\.[\w\-\+_]+(\.[\w\-\+_]+)*\s*$/;
@@ -123,14 +124,15 @@ module.exports = function(io) {
                         "_id": channelID,
                         "desc": "main channel"
                       });
-                      // newChannel.save();
+                      newChannel.save();
 
                       var newCourseData = new models.CourseData({
                         "_id": courseDataID,
                         "threads": {
                           "postedBy": "Rayos",
                           "content": "Welcome to Rayos!",
-                          "time": new Date()
+                          "time": new Date(),
+                          "_id": new mongoose.Types.ObjectId()
                         },
                         "channelRefs": {
                           name: "main",
@@ -138,16 +140,25 @@ module.exports = function(io) {
                         }
                       });
 
-                      drive.createCourseFolder(courseObj.summary, function(folderRef) {
-                        newCourseData.driveFolderRef = folderRef;
-                        drive.createFile(courseObj.summary, "doc", folderRef, function(fileID) {
-                          drive.insertPermission(fileID, user.info.email);
-                        });
-                        // newCourseData.save();
-                      });
+                      var newThread = new models.Thread({
+                        "_id": newCourseData["threads"][0]["_id"],
+                        "comments": []
+                      })
+
+                      // drive.createCourseFolder(courseObj.summary, function(folderRef) {
+                        // newCourseData.driveFolderRef = folderRef;
+                      //   drive.createFile(courseObj.summary, "doc", folderRef, function(fileID) {
+                      //     drive.insertPermission(fileID, user.info.email);
+                      //   });
+                      // });
 
                       //
-                      // newCourse.save();
+                      newCourse.save();
+                      
+                      newCourseData.save();
+
+                      newThread.save();
+
                       courseIDList.push(newCourse._id);
                       userCalendar.push(newCourse);
 

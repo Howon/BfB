@@ -109,7 +109,9 @@ module.exports = function(io) {
                             console.error("error: " + err2);
                           }
                           if(courseDataResult){
-                            drive.insertPermission(courseDataResult.folderRef, user.info.email);
+                            drive.insertPermission(courseDataResult.folderRef, user.info.email, function(){
+
+                            });
                           }
                         })
                       }

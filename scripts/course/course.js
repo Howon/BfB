@@ -161,8 +161,10 @@ module.exports = function(io) {
 
                       drive.createCourseFolder(courseObj.summary, function(folderRef) {
                         newCourseData.driveFolderRef = folderRef;
-                        drive.createFile(courseObj.summary, "doc", folderRef, function(fileID) {
-                          drive.insertPermission(folderRef, user.info.email);
+                        drive.insertPermission(folderRef, user.info.email, function(){
+                          drive.createFile(courseObj.summary, "doc", folderRef, function() {
+
+                          });
                         });
                         newCourseData.save();
                       });

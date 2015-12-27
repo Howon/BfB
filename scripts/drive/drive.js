@@ -88,27 +88,29 @@ module.exports = {
       console.log('Token stored to ' + TOKEN_PATH);
     }
   },
-  createCourseFolder: function(id, getFolderRef) {
+  createCourseFolder: function(id, callBack) {
     driveClient.files.insert({
       resource: {
         title: id,
         mimeType: "application/vnd.google-apps.folder"
       }
     }, function(err, res) {
-      getFolderRef(res.id);
+      callBack(res.id);
     });
   },
   createFile: function(docName, fileType, folderID, callBack) {
     driveClient.files.insert({
       resource: {
         title: docName,
-        mimeType: mimeSelector[fileType]
+        mimeType: mimeSelector[fileType],
+        parents : [{
+          id : folderID
+        }]
       }
     }, function(err, res) {
-      callBack(res ? res.id : null);
     });
   },
-  insertPermission: function(fileID, userEmail){
+  insertPermission: function(fileID, userEmail, callback){
     var permissionObject = {
       value : userEmail,
       type  : 'user',
@@ -121,7 +123,7 @@ module.exports = {
       kind : "drive#permission",
       sendNotificationEmails : false
     }, function(err, res) {
-      // console.dir(res);
+      callback();
     });
   },
   listDrive: function() {

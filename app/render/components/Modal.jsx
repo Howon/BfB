@@ -1,6 +1,9 @@
 import React from "react";
 
 class Modal extends React.Component {
+  constructor(props){
+  	super(props);
+  }
   render(){
     let displayStatus = { 
         display : this.props.showModal ? "block" : "none"
@@ -17,3 +20,6 @@ class Modal extends React.Component {
     )
   }
 }
+
+
+export default Modal;

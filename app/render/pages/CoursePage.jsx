@@ -126,25 +126,32 @@ class Body extends React.Component{
   toggleModal(thread){
     if (!this.state.showModal){
       this.setState({
-        showModal : !showModal,
+        showModal : !this.state.showModal,
         modalContent : thread.content,
         modalPostedBy: thread.postedBy
       })
     }
   }
+  offModal(){
+    if (this.state.showModal){
+      this.setState({
+        showModal : !this.state.showModal
+      })
+    }
+  }
 	render(){
   	return (
-  		<div>
+  		<div onClick = { this.offModal.bind(this) } >
+        <Modal showModal = { this.state.showModal }
+          modalContent = { this.state.modalContent }
+          modalPostedBy = { this.state.modalPostedBy } />
         <NavBar profile = { this.state.profile }
           uploadCalendar = { this.uploadCalendar.bind(this) } />
         <div id="content-area">
           <Thread threads = { this.state.threads }
+            toggleModal = { this.toggleModal.bind(this) }
             postThread = { this.postThread.bind(this) }
             toggleDriveArea = { this.toggleDriveArea.bind(this) } />
-          <Modal toggleModal = { this.toggleModal.bind(this) } 
-            showModal = { this.state.showModal }
-            modalContent = { this.state.modalContent }
-            modalPostedBy = { this.state.modalPostedBy } />
           <Chat messages = { this.state.messages }
             postMessage = { this.postMessage.bind(this) }
             currentChannel = { this.state.currentChannel }

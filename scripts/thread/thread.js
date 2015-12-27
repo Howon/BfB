@@ -66,13 +66,26 @@ module.exports = function(io) {
     });
 
     socket.on("post:thread_comment", function(comment) {
-      // 
+      // var comment = {
+      //   postedBy  : String,
+      //   content : String,
+      //   time    : Date
+      // }
       models.thread.findById(threadId, function(err, threadResult){
         if (err) {
           console.err("error: " + err);
         }
-        threadResult.save();
 
+        if (threadResult){
+          threadResult.comments.push({
+            "postedBy": comment.postedBy,
+            "content": comment.content,
+            "time" : new Date()
+          })
+
+          threadResult.save();
+        }
+        
       });
 
     });

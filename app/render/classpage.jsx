@@ -2,6 +2,7 @@ require('../stylesheets/chat.css');
 require('../stylesheets/sideBar.css');
 require('../stylesheets/contentArea.css');
 require('../stylesheets/thread.css');
+require('../stylesheets/modal.css');
 
 import React from 'react';
 import ChatPage from './pages/ClassPage.jsx';

@@ -20,6 +20,7 @@
     "css-loader": "^0.15.1",
     "express": "^4.13.3",
     "express-session": "^1.11.1",
+    "googleapis": "^2.1.6",
     "http-proxy": "^1.12.0",
     "ical2json": "^0.2.0",
     "jade": "~1.11.0",

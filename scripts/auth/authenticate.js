@@ -1,6 +1,5 @@
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
-  models = require('../models/index'),
-  mongoose = require('mongoose');
+models = require('../models/index'), mongoose = require('mongoose');
 
 function validateEmail(email) {
   var re = /^\s*[\w\-\+_]+(\.[\w\-\+_]+)*\@[\w\-\+_]+\.[\w\-\+_]+(\.[\w\-\+_]+)*\s*$/;

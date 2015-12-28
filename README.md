@@ -27,7 +27,7 @@ plain javascript. The mount page just calls the javascript render code
 to display appropriate contents
 
 ## Developers
-Howon Byun <br />
-Ken Aizawa <br />
-Kevin Lin <br />
-David Lee
+[Howon Byun](https://github.com/Howon) <br />
+[Ken Aizawa](https://github.com/aizawak) <br />
+[Kevin Lin](https://github.com/kl2806) <br />
+[David Lee](https://github.com/davidlee1435)

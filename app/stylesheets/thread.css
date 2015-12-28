@@ -85,7 +85,7 @@ ul#threads-area{
 ul#threads-area li{
     word-break: break-all;
     width: 100%;
-    padding: 5px;
+    padding: 7px 15px;
     margin: 0;
     min-height: 10%;
     background-color: #FFFFFF;

@@ -10,7 +10,6 @@ class DriveArea extends React.Component {
       display : this.props.showDriveArea ? "block" : "none"
     };
     let source = "https://drive.google.com/embeddedfolderview?id=" + this.props.driveFolder + "#list";
-    console.log(this.props.driveFolder)
     return (
 			<iframe style = { displayStatus }
 				id = "driveArea"

@@ -4,11 +4,8 @@ block head
   meta(charset='utf-8')
   meta(http-equiv='X-UA-Compatible', content='IE=edge')
   meta(name='viewport', content='width=device-width, initial-scale=1')
-  meta(name='description', content='')
-  meta(name='author', content='')
   title Rayos
   link(href='/stylesheets/ie10-viewport-bug-workaround.css', rel='stylesheet')
-  link(rel='stylesheet', type='text/css', href='//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.css')
   link(href='/stylesheets/login.css', rel='stylesheet')
   style(type='text/css').
     :root .carbonad,
@@ -29,48 +26,43 @@ block body
                 ul.nav.masthead-nav
                   li.active
                     a(href='/auth/google') Get Started
-          #inner-cover.inner.cover
-            .container
-              .carousel-inner(role='listbox')
-                .item
-                  .clagora-info-pannel
-                    img#college-image(src='/images/school_icon.png')
-                    h1.cover-heading All your classes, virtualized
-                      p.lead
-                        | Rayos provides a collaborative environment so you can stay connected to your class
-                      p.lead
-                        a.btn.btn-lg.btn-default(href='/auth/google') Get Started
-                .item
-                  .clagora-info-pannel
-                    img#college-image(src='/images/school_icon.png')
-                    h1.cover-heading Collaborative work environment
-                      p.lead
-                        | Rayos provides a collaborative environment so you can stay connected to your class
-                      p.lead
-                        a.btn.btn-lg.btn-default(href='/auth/google') Get Started
-                .item
-                  .clagora-info-pannel
-                    img#college-image(src='/images/school_icon.png')
-                    h1.cover-heading Classroom threads
-                      p.lead
-                        | Rayos provides a collaborative environment so you can stay connected to your class
-                      p.lead
-                        a.btn.btn-lg.btn-default(href='/auth/google') Get Started
-                .item
-                  .clagora-info-pannel
-                    img#college-image(src='/images/school_icon.png')
-                    h1.cover-heading Instant messaging
-                      p.lead
-                        | Rayos provides a collaborative environment so you can stay connected to your class
-                      p.lead
-                        a.btn.btn-lg.btn-default(href='/auth/google') Get Started
-         .mastfoot
-            .inner
-              p#bottom-footer
-                a(href='http://rayos.xyz/') Rayos
-                |  by&nbsp;
-                a(href='https://adicu.com/') ADI Labs
-                | .
+          .inner.cover
+            .rayos-info-pannel.active
+              img#college-image(src='/images/school_icon.png')
+              h1.cover-heading All your classes, virtualized
+                p.lead
+                  | Rayos provides a collaborative environment so you can stay connected to your class
+                p.lead
+                  a.btn.btn-lg.btn-default(href='/auth/google') Get Started
+            .rayos-info-pannel
+              img#college-image(src='/images/school_icon.png')
+              h1.cover-heading Collaborative work environment
+                p.lead
+                  | Share notes and files together with your classmates realtime
+                p.lead
+                  a.btn.btn-lg.btn-default(href='/auth/google') Get Started
+            .rayos-info-pannel
+              img#college-image(src='/images/school_icon.png')
+              h1.cover-heading Classroom threads
+                p.lead
+                  | Ask questions and conduct surveys
+                p.lead
+                  a.btn.btn-lg.btn-default(href='/auth/google') Get Started
+            .rayos-info-pannel
+              img#college-image(src='/images/school_icon.png')
+              h1.cover-heading Instant messaging
+                p.lead
+                  | Message across
+                p.lead
+                  a.btn.btn-lg.btn-default(href='/auth/google') Get Started
+            .navigation-area
+              i.navigate-item.fa.fa-angle-double-left(data-id = "left")
+              i.navigate-item.fa.fa-angle-double-right(data-id = "right")
+        .mastfoot
+          .inner
+            p#bottom-footer
+              a(href='http://rayos.xyz/') Rayos
+              |  by&nbsp;
+              a(href='https://adicu.com/') ADI Labs
   script(src='/javascripts/ie10-viewport-bug-workaround.js')
-  script(type='text/javascript', src='//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js')
   script(src='/javascripts/loginPage.js')

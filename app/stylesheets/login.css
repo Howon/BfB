@@ -22,7 +22,6 @@ a:hover {
   border: 0;
 }
 
-
 /*
  * Base structure
  */
@@ -30,7 +29,7 @@ a:hover {
 html,
 body {
   height: 100%;
-  background-color: #455C6E;
+  background-color: #3498DB;
   font-family: 'Lato', sans-serif;
 }
 body {
@@ -129,70 +128,6 @@ body {
   width: 100%;
 }
 
-/*
- * Affix and center
- */
-
-@media (min-width: 768px) {
-  /* Pull out the header and footer */
-  .masthead {
-    position: fixed;
-    top: 0;
-  }
-  /* Start the vertical centering */
-  .site-wrapper-inner {
-    vertical-align: middle;
-  }
-  /* Handle the widths */
-  .masthead,
-  .cover-container {
-    width: 100%; /* Must be percentage or pixels for horizontal alignment */
-  }
-
-  #college-image{
-    position: absolute;
-    top: 12%;
-    left: 0;
-    right: 0;
-    margin: auto;
-    width: 500px;
-  }
-
-  .inner.cover{
-    padding: 0;
-    margin-top: 250px;
-  }
-
-  .navigation-area {
-    top: -270px;
-  }
-}
-
-@media (min-width: 992px) {
-  .masthead,
-  .cover-container {
-    width: 1000px;
-  }
-
-  #college-image{
-    position: absolute;
-    top: 10%;
-    left: 0;
-    right: 0;
-    margin: auto;
-    width: 700px;
-  }
-
-  .inner.cover {
-    padding: 0;
-    margin-top: 400px;
-  }
-
-  .navigation-area {
-    top: -300px;
-  }
-}
-
 #bottom-footer{
   font-size: 17px;
   margin-bottom: 50px;
@@ -209,9 +144,8 @@ body {
 }
 
 .navigation-area {
-  position:relative;
+  position: relative;
   margin: auto;
-  width: 90%;
   height: 100px;
 }
 
@@ -237,4 +171,78 @@ body {
   float: left;
   left: 0;
   top: 0;
+}
+
+.get-started{
+  position: fixed;
+  left: 0;
+  right: 0;
+  float: bottom;
+  margin: auto;
+}
+
+/*
+ * Affix and center
+ */
+
+@media (min-width: 768px) {
+  /* Pull out the header and footer */
+  .masthead {
+    position: fixed;
+    top: 0;
+  }
+  /* Start the vertical centering */
+  .site-wrapper-inner {
+    vertical-align: middle;
+  }
+  /* Handle the widths */
+  .masthead,
+  .cover-container {
+    width: 100%; /* Must be percentage or pixels for horizontal alignment */
+  }
+
+  #rayos-image{
+    position: absolute;
+    top: 12%;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 500px;
+  }
+
+  .inner.cover{
+    padding: 0;
+    margin-top: 250px;
+  }
+
+  .navigation-area {
+    top: -270px;
+    width: 80%;
+  }
+}
+
+@media (min-width: 992px) {
+  .masthead,
+  .cover-container {
+    width: 1000px;
+  }
+
+  #rayos-image{
+    position: absolute;
+    top: 10%;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 600px;
+  }
+
+  .inner.cover {
+    padding: 0;
+    margin-top: 250px;
+  }
+
+  .navigation-area {
+    top: -230px;
+    width: 90%;
+  }
 }

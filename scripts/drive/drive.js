@@ -108,6 +108,7 @@ module.exports = {
         }]
       }
     }, function(err, res) {
+      callBack(res);
     });
   },
   insertPermission: function(fileID, userEmail, callBack){

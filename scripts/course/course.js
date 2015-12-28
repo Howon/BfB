@@ -105,13 +105,12 @@ module.exports = function(io) {
                         courseResult.subscriberRefs.push(user._id);
                         courseResult.save();
                       }
-                      models.CourseData.findById(courseDataID, function(err2, courseDataResult){
-                        if(err2){
+                      models.CourseData.findById(courseDataID, function(err2, courseDataResult) {
+                        if (err2) {
                           console.error("error: " + err2);
                         }
-                        if(courseDataResult){
-                          console.log(courseDataResult.folderRef)
-                          drive.insertPermission(courseDataResult.folderRef, user.info.email, function(){
+                        if (courseDataResult) {
+                          drive.insertPermission(courseDataResult.folderRef, user.info.email, function() {
 
                           });
                         }
@@ -158,22 +157,24 @@ module.exports = function(io) {
                       var newThread = new models.Thread({
                         "_id": newCourseData["threads"][0]["_id"],
                         "comments": [{
-                          "content" : "example comment",
-                          "postedBy" : "Rayos",
-                          "time" :  new Date()
+                          "content": "example comment",
+                          "postedBy": "Rayos",
+                          "time": new Date()
                         }]
                       })
 
                       newThread.save();
 
                       drive.createCourseFolder(courseObj.summary, function(folderRef) {
-                        newCourseData.driveFolderRef = folderRef;
-                        drive.insertPermission(folderRef, user.info.email, function(){
-                          drive.createFile(courseObj.summary, "doc", folderRef, function() {
-
+                        drive.insertPermission(folderRef, user.info.email, function() {
+                          drive.createFile(courseObj.summary, "doc", folderRef, function(res) {
+                            newCourseData.driveFileRefs.push({
+                              name: res.title,
+                              ref: res.id
+                            })
+                            newCourseData.save();
                           });
                         });
-                        newCourseData.save();
                       });
 
                       newCourse.save();
@@ -277,9 +278,9 @@ module.exports = function(io) {
         if (err) {
           console.error("error: " + err);
         }
-        if (threadResult){
+        if (threadResult) {
           socket.emit("receive:comments", {
-            thread : threadResult
+            thread: threadResult
           });
         }
       })

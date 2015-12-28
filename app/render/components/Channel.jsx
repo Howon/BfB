@@ -5,8 +5,9 @@ class Channel extends React.Component {
     this.props.joinChannel(this.props.channel.name);
   }
   render(){
+    let channelSelect = "channels-list-item";
     return (
-      <li className = "channels-list-item" onClick = { this.joinChannel.bind(this) } >
+      <li className = { channelSelect } onClick = { this.joinChannel.bind(this) } >
         { this.props.channel.name }
       </li>
     )
@@ -52,6 +53,7 @@ class ChannelSubmitForm extends React.Component {
     let displayStatus = {
         display : this.props.showChannelForm ? "block" : "none"
     };
+
     return(
       <div>
         <div style = { displayStatus } id = "channel-form-shader">
@@ -107,7 +109,7 @@ class ChannelArea extends React.Component {
       <div id = "channels-area">
         <div id = "channels-menu">
           <span id = "channel-current-channel">
-            { this.props.currentChannel }
+            channels
           </span>
           <i id = "channel-add-button" className = "fa fa-plus"
             onClick = { this.toggleChannelForm.bind(this) } ></i>

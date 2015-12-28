@@ -2,17 +2,32 @@ import React from "react";
 
 class ThreadMenu extends React.Component {
   render(){
+    let displayDriveMenu = {
+      display : this.props.showDriveArea ? "block" : "none"
+    };
+
     return (
-      <div id = "thread-menu">
+      <div id = "thread-menu-area">
         <img src = "/images/google-drive-icon.png" id = "show-google-docs"
-          onClick = { this.props.toggleDriveArea.bind(this) } >
+        onClick = { this.props.toggleDriveArea.bind(this) } >
         </img>
-        <input type="text" placeholder="Search for thread"
-          id = "search-thread">
-        </input>
-        <i id = "show-thread-post" className = "fa fa-pencil-square-o fa-lg"
-          onClick = { this.props.toggleDisplayStatus.bind(this) }>
-        </i>
+        <div id = "drive-menu-menus" style = { displayDriveMenu } >
+          <i className="file-upload-button fa fa-file-word-o" >
+          </i>
+          <i className="file-upload-button fa fa-file-pdf-o" >
+          </i>
+          <i className="file-upload-button fa fa-file-excel-o" >
+          </i>
+        </div>
+        <div id = "thread-menu-menus" >
+          <input type="text"
+            placeholder="Search for thread"
+            id = "search-thread">
+          </input>
+          <i id = "show-thread-post" className = "fa fa-pencil-square-o fa-lg"
+            onClick = { this.props.toggleDisplayStatus.bind(this) }>
+          </i>
+        </div>
       </div>
     )
   }
@@ -21,7 +36,7 @@ class ThreadMenu extends React.Component {
 class ThreadModal extends React.Component {
   render(){
     let displayStatus = {
-        display : this.props.displayModal ? "block" : "none"
+      display : this.props.displayModal ? "block" : "none"
     };
     return  (
       <div id="openModal" className="modalDialog" style = { displayStatus }  >
@@ -60,6 +75,8 @@ class ThreadList extends React.Component {
         </div>
       )
     }
+
+
     return (
       <ul id="threads-area" className="thread-area-component">
         { this.props.threads.map(renderThread.bind(this)) }
@@ -135,9 +152,13 @@ class ThreadArea extends React.Component {
     })
   }
   render() {
+    let threadAreaHeight = {
+      height : this.props.showDriveArea ? "40%" : "100%"
+    }
     return (
-      <div id="thread-area">
+      <div id="thread-area" style = { threadAreaHeight }>
         <ThreadMenu toggleDisplayStatus = { this.toggleDisplayStatus.bind(this) }
+          showDriveArea = { this.props.showDriveArea }
           toggleDriveArea = { this.props.toggleDriveArea.bind(this) } />
         <ThreadList threads = { this.props.threads } toggleModal = { this.props.toggleModal } />
         <ThreadInputForm showPostInput = { this.state.showPostInput } postThread = { this.props.postThread } toggleDisplayStatus = { this.toggleDisplayStatus.bind(this) } />

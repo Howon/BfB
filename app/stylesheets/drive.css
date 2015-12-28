@@ -1,4 +1,4 @@
-#driveArea{
+#drive-area{
 	position: absolute;
 	border:0;
   height: 100%;
@@ -8,7 +8,35 @@
   height: 60%;
 	z-index: 5;
 	background-color: white;
-	padding: 10px 0 10px 0;
+	padding: 0;
   border-left: 1px solid #607D8B;
   border-top: 1px solid #607D8B;
+}
+
+#drive-menu-menus{
+  position: absolute;
+  top: 0;
+  margin-top: 8px;
+  margin-left: 50px;
+}
+
+.file-upload-button{
+  font-size: 25px;
+  margin-right: 20px;
+  color: black;
+  cursor: pointer;
+  color: white;
+}
+
+#drive-file-list{
+  margin: 10px 50px 10px 50px;
+}
+
+.drive-file-list-item{
+  padding: 5px 10px 5px 10px;
+  border-bottom: 1px solid #607D8B;
+}
+
+.drive-file-list-item a{
+  text-decoration:none;
 }

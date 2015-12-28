@@ -21,10 +21,10 @@ class Body extends React.Component{
       course         : this.props.app_props.course.id,
       threads        : [],
       messages       : [],
-      driveFolder    : "",
       currentChannel : "main",
       channels       : [],
       showDriveArea  : false,
+      driveFiles     : [],
       showModal      : false,
       modalThread    : {
         content  : "",
@@ -63,7 +63,7 @@ class Body extends React.Component{
     this.setState({
       threads     : data.courseData.threads,
       channels    : data.courseData.channelRefs,
-      driveFolder : data.courseData.driveFolderRef
+      driveFiles  : data.courseData.driveFileRefs
     });
   }
   receiveComments(data){
@@ -157,18 +157,19 @@ class Body extends React.Component{
         <NavBar profile = { this.state.profile }
           uploadCalendar = { this.uploadCalendar.bind(this) } />
         <div id="content-area">
-          <Thread threads = { this.state.threads }
-            toggleModal = { this.toggleModal.bind(this) }
-            postThread = { this.postThread.bind(this) }
-            toggleDriveArea = { this.toggleDriveArea.bind(this) } />
           <Chat messages = { this.state.messages }
             postMessage = { this.postMessage.bind(this) }
             currentChannel = { this.state.currentChannel }
             channels = { this.state.channels }
             makeChannel = { this.makeChannel.bind(this) }
             joinChannel = { this.joinChannel.bind(this) } />
+          <Thread threads = { this.state.threads }
+            toggleModal = { this.toggleModal.bind(this) }
+            postThread = { this.postThread.bind(this) }
+            showDriveArea = { this.state.showDriveArea }
+            toggleDriveArea = { this.toggleDriveArea.bind(this) } />
           <Drive showDriveArea = { this.state.showDriveArea }
-            driveFolder = { this.state.driveFolder }
+            driveFiles = { this.state.driveFiles }
             toggleDriveArea = { this.toggleDriveArea.bind(this) } />
         </div>
   		</div>

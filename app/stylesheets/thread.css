@@ -2,7 +2,6 @@
     position: absolute;
     margin-left: 60%;
     width: 40%;
-    height: 100%;
     float: left;
     padding: 0;
     background-color: #B0BEC5;
@@ -16,11 +15,18 @@
     margin: 0;
 }
 
-#thread-menu{
+#thread-menu-area{
     margin: 0;
     height: 40px;
-    background-color: #80CBC4;
+    background-color: #2573A6;
     border-bottom: 1px solid #607D8B;
+}
+
+#thread-menu-menus{
+    position: absolute;
+    float: right;
+    right: 0;
+    top: 0;
 }
 
 #show-thread-post{
@@ -30,12 +36,14 @@
     margin-top: 13px;
     margin-right: 10px;
 	font-size: 25px;
+    color: #FAFAFA;
 }
 
 #show-thread-post:hover{
     margin-top: 12px;
     margin-right: 8px;
     font-size: 28px;
+    color: white;
 }
 
 #show-google-docs{

@@ -6,38 +6,50 @@
 
 #channels-area{
     position: absolute;
-    width: 200px;
+    width: 180px;
     height: 100%;
-    background-color: #FBFBFB;
+    background-color: #4B698C;
     border-right: 1px solid #455A64;
 }
 
 #channels-menu{
-    height: 50px;
+    height: 40px;
     width: 100%;
-    background-color: #E53935;
-    border-bottom: 1px solid #455A64;
+    background-color: #4B698C;
+    border-bottom: 1px solid #2D3C43;
 }
 
 #channel-current-channel{
     float: left;
-    margin: 5px 0 0 7px;
-    font-size: 24px;
-    font-style: italic;
-    font-weight: bold;
-    opacity: 0.87;
+    font-size: 22px;
+    margin-top: 4px;
+    margin-left: 5px;
+    opacity: 0.6;
+    color: white;
+    cursor: pointer;
+}
+
+#channel-current-channel:hover{
+    opacity: 1;
 }
 
 #channel-add-button{
     float: right;
-    margin: 8px 7px 0 0;
     cursor: pointer;
-    font-size: 27px;
+    font-size: 23px;
+    color: white;
+    margin-top: 9px;
+    margin-right: 9px;
+    opacity: 0.6;
 }
 
 #channel-add-button:hover{
-    margin-top : 7px;
-    font-size: 29px;
+    opacity: 1;
+}
+
+#channel-add-button:hover{
+    margin-top : 8px;
+    font-size: 24px;
 }
 
 #channel-form-shader{
@@ -117,11 +129,22 @@
     border: 1px #607D8B solid;
 }
 
+ul#channels-list {
+    padding-top: 5px;
+}
+
 ul#channels-list li{
-    margin: 0 10px 0 10px;
+    margin: 0;
+    padding-left: 10px;
+    padding-right: 10px;
     list-style-type: none;
     font-size: 21px;
-    color: #455A64;
+    color: #D8D8D8;
     opacity: 0.87;
     cursor: pointer;
+}
+
+ul#channels-list li:hover{
+    color: white;
+    background-color: #B5B5B5;
 }

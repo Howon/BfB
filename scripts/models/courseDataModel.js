@@ -14,7 +14,10 @@ var coursedataSchema = new Schema({
 		name : String,
 		ref : String
 	}],
-	driveFolderRef: String
+	driveFileRefs:[{
+		name : String,
+		ref : String
+	}]
 });
 
 module.exports = mongoose.model('CourseData', coursedataSchema);

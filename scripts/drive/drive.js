@@ -39,7 +39,7 @@ module.exports = {
 
       fs.readFile(TOKEN_PATH, function(err, token) {
         if (err) {
-          getNewToken(oauth2Client, seto);
+          getNewToken(oauth2Client, setOauthClient);
         } else {
           oauth2Client.credentials = JSON.parse(token);
           setOauthClient(oauth2Client);
@@ -47,7 +47,7 @@ module.exports = {
       });
     }
 
-    function getNewToken(oauth2Client, setClient) {
+    function getNewToken(oauth2Client, setOauthClient) {
       var authUrl = oauth2Client.generateAuthUrl({
         access_type: 'offline',
         scope: SCOPES
@@ -71,7 +71,7 @@ module.exports = {
           }
           oauth2Client.credentials = token;
           storeToken(token);
-          setClient(oauth2Client);
+          setOauthClient(oauth2Client);
         });
       });
     }

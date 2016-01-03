@@ -4,11 +4,11 @@
   height: 100%;
   margin-left: 60%;
   width: 40%;
-  top: 40%;
-  height: 60%;
+  top: 45%;
+  height: 55%;
 	z-index: 5;
 	background-color: white;
-	padding: 0;
+	padding: 10px;
   border-left: 1px solid #607D8B;
   border-top: 1px solid #607D8B;
 }
@@ -16,25 +16,31 @@
 #drive-menu-menus{
   position: absolute;
   top: 0;
-  margin-top: 8px;
-  margin-left: 50px;
+  right: 60px;
+  float: right;
+  margin-top: 10px;
 }
 
-.file-upload-button{
-  font-size: 25px;
-  margin-right: 20px;
-  color: black;
+#drive-file-upload-buttom{
+  margin-left: 20px;
   cursor: pointer;
-  color: white;
+  height: 30px;
 }
 
 #drive-file-list{
-  margin: 10px 50px 10px 50px;
+  margin: 10px 40px 10px 25px;
 }
 
 .drive-file-list-item{
-  padding: 5px 10px 5px 10px;
-  border-bottom: 1px solid #607D8B;
+  padding: 5px 15px 5px 15px;
+  border-top: 1px solid #607D8B;
+  font-size: 16px;
+}
+
+#drive-description{
+  color: #2573A6;
+  font-size: 18px;
+  margin-left: 25px;
 }
 
 .drive-file-list-item a{

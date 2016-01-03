@@ -10,10 +10,6 @@ body {
 	height: 100%;
 }
 
-.navbar.navbar-inverse.navbar-fixed-top{
-	margin: 0;
-}
-
 * {
 	margin: 0;
 	padding: 0;
@@ -29,21 +25,49 @@ li{
 }
 
 #mount-point{
-	top: 50px;
 	height: 100%;
 	width: 100%;
 	background-color: #FAFAF7;
 }
 
-.navbar.navbar-inverse.navbar-fixed-top{
+#navBar{
+	padding: 10px 20px;
+	width: 100%;
 	position: absolute;
 	background-color: #3498DB;
+	border-bottom: 1px solid #226E9F;
 	height: 50px;
 }
 
-
-.navbar.navbar-inverse.navbar-fixed-top a{
+#navBar a{
+	text-decoration: none;
 	font-family: 'Lato', sans-serif;
 	color: #FFFFFF;
 	font-size: 20px;
+}
+
+#navBar-Rayos{
+	z-index: 1;
+	position: absolute;
+}
+
+#course-title {
+	position: absolute;
+	text-align: center;
+	left: 0;
+	right: 0;
+	margin:auto;
+}
+
+#navBar-user-area{
+	position: absolute;
+	float: right;
+	right: 30px;
+}
+
+#navBar-user-area span{
+	margin-left: 25px;
+}
+.modal-backdrop.in{
+	display: none;
 }

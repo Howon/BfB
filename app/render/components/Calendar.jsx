@@ -1,7 +1,7 @@
-import React from "react";  
+import React from "react";
 
 
-function calenDate(icalStr)  { 
+function calenDate(icalStr)  {
   let  strYear = icalStr.substr(0,4);
   let  strMonth = parseInt(icalStr.substr(4,2), 10) - 1;
   let  strDay = icalStr.substr(6,2);
@@ -20,19 +20,19 @@ class Course extends React.Component {
     let startTime = calenDate(temp.startTime);
     let endTime = calenDate(temp.endTime);
 
-    let differenceMin = Math.round((endTime - startTime) / 60000);    
+    let differenceMin = Math.round((endTime - startTime) / 60000);
 
-    let courseHeight = heightOffset * (differenceMin / 60.0);    
+    let courseHeight = heightOffset * (differenceMin / 60.0);
     let courseTopOffset = Math.floor(heightOffset * ((startTime.getHours() - 7) + (startTime.getMinutes() / 60.0)));
     let courseURL = "/course/" + temp.id;
-    let blockStyle = { 
-        height : courseHeight,
-        top    : courseTopOffset
+    let blockStyle = {
+      height : courseHeight,
+      top    : courseTopOffset
     };
 
     return (
       <div className="calendar-course-item" style = { blockStyle } >
-          <a className = "calendar-course-item-courseUrl" href = { courseURL } > { temp.courseName } </a>          
+          <a className = "calendar-course-item-courseUrl" href = { courseURL } > { temp.courseName } </a>
       </div>
     );
   }
@@ -57,7 +57,7 @@ class Week extends React.Component {
     let coursesArr = [[], [], [], [], []];
     let tempCal = this.props.calendar;
 
-    for(let i = 0; i < tempCal.length; i++){      
+    for(let i = 0; i < tempCal.length; i++){
       let meetingTimes = tempCal[i].meetingTimes;
       for(let j = 0; j < meetingTimes.length; j++){
         let day = calenDate(meetingTimes[j].startTime).getDay() - 1;
@@ -67,9 +67,9 @@ class Week extends React.Component {
           location   : tempCal[i].location,
           startTime  : meetingTimes[j].startTime,
           endTime    : meetingTimes[j].endTime
-        }     
+        }
         coursesArr[day].push(tempCourse);
-      }      
+      }
     }
 
     let  days = coursesArr.map(function(courses, i) {
@@ -84,7 +84,7 @@ class Week extends React.Component {
   }
 }
 
-class Calendar extends React.Component { 
+class Calendar extends React.Component {
   render() {
     let hours = [];
     for (let i = 8; i < 23; i++){
@@ -98,13 +98,13 @@ class Calendar extends React.Component {
       }
       hours.push(<li key = { i } className = "time-bar-hour"> { time } </li>);
     }
-    return (      
+    return (
       <div id = "calendar">
-        <ul id = "time-bar"> 
-          { hours } 
+        <ul id = "time-bar">
+          { hours }
         </ul>
-        <table className="calendar-area">        
-          <thead>          
+        <table className="calendar-area">
+          <thead>
             <td className = "calendar-week-day"> Monday </td>
             <td className = "calendar-week-day"> Tuesday </td>
             <td className = "calendar-week-day"> Wednesday </td>
@@ -115,7 +115,7 @@ class Calendar extends React.Component {
         </table>
       </div>
     );
-  }    
+  }
 }
 
 export default Calendar;

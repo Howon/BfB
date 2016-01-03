@@ -2,23 +2,11 @@ import React from "react";
 
 class ThreadMenu extends React.Component {
   render(){
-    let displayDriveMenu = {
-      display : this.props.showDriveArea ? "block" : "none"
-    };
-
     return (
       <div id = "thread-menu-area">
-        <img src = "/images/google-drive-icon.png" id = "show-google-docs"
+        <img src = "/images/google-drive-icon.png" id = "show-drive-area"
         onClick = { this.props.toggleDriveArea.bind(this) } >
         </img>
-        <div id = "drive-menu-menus" style = { displayDriveMenu } >
-          <i className="file-upload-button fa fa-file-word-o" >
-          </i>
-          <i className="file-upload-button fa fa-file-pdf-o" >
-          </i>
-          <i className="file-upload-button fa fa-file-excel-o" >
-          </i>
-        </div>
         <div id = "thread-menu-menus" >
           <input type="text"
             placeholder="Search for thread"
@@ -36,10 +24,10 @@ class ThreadMenu extends React.Component {
 class ThreadModal extends React.Component {
   render(){
     let displayStatus = {
-      display : this.props.displayModal ? "block" : "none"
+      display : this.props.displayThreadModal ? "block" : "none"
     };
     return  (
-      <div id="openModal" className="modalDialog" style = { displayStatus }  >
+      <div id="openThreadModal" className="modalDialog" style = { displayStatus }  >
         <div>
           { this.props.currentThreadModal.content }
           <div className = 'thread-post-postedBy'>
@@ -52,34 +40,34 @@ class ThreadModal extends React.Component {
 }
 
 class Thread extends React.Component {
+  openThreadModal(){
+    this.props.openThreadModal(this.props.thread);
+  }
   render(){
     return (
-        <li className = 'thread-post'>
-          <div>
-            { this.props.thread.content }
-            <div className = 'thread-post-postedBy'>
-              Posted by : { this.props.thread.postedBy }
-            </div>
+      <li className = 'thread-post' onClick = { this.openThreadModal.bind(this) } >
+        <div>
+          { this.props.thread.title }
+          <div className = 'thread-post-postedBy'>
+            Posted by : { this.props.thread.postedBy }
           </div>
-       </li>
+        </div>
+     </li>
     )
   }
 };
 
 class ThreadList extends React.Component {
   render(){
-    var renderThread = function(thread, i){
+    let threads = this.props.threads.map(function(thread, i){
       return (
-        <div onClick = { this.props.toggleModal.bind(undefined, thread) }>
-          <Thread key = { i } thread = { thread }/>
-        </div>
-      )
-    }
-
+        <Thread key = { i } thread = { thread } openThreadModal = { this.props.openThreadModal.bind(this) } />
+      );
+    }, this);
 
     return (
       <ul id="threads-area" className="thread-area-component">
-        { this.props.threads.map(renderThread.bind(this)) }
+        { threads }
       </ul>
     )
   }
@@ -89,26 +77,51 @@ class ThreadInputForm extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      thread  : ''
+      threadTitle : '',
+      threadContent  : ''
     }
   }
-  handleChange(evt) {
+  componentDidMount(){
+    $(document).ready(function() {
+      $('#thread-content-input').summernote({
+        toolbar: [
+          ['style', ['bold', 'italic', 'underline', 'clear']],
+          ['style', [ 'fontname']],
+          ['font', ['superscript', 'subscript']],
+          ['fontsize', ['fontsize']],
+          ['color', ['color']],
+          ['para', ['ul', 'ol', 'paragraph','height']],
+          ['insert', ['link', 'table']]
+        ],
+        height: 350,
+        maxHeight: 350,             // set maximum height of editor
+        focus: true,                  // set focus to editable area after initializin
+        disableDragAndDrop: true,
+        placeholder: 'write here...'
+      });
+    });
+  }
+  handleTitleChange(evt) {
     evt.preventDefault();
     this.setState({
-      thread: evt.target.value
-    });
+      threadTitle : evt.target.value
+    })
   }
   postThread(e){
     if(/\S/.test(this.state.thread)){
       this.props.toggleDisplayStatus();
       this.props.postThread({
-        content : this.state.thread
+        title   : this.state.threadTitle,
+        content : $('#thread-content-input').summernote('code')
       });
     }
+    $('#thread-content-input').summernote().code('');
+
     e.preventDefault();
     this.setState({
       showPostInput : false,
-      thread: ""
+      threadTitle : "",
+      threadContent: ""
     });
   }
   render(){
@@ -116,17 +129,27 @@ class ThreadInputForm extends React.Component {
       display : this.props.showPostInput ? "block" : "none"
     };
     return (
-      <div>
-        <div style = { displayStatus }>
-          <i id = "cancel-thread-post" className = "fa fa-times"
-            onClick = { this.props.toggleDisplayStatus } ></i>
-          <i id = "submit-thread" className = "fa fa-check-square-o"
-            onClick = { this.postThread.bind(this) } ></i>
-          <textarea id = "thread-input" className = "thread-area"
+      <div style = { displayStatus } >
+        <div id = "thread-input-shader"
+          onClick = { this.props.toggleDisplayStatus } >
+        </div>
+        <div id = "thread-input-form" >
+          <div id = "thread-input-form-title">
+            New Thread
+          </div>
+          <i id = "close-thread-form" className = "fa fa-times"
+            onClick = { this.props.toggleDisplayStatus } >
+          </i>
+          <i id = "submit-thread-form" className = "fa fa-check-square-o"
+            onClick = { this.postThread.bind(this) } >
+          </i>
+          <textarea id = "thread-title-input"
             type = "text"
-            placeholder = "Type to post a thread"
-            onChange = { this.handleChange.bind(this) }
-            value = { this.state.thread } ></textarea>
+            placeholder = "Enter title for your thread"
+            onChange = { this.handleTitleChange.bind(this) }
+            value = { this.state.threadTitle } ></textarea>
+          <textarea id = "thread-content-input"
+            value = { this.state.threadContent } ></textarea>
         </div>
       </div>
     )
@@ -143,7 +166,7 @@ class ThreadArea extends React.Component {
     this.state = {
       showPostInput : false,
       currentThreadModal : emptyThread,
-      displayModal   : false
+      displayThreadModal   : false
     }
   }
   toggleDisplayStatus(){
@@ -153,14 +176,14 @@ class ThreadArea extends React.Component {
   }
   render() {
     let threadAreaHeight = {
-      height : this.props.showDriveArea ? "40%" : "100%"
+      height : this.props.showDriveArea ? "45%" : "100%"
     }
     return (
       <div id="thread-area" style = { threadAreaHeight }>
         <ThreadMenu toggleDisplayStatus = { this.toggleDisplayStatus.bind(this) }
           showDriveArea = { this.props.showDriveArea }
           toggleDriveArea = { this.props.toggleDriveArea.bind(this) } />
-        <ThreadList threads = { this.props.threads } toggleModal = { this.props.toggleModal } />
+        <ThreadList threads = { this.props.threads } openThreadModal = { this.props.openThreadModal } />
         <ThreadInputForm showPostInput = { this.state.showPostInput } postThread = { this.props.postThread } toggleDisplayStatus = { this.toggleDisplayStatus.bind(this) } />
       </div>
     )

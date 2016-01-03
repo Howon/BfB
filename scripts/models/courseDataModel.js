@@ -6,9 +6,9 @@ var coursedataSchema = new Schema({
 	_id: String,
 	threads: [{
 		postedBy  : String,
-		content : String,
-		time    : Date,
-		_id : String
+		title : String,
+		time  : Date,
+		threadRef: String
 	}],
 	channelRefs: [{
 		name : String,

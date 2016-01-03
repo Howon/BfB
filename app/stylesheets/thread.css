@@ -46,18 +46,12 @@
     color: white;
 }
 
-#show-google-docs{
+#show-drive-area{
     cursor: pointer;
     margin-top: 6px;
     margin-left: 6px;
     z-index: 10;
     width: 27px;
-}
-
-#show-google-docs:hover{
-    margin-top: 6px;
-    margin-left: 6px;
-    width: 28px;
 }
 
 #search-thread{
@@ -85,9 +79,9 @@ ul#threads-area{
 ul#threads-area li{
     word-break: break-all;
     width: 100%;
-    padding: 7px 15px;
+    padding: 10px 15px;
     margin: 0;
-    min-height: 10%;
+    height: 40px;
     background-color: #FFFFFF;
     border-bottom: 1px solid #607D8B;
     cursor: pointer;
@@ -109,51 +103,106 @@ div.thread-post-postedBy{
     float: right;
 }
 
-textarea#thread-input{
-    z-index: 2;
-    padding: 3px;
+#thread-input-form{
+    font-family: 'Lato', sans-serif;
+    z-index: 10;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    height: 610px;
+    width: 760px;
+    padding: 15px;
+    background-color: white;
+    border: 2px #5C80AE solid;
+    border-radius: 3px;
+}
+
+#thread-input-shader{
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 50px;
+    background-color: #37474F;
+    opacity: 0.3;
+    z-index: 10;
+}
+
+#thread-input-form .note-resizebar{
+    display: none;
+}
+
+#thread-input-form-title{
     position: absolute;
-    bottom: 15px;
-    height: 80px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 24px;
+    color: #2573A6;
+}
+
+#thread-input-form textarea{
     resize: none;
     outline: none;
-    left: 10px;
-    width: calc(100% - 20px);
-    border: 1px #607D8B solid;
+    position: absolute;
+    border: 1px solid #2573A6;
 }
 
-#submit-thread{
+#thread-input-form textarea#thread-title-input{
+    width: 90%;
+    left: 5%;
+    height: 40px;
+    padding: 7px 10px;
+    top: 80px;
+    font-size: 17px;
+}
+
+#thread-input-form .note-editor.note-frame.panel.panel-default{
+    position: absolute;
+    bottom: 0;
+    top: 140px;
+    height: 400px;
+    left: 5%;
+    width: 90%;
+    border: 1px #2573A6 solid;
+    border-radius: 0;
+}
+
+.panel-default .fa{
+    font-size: 15px;
+}
+
+#submit-thread-form{
     z-index: 3;
+    opacity: 0.5;
     position: absolute;
     float: right;
-    right: 15px;
-    bottom: 20px;
-    font-size: 20px;
+    right: 20px;
+    bottom: 15px;
+    font-size: 28px;
     cursor: pointer;
 }
 
-#submit-thread:hover{
-    font-size: 25px;
-    bottom: 17px;
-    right: 13px;
+#submit-thread-form:hover {
+    opacity: 1;
+    color: #5B82BA;
 }
 
-.fa.fa-check-square-o{
-    margin-left: 10px;
-}
-
-#cancel-thread-post{
+#close-thread-form {
     z-index: 3;
+    opacity: 0.5;
     position: absolute;
+    top: 15px;
     float: right;
-    right: 17px;
-    bottom: 100px;
-    font-size: 22px;
+    right: 20px;
+    font-size: 30px;
     cursor: pointer;
 }
 
-#cancel-thread-post:hover{
-    font-size: 27px;
-    bottom: 97px;
-    right: 15px;
+#close-thread-form:hover {
+    opacity: 1;
+    color: #5C80AE;
 }

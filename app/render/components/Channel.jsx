@@ -5,7 +5,7 @@ class Channel extends React.Component {
     this.props.joinChannel(this.props.channel.name);
   }
   render(){
-    let channelSelect = "channels-list-item";
+    let channelSelect = this.props.currentChannel === this.props.channel.name ? "channels-list-item active" : "channels-list-item";
     return (
       <li className = { channelSelect } onClick = { this.joinChannel.bind(this) } >
         { this.props.channel.name }
@@ -56,7 +56,8 @@ class ChannelSubmitForm extends React.Component {
 
     return(
       <div>
-        <div style = { displayStatus } id = "channel-form-shader">
+        <div style = { displayStatus } id = "channel-form-shader"
+          onClick = { this.props.toggleChannelForm.bind(this) } >
         </div>
         <div style = { displayStatus } id = "channel-form">
           <p> Create a new channel </p>
@@ -92,7 +93,7 @@ class ChannelArea extends React.Component {
   }
   toggleChannelForm(){
     this.setState({
-      showChannelForm : this.state.showChannelForm ? false : true
+      showChannelForm : !this.state.showChannelForm
     })
   }
   submitChannelForm(newChannelData){
@@ -101,20 +102,18 @@ class ChannelArea extends React.Component {
   render() {
     let channels = this.props.channels.map(function(channel, i){
       return (
-        <Channel key = { i } channel = { channel } joinChannel = { this.joinChannel.bind(this) }/>
+        <Channel key = { i } currentChannel = { this.props.currentChannel } channel = { channel } joinChannel = { this.joinChannel.bind(this) }/>
       );
     }, this);
 
     return(
       <div id = "channels-area">
         <div id = "channels-menu">
-          <span id = "channel-current-channel">
+          <span id = "channels-menu-area">
             channels
           </span>
           <i id = "channel-add-button" className = "fa fa-plus"
             onClick = { this.toggleChannelForm.bind(this) } ></i>
-          <ChannelSubmitForm showChannelForm = { this.state.showChannelForm }
-            toggleChannelForm = { this.toggleChannelForm.bind(this) } />
           <ChannelSubmitForm showChannelForm = { this.state.showChannelForm }
             toggleChannelForm = { this.toggleChannelForm.bind(this) }
             submitChannelForm = { this.submitChannelForm.bind(this) }/>

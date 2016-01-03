@@ -73,3 +73,7 @@ textarea#message-input-text{
     cursor: pointer;
     color: #2573A6;
 }
+
+#message-input-button:hover{
+    color: #2889CA;
+}

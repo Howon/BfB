@@ -1,54 +1,51 @@
 @import url(http://fonts.googleapis.com/css?family=Roboto);
 
-table {
-    border-collapse: collapse;
-    padding: 0;
-    margin: 0;
-    border: 0;
-}
-
-thead {
-    text-align: center;
-}
-
-tr{
-    width: 100%;
-}
-
 .calendar-week-day{
     height: 30px;
     background-color: #B0BEC5;
 }
 
 .calendar-week{
-    height: 610px;    
+    height: 610px;
 }
 
 .calendar-day:first-child{
     padding-left: 3px;
 }
 
-a {
-    text-decoration: none
-}
-
-button {
-    font-size: large;
-}
-
 .calendar-area {
     position: absolute;
-    top: 80px;    
+    top: 80px;
     left: calc(9% + 50px);
-    width: 850px;    
+    width: 850px;
     table-layout: fixed;
     background-color: #FDFDFD;
     min-height: 200px;
 }
 
+.calendar-area table {
+    border-collapse: collapse;
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+
+.calendar-area thead {
+    text-align: center;
+}
+
+.calendar-area tr{
+    width: 100%;
+}
+
+.calendar-area button {
+    font-size: large;
+}
+
+
 .calendar-course-item {
     position: absolute;
-    font-size: 11px;    
+    font-size: 11px;
     width: 19%;
     margin-left: 4px;
     margin-top: 4px;
@@ -67,10 +64,10 @@ button {
     position: absolute;
     height: 640px;
     top: 80px;
-    left: 9%;  
+    left: 9%;
     padding: 0;
     padding-top: 30px;
-    width: 50px; 
+    width: 50px;
     background-color: #B0BEC5;
     text-align: right;
     -webkit-box-shadow: 1px 1px 2px 2px rgba(0,0,0,0.1);
@@ -81,6 +78,6 @@ button {
 .time-bar-hour{
     padding-right: 5px;
     list-style-type: none;
-    height: 40px;    
+    height: 40px;
 }
 

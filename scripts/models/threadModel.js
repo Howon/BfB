@@ -4,6 +4,7 @@ var mongoose = require('mongoose'),
 
 var threadSchema = new Schema({
 	_id: String,
+  content : String,
 	comments: [{
 		postedBy  : String,
 		content : String,

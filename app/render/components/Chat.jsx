@@ -15,7 +15,7 @@ class Message extends React.Component {
 
 class MessageList extends React.Component {
   render(){
-    var renderMessage = function(message, i){
+    let renderMessage = function(message, i){
       return <Message key = { i } sender = { message.sender } content = { message.content } />
     }
     return (

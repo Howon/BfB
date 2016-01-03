@@ -1,27 +1,26 @@
 import React from "react";
 
 class NavBar extends React.Component {
-    constructor(props) {
-        super(props);
-        this.displayName = '';
-    }
-    render() {
-        return (
-          <nav className="navbar navbar-inverse navbar-fixed-top">
-            <div className="container-fluid">
-              <div className="navbar-header">
-                <a className="navbar-brand" href="/">Rayos</a>
-              </div>
-              <div id="navbar" className="navbar-collapse collapse">
-                <ul className="nav navbar-nav navbar-right">
-                  <li><a href="">{ this.props.profile.name }</a></li>
-                  <li><a href="/logout">Logout</a></li>
-                </ul>
-              </div>
-            </div>
-          </nav>
-        )
-    }
+  constructor(props) {
+    super(props);
+    this.displayName = '';
+  }
+  render() {
+    return (
+      <nav id = "navBar">
+        <div id = "navBar-Rayos">
+          <a href="/">Rayos</a>
+        </div>
+        <div id = "course-title">
+          <a className="" href="">{ this.props.courseTitle }</a>
+        </div>
+        <div id = "navBar-user-area">
+          <span><a>{ this.props.profile.name }</a></span>
+          <span ><a href="/logout">Logout</a></span>
+        </div>
+      </nav>
+    )
+  }
 }
 
 export default NavBar

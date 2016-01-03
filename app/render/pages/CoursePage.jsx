@@ -1,5 +1,6 @@
 import React from "react";
 import io from 'socket.io-client';
+
 let courseSock = io(window.location.host + "/course");
 let chatSock = io(window.location.host + "/chat");
 let threadSock = io(window.location.host + "/thread");
@@ -9,23 +10,22 @@ import SideBar from "../components/SideBar.jsx";
 import NavBar from "../components/NavBar.jsx";
 import Chat from "../components/Chat.jsx";
 import Drive from "../components/Drive.jsx";
-import Modal from "../components/Modal.jsx";
-
-let Transition = React.TransitionGroup;
+import ThreadModal from "../components/ThreadModal.jsx";
 
 class Body extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
       profile        : this.props.app_props.user,
-      course         : this.props.app_props.course.id,
+      courseTitle    : this.props.app_props.course.title,
+      courseID       : this.props.app_props.course.id,
       threads        : [],
       messages       : [],
       currentChannel : "main",
       channels       : [],
       showDriveArea  : false,
       driveFiles     : [],
-      showModal      : false,
+      showThreadModal      : false,
       modalThread    : {
         content  : "",
         postedBy : ""
@@ -34,14 +34,12 @@ class Body extends React.Component{
     }
   }
   componentDidMount(){
-    courseSock.emit('get:course_data', this.state.course);
+    courseSock.emit('get:course_data', this.state.courseID);
     chatSock.emit('join:channel', {
       channel : "main",
-      course  : this.state.course
+      course  : this.state.courseID
     });
-    threadSock.emit('join:thread_space', this.state.course);
-
-    let course = this.state.course;
+    threadSock.emit('join:thread_space', this.state.courseID);
 
     courseSock.on('receive:course_data', this.receiveCourseData.bind(this));
     courseSock.on('receive:new_channel', this.receiveChannel.bind(this));
@@ -91,7 +89,7 @@ class Body extends React.Component{
     });
   }
   makeChannel(newChannelData){
-    newChannelData.course = this.state.course;
+    newChannelData.course = this.state.courseID;
     courseSock.emit("make:new_channel", newChannelData);
     this.joinChannel(newChannelData.name);
     this.receiveChannel(newChannelData);
@@ -99,7 +97,7 @@ class Body extends React.Component{
   joinChannel(channelName){
     chatSock.emit('join:channel', {
       channel : channelName,
-      course  : this.state.course
+      course  : this.state.courseID
     });
   }
   loadChannel(channelData){
@@ -129,34 +127,36 @@ class Body extends React.Component{
   }
   toggleDriveArea(){
     this.setState({
-      showDriveArea : this.state.showDriveArea ? false : true
+      showDriveArea : !this.state.showDriveArea
     })
   }
-  toggleModal(thread){
-    if (!this.state.showModal){
+  openThreadModal(thread){
+    if (!this.state.showThreadModal){
       this.setState({
-        showModal : !this.state.showModal,
+        showThreadModal : !this.state.showThreadModal,
         modalThread : thread
       })
       courseSock.emit('get:comments', thread._id);
     }
   }
-  offModal(){
-    if (this.state.showModal){
+  closeThreadModal(){
+    if (this.state.showThreadModal){
       this.setState({
-        showModal : !this.state.showModal
+        showThreadModal : !this.state.showThreadModal
       })
     }
   }
 	render(){
   	return (
-  		<div onClick = { this.offModal.bind(this) } >
-        <Modal showModal = { this.state.showModal }
-          modalComments = { this.state.modalComments }
-          modalThread = { this.state.modalThread } />
+  		<div>
         <NavBar profile = { this.state.profile }
+          courseTitle = { this.state.courseTitle }
           uploadCalendar = { this.uploadCalendar.bind(this) } />
         <div id="content-area">
+          <ThreadModal showThreadModal = { this.state.showThreadModal }
+            modalComments = { this.state.modalComments }
+            modalThread = { this.state.modalThread }closeThreadModal
+            closeThreadModal = { this.closeThreadModal.bind(this) } />
           <Chat messages = { this.state.messages }
             postMessage = { this.postMessage.bind(this) }
             currentChannel = { this.state.currentChannel }
@@ -164,7 +164,7 @@ class Body extends React.Component{
             makeChannel = { this.makeChannel.bind(this) }
             joinChannel = { this.joinChannel.bind(this) } />
           <Thread threads = { this.state.threads }
-            toggleModal = { this.toggleModal.bind(this) }
+            openThreadModal = { this.openThreadModal.bind(this) }
             postThread = { this.postThread.bind(this) }
             showDriveArea = { this.state.showDriveArea }
             toggleDriveArea = { this.toggleDriveArea.bind(this) } />

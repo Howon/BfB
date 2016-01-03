@@ -1,5 +1,7 @@
 "use strict";
 
+var models = require('./models/index');
+
 module.exports = function(app, passport) {
   app.get('/', function(req, res) {
     if (req.isAuthenticated()) {
@@ -30,7 +32,7 @@ module.exports = function(app, passport) {
         user: {
           id: req.user._id,
           name: req.user.info.name,
-          email: req.user.info.email,
+          email: req.user.info.email
         }
       };
 
@@ -45,38 +47,36 @@ module.exports = function(app, passport) {
 
   app.get('/course/:id', function(req, res) {
     if (req.isAuthenticated()) {
-      var props = {
-        user: {
-          id: req.user._id,
-          name: req.user.info.name,
-          email: req.user.info.email,
-        },
-        course: {
-          id: req.params.id
-        }
-      };
+      var courseID = req.params.id;
+      models.Course.findById(courseID, function(err, courseData){
+        if(err){
+          console.error(err);
+        } else if (courseData){
+          var props = {
+            user: {
+              id: req.user._id,
+              name: req.user.info.name,
+              email: req.user.info.email
+            },
+            course: {
+              title : courseData.summary,
+              id: courseID
+            }
+          };
 
-      res.render('course', {
-        title: 'rayos',
-        APP_PROPS: props
-      });
+          res.render('course', {
+            title: 'rayos',
+            APP_PROPS: props
+          });
+        }
+      })
     } else {
       res.redirect('/');
     }
-  });
-
-  app.get('/test', function(req, res){
-    res.render('test', {
-      title: 'test'
-    });
   });
 
   app.get('/logout', function(req, res) {
     req.logout();
     res.redirect('/');
   });
-
-  app.get('/test', function(req, res){
-    res.render('displaydocs');
-  })
 };

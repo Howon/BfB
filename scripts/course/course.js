@@ -140,30 +140,32 @@ module.exports = function(io) {
                       });
                       newChannel.save();
 
+                      var threadID = new mongoose.Types.ObjectId();
+
+                      var newThread = new models.Thread({
+                        "_id" : threadID,
+                        "content" : "Rayos is a virtual classroom environment...",
+                        'comments' : [{
+                          "content": "example comment",
+                          "postedBy": "Rayos",
+                          "time": new Date()
+                        }]
+                      })
+                      newThread.save();
+
                       var newCourseData = new models.CourseData({
                         "_id": courseDataID,
                         "threads": {
                           "postedBy": "Rayos",
-                          "content": "Welcome to Rayos!",
+                          "title": "Welcome to Rayos!",
                           "time": new Date(),
-                          "_id": new mongoose.Types.ObjectId()
+                          "threadRef": threadID
                         },
                         "channelRefs": {
                           name: "main",
                           ref: channelID
                         }
                       });
-
-                      var newThread = new models.Thread({
-                        "_id": newCourseData["threads"][0]["_id"],
-                        "comments": [{
-                          "content": "example comment",
-                          "postedBy": "Rayos",
-                          "time": new Date()
-                        }]
-                      })
-
-                      newThread.save();
 
                       drive.createCourseFolder(courseObj.summary, function(folderRef) {
                         drive.insertPermission(folderRef, user.info.email, function() {

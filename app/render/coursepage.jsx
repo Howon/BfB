@@ -4,8 +4,8 @@ require('../stylesheets/contentArea.css');
 require('../stylesheets/thread.css');
 require('../stylesheets/modal.css');
 require('../stylesheets/drive.css');
-require('../stylesheets/channel.css')
-
+require('../stylesheets/channel.css');
+require('../stylesheets/threadModal.css');
 import React from 'react';
 import ReactDom from 'react-dom'
 import CoursePage from './pages/CoursePage.jsx';

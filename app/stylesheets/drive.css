@@ -1,48 +1,88 @@
 #drive-area{
-	position: absolute;
-	border:0;
-  height: 100%;
-  margin-left: 60%;
-  width: 40%;
-  top: 45%;
-  height: 55%;
-	z-index: 5;
-	background-color: white;
-	padding: 10px;
-  border-left: 1px solid #607D8B;
-  border-top: 1px solid #607D8B;
+    position: absolute;
+    border:0;
+    height: 100%;
+    margin-left: 60%;
+    width: 40%;
+    top: 40%;
+    height: 60%;
+    z-index: 5;
+    background-color: white;
+    padding: 10px;
+    border-left: 1px solid #607D8B;
+    border-top: 1px solid #475D71;
+}
+
+#drive-area * {
+
+    list-style: none;
 }
 
 #drive-menu-menus{
-  position: absolute;
-  top: 0;
-  right: 60px;
-  float: right;
-  margin-top: 10px;
+    position: absolute;
+    top: 0;
+    right: 60px;
+    float: right;
+    margin-top: 10px;
+    cursor: pointer;
 }
 
-#drive-file-upload-buttom{
-  margin-left: 20px;
-  cursor: pointer;
-  height: 30px;
+#drive-menu-menus span{
+    position: absolute;
+    top: 28px;
+    right: -8px;
+    font-size: 11px;
+    width: 45px;
+    color: #2573A6;
 }
 
-#drive-file-list{
-  margin: 10px 40px 10px 25px;
-}
-
-.drive-file-list-item{
-  padding: 5px 15px 5px 15px;
-  border-top: 1px solid #607D8B;
-  font-size: 16px;
+#drive-file-upload-button{
+    margin-right: 5px;
+    cursor: pointer;
+    height: 28px;
 }
 
 #drive-description{
-  color: #2573A6;
-  font-size: 18px;
-  margin-left: 25px;
+    color: #2573A6;
+    font-size: 20px;
+    margin-left: 25px;
+    margin-top: 5px;
+}
+
+#drive-file-list{
+    margin: 10px 40px 10px 25px;
+    padding: 0;
+}
+
+.drive-file-list-item{
+    padding: 10px 15px 10px 15px;
+    border-top: 1px solid #607D8B;
+    font-size: 17px;
 }
 
 .drive-file-list-item a{
-  text-decoration:none;
+    text-decoration: none;
+    color: black;
+    margin-left: 15px;
+}
+
+.drive-file-list-item i.fa{
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.drive-file-list-item i.fa-file-word-o{
+    color: #3175C8;
+}
+
+.drive-file-list-item i.fa-file-excel-o{
+    color: #42C663;
+}
+
+.drive-file-list-item i.fa-file-powerpoint-o{
+    color: #E9A033;
+}
+
+.drive-file-list-item i.fa-file-pdf-o{
+    color: #FA360A;
 }

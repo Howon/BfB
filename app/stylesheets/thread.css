@@ -17,9 +17,15 @@
 
 #thread-menu-area{
     margin: 0;
-    height: 40px;
+    height: 45px;
     background-color: #2573A6;
     border-bottom: 1px solid #607D8B;
+}
+
+#thread-menu-area span{
+    position: absolute;
+    color: white;
+    font-size: 11px;
 }
 
 #thread-menu-menus{
@@ -30,38 +36,53 @@
 }
 
 #show-thread-post{
-	cursor: pointer;
-	float: right;
-    right: 10px;
-    margin-top: 13px;
-    margin-right: 10px;
-	font-size: 25px;
-    color: #FAFAFA;
+    cursor: pointer;
 }
 
-#show-thread-post:hover{
-    margin-top: 12px;
-    margin-right: 8px;
-    font-size: 28px;
+#thread-menu-menus span{
+    width: 60px;
+    right: 10px;
+    top: 28px;
+}
+
+#show-thread-post-icon{
+	float: right;
+    margin-top: 8px;
+    margin-right: 27px;
+	font-size: 27px;
     color: white;
 }
 
 #show-drive-area{
+    opacity: 0.8;
     cursor: pointer;
-    margin-top: 6px;
-    margin-left: 6px;
-    z-index: 10;
-    width: 27px;
+}
+
+#show-drive-area:hover,
+#show-drive-area.active{
+    opacity: 1;
+}
+
+#show-drive-area span{
+    margin-top: 29px;
+    left: 10px;
+}
+
+#show-drive-area-icon{
+    position: absolute;
+    top: 3px;
+    left: 24px;
+    width: 26px;
 }
 
 #search-thread{
     outline: none;
     position: absolute;
     margin-top: 6px;
-    height: 29px;
-    width: 200px;
+    height: 33px;
+    width: 220px;
     float: right;
-    right: 50px;
+    right: 80px;
     padding: 2px;
     border-radius: 3px;
     border: 1px solid #616161;
@@ -70,9 +91,11 @@
 ul#threads-area{
     list-style-type: none;
     background-color: #ECEFF1;
-    top: 40px;
-    height: calc(100% - 40px);
+    top: 45px;
+    height: calc(100% - 45px);
     overflow: auto;
+    margin: 0;
+    padding: 0;
     z-index: 1;
 }
 
@@ -87,6 +110,10 @@ ul#threads-area li{
     cursor: pointer;
 }
 
+ul#threads-area li:nth-child(even){
+    background-color: #F5F5F5;
+}
+
 ul#threads-area li:hover{
     background-color: #FAFAFA;
 }
@@ -98,10 +125,14 @@ ul#threads-area li:hover{
     width: (100% - 40px);
 }
 
-div.thread-post-postedBy{
+div.thread-post-postedBy {
     position: relative;
     float: right;
 }
+
+/*********************************************/
+/*********************************************/
+/*********************************************/
 
 #thread-input-form{
     font-family: 'Lato', sans-serif;
@@ -113,7 +144,7 @@ div.thread-post-postedBy{
     bottom: 0;
     margin: auto;
     height: 610px;
-    width: 760px;
+    width: 740px;
     padding: 15px;
     background-color: white;
     border: 2px #5C80AE solid;
@@ -137,6 +168,7 @@ div.thread-post-postedBy{
 
 #thread-input-form-title{
     position: absolute;
+    top: 30px;
     left: 0;
     right: 0;
     text-align: center;
@@ -172,7 +204,15 @@ div.thread-post-postedBy{
 }
 
 .panel-default .fa{
-    font-size: 15px;
+    font-size: 16px;
+}
+
+#thread-input-warning{
+    position: absolute;
+    bottom: 20px;
+    left: 35px;
+    font-size: 19px;
+    color: #FA360A;
 }
 
 #submit-thread-form{
@@ -193,12 +233,12 @@ div.thread-post-postedBy{
 
 #close-thread-form {
     z-index: 3;
-    opacity: 0.5;
+    opacity: 0.3;
     position: absolute;
-    top: 15px;
+    top: 10px;
     float: right;
-    right: 20px;
-    font-size: 30px;
+    right: 15px;
+    font-size: 28px;
     cursor: pointer;
 }
 

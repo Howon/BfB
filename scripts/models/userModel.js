@@ -2,13 +2,17 @@ var mongoose = require('mongoose'),
 	Schema = mongoose.Schema;
 
 var userSchema = new Schema({
-	 _id: Number,
-	token: String,
-	info: {
-		name: String,
+	 _id : Number,
+	token : String,
+	info : {
+		name: {
+      firstName : String,
+      lastName : String
+    },
 		email: String
 	},
-	courseRefs: [String],
+	courseRefs : [String],
+  userOnboard : Boolean,
 	notificationsRef : String
 });
 

@@ -1,15 +1,14 @@
-#display-channel{
-    width: 50px;
-    height: 100%;
-    background-color: #E53935;
-}
-
 #channels-area{
     position: absolute;
     width: 180px;
     height: 100%;
     background-color: #4B698C;
     border-right: 1px solid #455A64;
+}
+
+#channels-area * {
+    margin: 0;
+    padding: 0;
 }
 
 #channels-menu{
@@ -65,7 +64,7 @@
     position: fixed;
     z-index: 15;
     background-color: white;
-    height: 350px;
+    height: 340px;
     width: 450px;
     left: 0;
     right: 0;
@@ -84,7 +83,8 @@
     opacity: 0.5;
     position: absolute;
     top: 15px;
-    right: 18px;
+    right: 20px;
+    font-size: 28px;
     cursor: pointer;
 }
 
@@ -96,10 +96,10 @@
 #submit-channel-form{
     opacity: 0.5;
     position: absolute;
-    bottom: 15px;
+    bottom: 10px;
     right: 17px;
     cursor: pointer;
-    font-size: 28px;
+    font-size: 26px;
 }
 
 #submit-channel-form:hover{
@@ -107,30 +107,25 @@
     color: #5B82BA;
 }
 
-.channel-input-form{
-    padding: 3px;
+#channel-form textarea{
     position: absolute;
     left: 30px;
     font-size: 20px;
-    border: 1px solid #2573A6;
+    resize: none;
+    outline: none;
+    border: 1px #5C80AE solid;
+    padding: 5px 10px;
+    width: calc(100% - 60px);
 }
 
 #channel-name-input{
     top: 80px;
     height: 40px;
-    resize: none;
-    outline: none;
-    width: calc(100% - 60px);
-    border: 1px #607D8B solid;
 }
 
 #channel-desc-input{
     top: 140px;
     height: 140px;
-    resize: none;
-    outline: none;
-    width: calc(100% - 60px);
-    border: 1px #607D8B solid;
 }
 
 ul#channels-list li{

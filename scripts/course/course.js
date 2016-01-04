@@ -136,7 +136,11 @@ module.exports = function(io) {
 
                       var newChannel = new models.Channel({
                         "_id": channelID,
-                        "desc": "main channel"
+                        "desc": "main channel",
+                        "messages" : {
+                          "sender" : "Rayos",
+                          "content" : "This is the main channel for " + courseObj.summary
+                        }
                       });
                       newChannel.save();
 
@@ -162,8 +166,8 @@ module.exports = function(io) {
                           "threadRef": threadID
                         },
                         "channelRefs": {
-                          name: "main",
-                          ref: channelID
+                          "name": "main",
+                          "ref": channelID
                         }
                       });
 
@@ -171,8 +175,9 @@ module.exports = function(io) {
                         drive.insertPermission(folderRef, user.info.email, function() {
                           drive.createFile(courseObj.summary, "doc", folderRef, function(res) {
                             newCourseData.driveFileRefs.push({
-                              name: res.title,
-                              ref: res.id
+                              "name" : res.title,
+                              "fileType" : "word",
+                              "ref" : res.id
                             })
                             newCourseData.save();
                           });

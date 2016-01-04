@@ -15,7 +15,7 @@ class NavBar extends React.Component {
           <a className="" href="">{ this.props.courseTitle }</a>
         </div>
         <div id = "navBar-user-area">
-          <span><a>{ this.props.profile.name }</a></span>
+          <span><a>{ this.props.name.firstName + " " + this.props.name.lastName }</a></span>
           <span ><a href="/logout">Logout</a></span>
         </div>
       </nav>

@@ -20,7 +20,7 @@ module.exports = function(config, passport) {
   passport.serializeUser(function(user, done) {
     done(null, user._id);
   });
-  // used to deserialize the user
+
   passport.deserializeUser(function(id, done) {
     models.User.findById(id, function(err, user) {
       done(err, user);
@@ -54,7 +54,8 @@ module.exports = function(config, passport) {
               // set all of the relevant information
               newUser._id = profile.id;
               newUser.token = token;
-              newUser.info.name = profile.displayName;
+              newUser.info.name.firstName = profile.name.givenName;
+              newUser.info.name.lastName = profile.name.familyName;
               newUser.info.email = profile.emails[0].value; // pull the first email
               // save the user
               var newNotification = new models.Notification();

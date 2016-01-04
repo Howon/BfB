@@ -16,6 +16,7 @@ var coursedataSchema = new Schema({
 	}],
 	driveFileRefs:[{
 		name : String,
+		fileType : String,
 		ref : String
 	}]
 });

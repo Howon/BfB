@@ -18,7 +18,7 @@ ul#messages-area{
     list-style-type: none;
     height: calc(100% - 50px);
     overflow: auto;
-    padding: 15px;
+    padding: 20px;
     overflow-y: auto;
     background-color: #FAFAFA;
 }
@@ -35,14 +35,14 @@ ul#messages-area div{
 ul#messages-area div.message-sender{
     color: #5F8BAF;
     float: left;
-    width: 100px;
+    width: 80px;
 }
 
 ul#messages-area div.message-content{
     overflow: auto;
     color: #B59484;
     padding: 0;
-    width: calc(100% - 100px);
+    width: calc(100% - 80px);
     word-break: break-all;
 }
 

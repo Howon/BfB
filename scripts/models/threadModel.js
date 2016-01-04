@@ -3,12 +3,12 @@ var mongoose = require('mongoose'),
 	ObjectId = Schema.ObjectId;
 
 var threadSchema = new Schema({
-	_id: String,
+	_id : String,
   content : String,
-	comments: [{
-		postedBy  : String,
+	comments : [{
+		postedBy : String,
 		content : String,
-		time    : Date
+		time : Date
 	}]
 });
 

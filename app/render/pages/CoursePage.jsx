@@ -70,13 +70,13 @@ class Body extends React.Component{
     })
   }
 	postMessage(message){
-    message.sender = this.state.profile.name,
+    message.sender = this.state.profile.name.firstName,
     this.receiveMessage(message);
 		chatSock.emit('post:chat_message', message);
 	}
   postThread(data){
     let thread = data;
-    thread.postedBy = this.state.profile.name;
+    thread.postedBy = this.state.profile.name.firstName;
     thread.time = new Date();
     this.receiveThread(thread);
     threadSock.emit('post:thread', thread);
@@ -149,7 +149,7 @@ class Body extends React.Component{
 	render(){
   	return (
   		<div>
-        <NavBar profile = { this.state.profile }
+        <NavBar name = { this.state.profile.name }
           courseTitle = { this.state.courseTitle }
           uploadCalendar = { this.uploadCalendar.bind(this) } />
         <div id="content-area">

@@ -60,7 +60,7 @@ class ChannelSubmitForm extends React.Component {
           onClick = { this.props.toggleChannelForm.bind(this) } >
         </div>
         <div style = { displayStatus } id = "channel-form">
-          <p> Create a new channel </p>
+          <p> Make a new channel </p>
            <textarea id = "channel-name-input" className = "channel-input-form"
             type = "text"
             placeholder = "Enter name of this channel"
@@ -71,8 +71,9 @@ class ChannelSubmitForm extends React.Component {
             placeholder = "Describe this channel"
             onChange = { this.handleChannelDescChange.bind(this) }
             value = { this.state.newChannelDesc } ></textarea>
-          <i id = "submit-channel-form" className = "fa fa-check"
-            onClick = { this.submitChannelForm.bind(this) } ></i>
+          <span id = "submit-channel-form" onClick = { this.submitChannelForm.bind(this) } >
+            make
+          </span>
           <i id = "close-channel-form" className = "fa fa-times"
             onClick = { this.props.toggleChannelForm.bind(this) } ></i>
         </div>

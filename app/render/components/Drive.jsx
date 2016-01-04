@@ -4,9 +4,12 @@ class DriveItem extends React.Component {
   render(){
     let driveFile = this.props.driveFile;
     let fileLink = "https://docs.google.com/document/d/" + driveFile.ref + "/edit";
+    let fileTypeLogo = "fa fa-file-" + driveFile.fileType + "-o";
+
     return (
-      <li className = "drive-file-list-item">
-        <a target="_blank" href={ fileLink }>{ driveFile.name } </a>
+      <li className = "drive-file-list-item" >
+        <i className = { fileTypeLogo } ></i>
+        <a target="_blank" href={ fileLink } > { driveFile.name } </a>
       </li>
     )
   }
@@ -32,7 +35,8 @@ class DriveArea extends React.Component {
           Shared Files
         </p>
         <div id = "drive-menu-menus" >
-          <img id = "drive-file-upload-buttom" src="/images/file-upload-icon.png" alt=""/>
+          <span>new files</span>
+          <img id = "drive-file-upload-button" src="/images/file-upload-icon.png" alt=""/>
         </div>
         <ul id = "drive-file-list">
           { this.props.driveFiles.map(renderDriveItem.bind(this)) }

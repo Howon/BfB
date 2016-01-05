@@ -18,6 +18,8 @@ if ! type "node" > /dev/null
 		echo "node downloaded"
 fi
 
+mkdir tempCal
+
 sudo npm install
 npm install pm2 -g
 npm install -g ical2json

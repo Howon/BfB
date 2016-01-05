@@ -7,7 +7,7 @@
     top: 40%;
     height: 60%;
     z-index: 5;
-    background-color: white;
+    background-color: #F8F8F8;
     padding: 10px;
     border-left: 1px solid #607D8B;
     border-top: 1px solid #475D71;
@@ -18,7 +18,7 @@
     list-style: none;
 }
 
-#drive-menu-menus{
+#drive-menu{
     position: absolute;
     top: 0;
     right: 60px;
@@ -27,7 +27,7 @@
     cursor: pointer;
 }
 
-#drive-menu-menus span{
+#drive-menu span{
     position: absolute;
     top: 28px;
     right: -8px;

@@ -18,7 +18,7 @@
 #thread-menu-area{
     margin: 0;
     height: 45px;
-    background-color: #2573A6;
+    background-color: #386BA6;
     border-bottom: 1px solid #607D8B;
 }
 
@@ -35,8 +35,14 @@
     top: 0;
 }
 
-#show-thread-post{
+#show-thread-form-button{
+    opacity: 0.7;
     cursor: pointer;
+}
+
+#show-thread-form-button:hover,
+#show-thread-form-button.active{
+    opacity: 1;
 }
 
 #thread-menu-menus span{
@@ -45,25 +51,25 @@
     top: 28px;
 }
 
-#show-thread-post-icon{
+#show-thread-form-icon{
 	float: right;
     margin-top: 8px;
-    margin-right: 27px;
+    margin-right: 28px;
 	font-size: 27px;
     color: white;
 }
 
-#show-drive-area{
-    opacity: 0.8;
+#show-drive-area-button{
+    opacity: 0.7;
     cursor: pointer;
 }
 
-#show-drive-area:hover,
-#show-drive-area.active{
+#show-drive-area-button:hover,
+#show-drive-area-button.active{
     opacity: 1;
 }
 
-#show-drive-area span{
+#show-drive-area-button span{
     margin-top: 29px;
     left: 10px;
 }
@@ -90,7 +96,7 @@
 
 ul#threads-area{
     list-style-type: none;
-    background-color: #ECEFF1;
+    background-color: #DADCE3;
     top: 45px;
     height: calc(100% - 45px);
     overflow: auto;
@@ -111,21 +117,21 @@ ul#threads-area li{
 }
 
 ul#threads-area li:nth-child(even){
-    background-color: #F5F5F5;
-}
-
-ul#threads-area li:hover{
     background-color: #FAFAFA;
 }
 
-.thread-post-content{
+ul#threads-area li:hover{
+    background-color: #F1F1F1;
+}
+
+.thread-form-content{
     position: absolute;
     top: 14px;
     margin-left: 40px;
     width: (100% - 40px);
 }
 
-div.thread-post-postedBy {
+div.thread-form-postedBy {
     position: relative;
     float: right;
 }

@@ -6,9 +6,14 @@ class ThreadMenu extends React.Component {
     if(this.props.showDriveArea){
       driveAreaToggle += " active"
     };
+
+    let threadFormToggle = "show-thread-form"
+    if(this.props.showThreadForm){
+      threadFormToggle += " active"
+    };
     return (
       <div id = "thread-menu-area" >
-        <div id = "show-drive-area" className = { driveAreaToggle }
+        <div id = "show-drive-area-button" className = { driveAreaToggle }
           onClick = { this.props.toggleDriveArea.bind(this) } >
           <img src = "/images/google-drive-icon.png" id = "show-drive-area-icon" >
           </img>
@@ -19,8 +24,9 @@ class ThreadMenu extends React.Component {
             placeholder="Search for thread"
             id = "search-thread">
           </input>
-          <div id = "show-thread-post" onClick = { this.props.toggleThreadForm.bind(this) } >
-            <i id = "show-thread-post-icon" className = "fa fa-pencil-square-o fa-lg" >
+          <div id = "show-thread-form-button" className = { threadFormToggle }
+            onClick = { this.props.toggleThreadForm.bind(this) } >
+            <i id = "show-thread-form-icon" className = "fa fa-pencil-square-o fa-lg" >
             </i>
             <span>new thread</span>
           </div>
@@ -39,7 +45,7 @@ class ThreadModal extends React.Component {
       <div id="openThreadModal" className="modalDialog" style = { displayStatus }  >
         <div>
           { this.props.currentThreadModal.content }
-          <div className = 'thread-post-postedBy'>
+          <div className = 'thread-form-postedBy'>
             { this.props.currentThreadModal.postedBy }
           </div>
         </div>
@@ -54,10 +60,10 @@ class Thread extends React.Component {
   }
   render(){
     return (
-      <li className = 'thread-post' onClick = { this.openThreadModal.bind(this) } >
+      <li className = 'thread-form' onClick = { this.openThreadModal.bind(this) } >
         <div>
           { this.props.thread.title }
-          <div className = 'thread-post-postedBy'>
+          <div className = 'thread-form-postedBy'>
             { this.props.thread.postedBy }
           </div>
         </div>
@@ -197,8 +203,8 @@ class ThreadArea extends React.Component {
         ['insert', ['link', 'table']]
       ],
       height: 350,
-      maxHeight: 350,             // set maximum height of editor
-      focus: true,                  // set focus to editable area after initializin
+      maxHeight: 350,
+      focus: true,
       disableDragAndDrop: true,
       placeholder : "write here..."
     });
@@ -216,9 +222,13 @@ class ThreadArea extends React.Component {
       <div id="thread-area" style = { threadAreaHeight }>
         <ThreadMenu toggleThreadForm = { this.toggleThreadForm.bind(this) }
           showDriveArea = { this.props.showDriveArea }
+          showThreadForm = { this.state.showThreadForm }
           toggleDriveArea = { this.props.toggleDriveArea.bind(this) } />
-        <ThreadList threads = { this.props.threads } openThreadModal = { this.props.openThreadModal } />
-        <ThreadInputForm showThreadForm = { this.state.showThreadForm } postThread = { this.props.postThread } toggleThreadForm = { this.toggleThreadForm.bind(this) } />
+        <ThreadList threads = { this.props.threads }
+          openThreadModal = { this.props.openThreadModal } />
+        <ThreadInputForm showThreadForm = { this.state.showThreadForm }
+          postThread = { this.props.postThread }
+          toggleThreadForm = { this.toggleThreadForm.bind(this) } />
       </div>
     )
   }

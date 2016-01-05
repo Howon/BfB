@@ -34,7 +34,8 @@ module.exports = function(io) {
         }
         if(channelResult){
           socket.emit("load:channel", {
-            channelName : channelInfo.channel,
+            channelName : channelResult.name,
+            channelDesc : channelResult.desc,
             messages    : channelResult.messages
           });
         }

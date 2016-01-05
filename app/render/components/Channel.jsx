@@ -6,9 +6,13 @@ class Channel extends React.Component {
   }
   render(){
     let channelSelect = this.props.currentChannel === this.props.channel.name ? "channels-list-item active" : "channels-list-item";
+    let channelName = this.props.channel.name;
+    if(channelName.length > 15){
+      channelName = channelName.substring(0, 15) + "...";
+    }
     return (
       <li className = { channelSelect } onClick = { this.joinChannel.bind(this) } >
-        { this.props.channel.name }
+        { channelName }
       </li>
     )
   }
@@ -63,12 +67,12 @@ class ChannelSubmitForm extends React.Component {
           <p> Make a new channel </p>
            <textarea id = "channel-name-input" className = "channel-input-form"
             type = "text"
-            placeholder = "Enter name of this channel"
+            placeholder = "Name this channel!"
             onChange = { this.handleChannelNameChange.bind(this) }
             value = { this.state.newChannelName } ></textarea>
            <textarea id = "channel-desc-input" className = "channel-input-form"
             type = "text"
-            placeholder = "Describe this channel"
+            placeholder = "What is it for?"
             onChange = { this.handleChannelDescChange.bind(this) }
             value = { this.state.newChannelDesc } ></textarea>
           <span id = "submit-channel-form" onClick = { this.submitChannelForm.bind(this) } >

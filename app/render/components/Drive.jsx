@@ -34,7 +34,7 @@ class DriveArea extends React.Component {
         <p id="drive-description">
           Shared Files
         </p>
-        <div id = "drive-menu-menus" >
+        <div id = "drive-menu" >
           <span>new files</span>
           <img id = "drive-file-upload-button" src="/images/file-upload-icon.png" alt=""/>
         </div>
@@ -47,10 +47,3 @@ class DriveArea extends React.Component {
 }
 
 export default DriveArea;
-
-// <i className="file-upload-button fa fa-file-word-o" >
-//           </i>
-//           <i className="file-upload-button fa fa-file-pdf-o" >
-//           </i>
-//           <i className="file-upload-button fa fa-file-excel-o" >
-//           </i>

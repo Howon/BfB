@@ -136,10 +136,11 @@ module.exports = function(io) {
 
                       var newChannel = new models.Channel({
                         "_id": channelID,
-                        "desc": "main channel",
+                        "name" : "main",
+                        "desc": "I am the main chat channel for " + courseObj.summary,
                         "messages" : {
                           "sender" : "Rayos",
-                          "content" : "This is the main channel for " + courseObj.summary
+                          "content" : "Hello!"
                         }
                       });
                       newChannel.save();

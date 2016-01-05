@@ -92,6 +92,14 @@ class Chat extends React.Component {
           channels = { this.props.channels }
           makeChannel = { this.props.makeChannel.bind(this) }
           joinChannel = { this.props.joinChannel } />
+        <div id = "chat-channel-desc-area" className = "chat-area-component">
+          <span id = "chat-current-channel-name">
+            { this.props.currentChannel } &nbsp;
+          </span>
+          <span id = "chat-current-channel-desc">
+            { this.props.channelDesc }
+          </span>
+        </div>
         <MessageList messages = { this.props.messages } />
         <MessageInputForm profile = { this.props.profile }
           postMessage = { this.props.postMessage } />

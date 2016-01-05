@@ -16,17 +16,18 @@ class Body extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
-      profile        : this.props.app_props.user,
-      courseTitle    : this.props.app_props.course.title,
-      courseID       : this.props.app_props.course.id,
-      threads        : [],
-      messages       : [],
+      profile : this.props.app_props.user,
+      courseTitle : this.props.app_props.course.title,
+      courseID : this.props.app_props.course.id,
+      threads : [],
+      messages : [],
       currentChannel : "main",
-      channels       : [],
-      showDriveArea  : false,
-      driveFiles     : [],
-      showThreadModal      : false,
-      modalThread    : {
+      channelDesc : "",
+      channels : [],
+      showDriveArea : true,
+      driveFiles : [],
+      showThreadModal : false,
+      modalThread : {
         content  : "",
         postedBy : ""
       },
@@ -103,6 +104,7 @@ class Body extends React.Component{
   loadChannel(channelData){
     this.setState({
       currentChannel : channelData.channelName,
+      channelDesc : channelData.channelDesc,
       messages    : channelData.messages
     });
   }
@@ -160,6 +162,7 @@ class Body extends React.Component{
           <Chat messages = { this.state.messages }
             postMessage = { this.postMessage.bind(this) }
             currentChannel = { this.state.currentChannel }
+            channelDesc = { this.state.channelDesc }
             channels = { this.state.channels }
             makeChannel = { this.makeChannel.bind(this) }
             joinChannel = { this.joinChannel.bind(this) } />

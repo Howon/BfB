@@ -4,17 +4,16 @@
     height: 100%;
     margin-left: 60%;
     width: 40%;
-    top: 40%;
-    height: 60%;
+    top: 35%;
+    height: 65%;
     z-index: 5;
-    background-color: #F8F8F8;
+    background-color: #FEFEFE;
     padding: 10px;
     border-left: 1px solid #607D8B;
     border-top: 1px solid #475D71;
 }
 
 #drive-area * {
-
     list-style: none;
 }
 

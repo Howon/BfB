@@ -59,7 +59,7 @@ class ChannelSubmitForm extends React.Component {
     };
 
     return(
-      <div>
+      <div id = "channel-form-area">
         <div style = { displayStatus } id = "channel-form-shader"
           onClick = { this.props.toggleChannelForm.bind(this) } >
         </div>

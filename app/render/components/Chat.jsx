@@ -99,6 +99,7 @@ class Chat extends React.Component {
           <span id = "chat-current-channel-desc">
             { this.props.channelDesc }
           </span>
+          <i id = "chat-current-channel-desc-edit" className="fa fa-pencil"></i>
         </div>
         <MessageList messages = { this.props.messages } />
         <MessageInputForm profile = { this.props.profile }

@@ -27,11 +27,9 @@ class Body extends React.Component{
       showDriveArea : true,
       driveFiles : [],
       showThreadModal : false,
-      modalThread : {
-        content  : "",
-        postedBy : ""
-      },
-      modalComments  : []
+      currentThread : {},
+      threadModalContent : {},
+      threadModalComments : []
     }
   }
   componentDidMount(){
@@ -44,12 +42,13 @@ class Body extends React.Component{
 
     courseSock.on('receive:course_data', this.receiveCourseData.bind(this));
     courseSock.on('receive:new_channel', this.receiveChannel.bind(this));
-    courseSock.on('receive:comments', this.receiveComments.bind(this));
 
   	chatSock.on('receive:chat_message', this.receiveMessage.bind(this));
     chatSock.on('load:channel', this.loadChannel.bind(this));
 
-    threadSock.on('receive:thread', this.receiveThread.bind(this));
+    threadSock.on('receive:new_thread', this.receiveThread.bind(this));
+    threadSock.on('load:thread_modal', this.loadThreadModal.bind(this));
+    threadSock.on('receive:comment', this.receiveThreadComment.bind(this));
   }
  	receiveMessage(message){
     let newMessageArray = this.state.messages.slice();
@@ -58,17 +57,12 @@ class Body extends React.Component{
     	messages: newMessageArray
     });
   }
-  receiveCourseData(data){
+  receiveCourseData(courseData){
     this.setState({
-      threads     : data.courseData.threads,
-      channels    : data.courseData.channelRefs,
-      driveFiles  : data.courseData.driveFileRefs
+      threads     : courseData.threads,
+      channels    : courseData.channelRefs,
+      driveFiles  : courseData.driveFileRefs
     });
-  }
-  receiveComments(data){
-    this.setState({
-      modalComments : data.thread.comments
-    })
   }
 	postMessage(message){
     message.sender = this.state.profile.name.firstName,
@@ -80,7 +74,7 @@ class Body extends React.Component{
     thread.postedBy = this.state.profile.name.firstName;
     thread.time = new Date();
     this.receiveThread(thread);
-    threadSock.emit('post:thread', thread);
+    threadSock.emit('post:new_thread', thread);
   }
   receiveThread(thread){
     let newThreadArray = this.state.threads.slice();
@@ -133,20 +127,34 @@ class Body extends React.Component{
     })
   }
   openThreadModal(thread){
-    if (!this.state.showThreadModal){
-      this.setState({
-        showThreadModal : !this.state.showThreadModal,
-        modalThread : thread
-      })
-      courseSock.emit('get:comments', thread._id);
-    }
+    this.setState({
+      showThreadModal : true,
+      currentThread : thread
+    });
+    threadSock.emit("load:thread_modal", thread.threadRef);
+  }
+  loadThreadModal(threadData){
+    var currentThread = this.state.currentThread;
+    this.setState({
+      threadModalContent : {
+        postedBy : currentThread.postedBy,
+        title : currentThread.title,
+        content : threadData.content
+      },
+      threadModalComments : threadData.comments
+    })
+  }
+  receiveThreadComment(newComment){
+    this.setState({
+      threadModalComments : data.thread.comments
+    })
   }
   closeThreadModal(){
-    if (this.state.showThreadModal){
-      this.setState({
-        showThreadModal : !this.state.showThreadModal
-      })
-    }
+    this.setState({
+      showThreadModal : false,
+      threadModalContent : {},
+      threadModalComments : []
+    });
   }
 	render(){
   	return (
@@ -156,8 +164,8 @@ class Body extends React.Component{
           uploadCalendar = { this.uploadCalendar.bind(this) } />
         <div id="content-area">
           <ThreadModal showThreadModal = { this.state.showThreadModal }
-            modalComments = { this.state.modalComments }
-            modalThread = { this.state.modalThread }closeThreadModal
+            threadModalContent = { this.state.threadModalContent }
+            threadModalComments = { this.state.threadModalComments }
             closeThreadModal = { this.closeThreadModal.bind(this) } />
           <Chat messages = { this.state.messages }
             postMessage = { this.postMessage.bind(this) }

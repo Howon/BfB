@@ -36,34 +36,16 @@ class ThreadMenu extends React.Component {
   }
 };
 
-class ThreadModal extends React.Component {
-  render(){
-    let displayStatus = {
-      display : this.props.displayThreadModal ? "block" : "none"
-    };
-    return  (
-      <div id="openThreadModal" className="modalDialog" style = { displayStatus }  >
-        <div>
-          { this.props.currentThreadModal.content }
-          <div className = 'thread-form-postedBy'>
-            { this.props.currentThreadModal.postedBy }
-          </div>
-        </div>
-      </div>
-    )
-  }
-}
-
 class Thread extends React.Component {
   openThreadModal(){
     this.props.openThreadModal(this.props.thread);
   }
   render(){
     return (
-      <li className = 'thread-form' onClick = { this.openThreadModal.bind(this) } >
+      <li className = 'thread-list-item' onClick = { this.openThreadModal.bind(this) } >
         <div>
           { this.props.thread.title }
-          <div className = 'thread-form-postedBy'>
+          <div className = 'thread-list-item-postedBy'>
             { this.props.thread.postedBy }
           </div>
         </div>
@@ -195,8 +177,7 @@ class ThreadArea extends React.Component {
     $('#thread-content-input').summernote({
       toolbar: [
         ['style', ['bold', 'italic', 'underline', 'clear']],
-        ['style', [ 'fontname']],
-        ['font', ['superscript', 'subscript']],
+        ['font', ['strikethrough','superscript', 'subscript']],
         ['fontsize', ['fontsize']],
         ['color', ['color']],
         ['para', ['ul', 'ol', 'paragraph','height']],
@@ -216,7 +197,7 @@ class ThreadArea extends React.Component {
   }
   render() {
     let threadAreaHeight = {
-      height : this.props.showDriveArea ? "40%" : "100%"
+      height : this.props.showDriveArea ? "35%" : "100%"
     }
     return (
       <div id="thread-area" style = { threadAreaHeight }>

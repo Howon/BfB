@@ -31,14 +31,25 @@ class ThreadModal extends React.Component {
       <div id = "thread-modal" style = { displayStatus }  >
         <div id = "thread-modal-area">
           <div id = "thread-modal-main-content">
-            { this.props.modalThread.title }
-            <div className = 'thread-post-postedBy'>
-              Posted by : { this.props.modalThread.postedBy }
+            <div id = "thread-modal-title-area">
+              <span id = 'thread-modal-title'>
+                { this.props.threadModalContent.title }
+              </span>
+              <span id = 'thread-modal-postedBy'>
+                { this.props.threadModalContent.postedBy }
+              </span>
+            </div>
+            <i id = "close-thread-modal" className = "fa fa-times"
+              onClick = { this.props.closeThreadModal.bind(this) } >
+            </i>
+            <div id = "thread-modal-display-content" dangerouslySetInnerHTML={ {__html: this.props.threadModalContent.content } }>
             </div>
           </div>
-          <ul id = "thread-modal-comment-list">
-          	{ this.props.modalComments.map(renderComment) }
-          </ul>
+          <div id = "thread-modal-comment">
+            <ul id = "thread-modal-comment-list">
+              { this.props.threadModalComments.map(renderComment) }
+            </ul>
+          </div>
         </div>
         <div id="thread-modal-shader"
           onClick = { this.props.closeThreadModal.bind(this) } >

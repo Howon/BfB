@@ -149,6 +149,7 @@ module.exports = function(io) {
 
                       var newThread = new models.Thread({
                         "_id" : threadID,
+                        "courseRef" : courseID,
                         "content" : "Rayos is a virtual classroom environment...",
                         'comments' : [{
                           "content": "example comment",
@@ -274,22 +275,7 @@ module.exports = function(io) {
           console.error("error: " + err);
         }
         if (courseDataResult) {
-          socket.emit("receive:course_data", {
-            courseData: courseDataResult
-          });
-        }
-      })
-    });
-
-    socket.on('get:comments', function(threadID) {
-      models.Thread.findById(threadID, function(err, threadResult) {
-        if (err) {
-          console.error("error: " + err);
-        }
-        if (threadResult) {
-          socket.emit("receive:comments", {
-            thread: threadResult
-          });
+          socket.emit("receive:course_data", courseDataResult);
         }
       })
     });

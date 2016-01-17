@@ -70,18 +70,56 @@
     cursor: pointer;
 }
 
-.drive-file-list-item i.fa-file-word-o{
+i.fa-file-word-o{
     color: #3175C8;
 }
 
-.drive-file-list-item i.fa-file-excel-o{
+i.fa-file-excel-o{
     color: #42C663;
 }
 
-.drive-file-list-item i.fa-file-powerpoint-o{
+i.fa-file-powerpoint-o{
     color: #E9A033;
 }
 
-.drive-file-list-item i.fa-file-pdf-o{
+i.fa-file-pdf-o{
     color: #FA360A;
+}
+
+/****************************************/
+/****************************************/
+/****************************************/
+
+#drive-input-form{
+    height: 260px;
+    width: 340px;
+}
+
+#drive-input-form textarea{
+    left: 30px;
+    width: calc(100% - 60px);
+    padding: 5px 10px;
+    height: 45px;
+}
+
+#drive-input-form-file-selector{
+    margin-top: 70px;
+    position: absolute;
+    width: 100%;
+    padding: 0 40px;
+}
+
+.drive-input-icon {
+    opacity: 0.4;
+    font-size: 43px;
+    margin-right: 26px;
+    cursor: pointer;
+}
+
+.drive-input-icon:hover{
+    opacity: 1;
+}
+
+.drive-input-icon.active{
+    opacity: 1;
 }

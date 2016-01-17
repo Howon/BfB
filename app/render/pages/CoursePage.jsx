@@ -24,7 +24,7 @@ class Body extends React.Component{
       currentChannel : "main",
       channelDesc : "",
       channels : [],
-      showDriveArea : true,
+      displayDriveArea : true,
       driveFiles : [],
       showThreadModal : false,
       currentThread : {},
@@ -86,19 +86,21 @@ class Body extends React.Component{
   makeChannel(newChannelData){
     newChannelData.course = this.state.courseID;
     courseSock.emit("make:new_channel", newChannelData);
+
     this.joinChannel(newChannelData.name);
+    this.loadChannel(newChannelData);
     this.receiveChannel(newChannelData);
   }
   joinChannel(channelName){
     chatSock.emit('join:channel', {
-      channel : channelName,
+      name : channelName,
       course  : this.state.courseID
     });
   }
   loadChannel(channelData){
     this.setState({
-      currentChannel : channelData.channelName,
-      channelDesc : channelData.channelDesc,
+      currentChannel : channelData.name,
+      channelDesc : channelData.desc,
       messages    : channelData.messages
     });
   }
@@ -123,7 +125,7 @@ class Body extends React.Component{
   }
   toggleDriveArea(){
     this.setState({
-      showDriveArea : !this.state.showDriveArea
+      displayDriveArea : !this.state.displayDriveArea
     })
   }
   openThreadModal(thread){
@@ -177,9 +179,9 @@ class Body extends React.Component{
           <Thread threads = { this.state.threads }
             openThreadModal = { this.openThreadModal.bind(this) }
             postThread = { this.postThread.bind(this) }
-            showDriveArea = { this.state.showDriveArea }
+            displayDriveArea = { this.state.displayDriveArea }
             toggleDriveArea = { this.toggleDriveArea.bind(this) } />
-          <Drive showDriveArea = { this.state.showDriveArea }
+          <Drive displayDriveArea = { this.state.displayDriveArea }
             driveFiles = { this.state.driveFiles }
             toggleDriveArea = { this.toggleDriveArea.bind(this) } />
         </div>

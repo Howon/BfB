@@ -51,7 +51,7 @@ class ThreadModal extends React.Component {
             </ul>
           </div>
         </div>
-        <div id="thread-modal-shader"
+        <div id="thread-modal-shader" className = "page-shader"
           onClick = { this.props.closeThreadModal.bind(this) } >
         </div>
       </div>

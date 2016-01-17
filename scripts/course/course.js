@@ -289,9 +289,10 @@ module.exports = function(io) {
         }
         if (!channelResult) {
           var newChannel = new models.Channel({
-            "_id": channelID,
-            "name": newChannelData.name,
-            "desc": newChannelData.desc
+            "_id" : channelID,
+            "name" : newChannelData.name,
+            "desc" : newChannelData.desc,
+            "messages" : newChannelData.messages
           })
           newChannel.save();
 

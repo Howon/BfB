@@ -24,18 +24,17 @@ module.exports = function(io) {
     });
 
     socket.on("join:channel", function(channelInfo) {
-      var channelID = strIDHash((channelInfo.channel + "_" + channelInfo.course));
+      var channelID = strIDHash((channelInfo.name + "_" + channelInfo.course));
       socket.room = channelID
       socket.join(channelID);
-
       models.Channel.findById(channelID, function(err2, channelResult){
         if(err2){
           console.error("error: " + err2);
         }
         if(channelResult){
           socket.emit("load:channel", {
-            channelName : channelResult.name,
-            channelDesc : channelResult.desc,
+            name : channelResult.name,
+            desc : channelResult.desc,
             messages    : channelResult.messages
           });
         }

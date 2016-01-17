@@ -86,7 +86,7 @@
     position: absolute;
     margin-top: 6px;
     height: 33px;
-    width: 220px;
+    width: 200px;
     float: right;
     right: 80px;
     padding: 2px;
@@ -134,59 +134,21 @@ div.thread-list-item-postedBy {
 /*********************************************/
 
 #thread-input-form{
-    z-index: 10;
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 15%;
-    bottom: 0;
-    margin: 0 auto;
-    height: 610px;
-    width: 715px;
-    padding: 15px;
-    background-color: white;
-    border: 2px #5C80AE solid;
-    border-radius: 3px;
-}
 
-#thread-input-shader{
-    position: fixed;
-    height: 100%;
-    width: 100%;
-    left: 0;
-    top: 0;
-    background-color: #37474F;
-    opacity: 0.3;
-    z-index: 10;
+    height: 600px;
+    width: 700px;
 }
 
 #thread-input-form .note-resizebar{
     display: none;
 }
 
-#thread-input-form-title{
-    position: absolute;
-    top: 30px;
-    left: 0;
-    right: 0;
-    text-align: center;
-    font-size: 24px;
-    color: #2573A6;
-}
-
-#thread-input-form textarea{
-    resize: none;
-    outline: none;
-    position: absolute;
-    border: 1px solid #2573A6;
-}
-
 #thread-input-form textarea#thread-title-input{
     width: 90%;
-    left: 5%;
     height: 40px;
-    padding: 7px 10px;
+    left: 5%;
     top: 80px;
+    padding: 7px 10px;
     font-size: 17px;
 }
 
@@ -202,45 +164,5 @@ div.thread-list-item-postedBy {
 }
 
 .panel-default .fa{
-    font-size: 16px;
-}
-
-#thread-input-warning{
-    position: absolute;
-    bottom: 20px;
-    left: 35px;
-    font-size: 19px;
-    color: #FA360A;
-}
-
-#submit-thread-form{
-    z-index: 3;
-    opacity: 0.5;
-    position: absolute;
-    float: right;
-    right: 20px;
-    bottom: 15px;
-    font-size: 28px;
-    cursor: pointer;
-}
-
-#submit-thread-form:hover {
-    opacity: 1;
-    color: #5B82BA;
-}
-
-#close-thread-form {
-    z-index: 3;
-    opacity: 0.3;
-    position: absolute;
-    top: 10px;
-    float: right;
-    right: 15px;
-    font-size: 28px;
-    cursor: pointer;
-}
-
-#close-thread-form:hover {
-    opacity: 1;
-    color: #5C80AE;
+    font-size: 15px;
 }

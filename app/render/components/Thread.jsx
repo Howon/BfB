@@ -3,12 +3,12 @@ import React from "react";
 class ThreadMenu extends React.Component {
   render(){
     let driveAreaToggle = "show-drive-area"
-    if(this.props.showDriveArea){
+    if(this.props.displayDriveArea){
       driveAreaToggle += " active"
     };
 
     let threadFormToggle = "show-thread-form"
-    if(this.props.showThreadForm){
+    if(this.props.displayThreadForm){
       threadFormToggle += " active"
     };
     return (
@@ -37,12 +37,10 @@ class ThreadMenu extends React.Component {
 };
 
 class Thread extends React.Component {
-  openThreadModal(){
-    this.props.openThreadModal(this.props.thread);
-  }
   render(){
     return (
-      <li className = 'thread-list-item' onClick = { this.openThreadModal.bind(this) } >
+      <li className = 'thread-list-item'
+        onClick = { this.props.openThreadModal.bind(this, this.props.thread) } >
         <div>
           { this.props.thread.title }
           <div className = 'thread-list-item-postedBy'>
@@ -86,74 +84,80 @@ class ThreadInputForm extends React.Component {
   }
   toggleThreadForm(){
     this.props.toggleThreadForm();
-    if(this.props.showThreadForm){
+    if(this.props.displayThreadForm){
       let summernoteElem = document.getElementsByClassName("note-editable panel-body")[0];
       summernoteElem.innerHTML = "<p></p>";
       let summernotePlaceHolder = document.getElementsByClassName("note-placeholder")[0];
       summernotePlaceHolder.innerHTML = "write here...";
       summernotePlaceHolder.style.display = "block";
       this.setState({
-        showThreadForm : false,
+        displayThreadForm : false,
         threadTitle : "",
-        inputWarning : false
+        threadInputWarning : false,
+        threadInputWarningMessage : ""
       });
     }
   }
-  postThread(e){
+  postThread(){
     let summernoteElem = document.getElementsByClassName("note-editable panel-body")[0];
     let threadContent = summernoteElem.innerHTML;
-    let threadContentTester = threadContent.replace(/&nbsp;/g, '').replace(/ /g, '');
+    let threadContentTester = threadContent.trim().replace(/&nbsp;/g, '').replace(/ /g, '');
 
-    if(!(/\S/.test(this.state.threadTitle) && (threadContentTester !== "<p></p>") && (threadContentTester !== "<p><br></p>"))){
+    if(!(/\S/.test(this.state.threadTitle))){
       this.setState({
-        inputWarning : true
+        threadInputWarning : true,
+        threadInputWarningMessage : "Please enter title for this thread"
+      });
+    } else if ((threadContentTester == "<p></p>") || (threadContentTester == "<p><br></p>")){
+      this.setState({
+        threadInputWarning : true,
+        threadInputWarningMessage : "Give your thread some content!"
       });
     } else {
-      this.toggleThreadForm();
       this.props.postThread({
         title   : this.state.threadTitle,
         content : threadContent
       });
 
-      e.preventDefault();
+      this.toggleThreadForm();
     }
   }
   render(){
     let displayThreadForm = {
-      display : this.props.showThreadForm ? "block" : "none"
+      display : this.props.displayThreadForm ? "block" : "none"
     };
 
     let displayWarning = {
-      display : this.state.inputWarning ? "block" : "none"
+      display : this.state.threadInputWarning ? "block" : "none"
     };
 
     return (
       <div style = { displayThreadForm } >
-        <div id = "thread-input-shader"
-          onClick = { this.toggleThreadForm.bind(this) } >
+        <div id = "thread-input-shader" className = "page-shader" >
         </div>
-        <div id = "thread-input-form" >
-          <div id = "thread-input-form-title">
+        <div id = "thread-input-form" className = "input-form" >
+          <div id = "thread-input-form-title" className = "form-title" >
             New Thread
           </div>
-          <i id = "close-thread-form" className = "fa fa-times"
-            onClick = { this.toggleThreadForm.bind(this) } >
-          </i>
-          <span id = "submit-thread-form" onClick = { this.postThread.bind(this) } >
-            post
-          </span>
           <textarea id = "thread-title-input"
             type = "text"
-            placeholder = "Enter title for your thread"
+            placeholder = "What is this thread called?"
             onChange = { this.handleTitleChange.bind(this) }
             value = { this.state.threadTitle } >
           </textarea>
           <div id = "thread-content-input" >
           </div>
-          <div style = { displayWarning }
+          <div style = { displayWarning } className = "form-warning"
             id = "thread-input-warning">
-            Please enter both title and content for your thead
+            { this.state.threadInputWarningMessage }
           </div>
+          <i id = "close-thread-form" className = "fa fa-times button-close-form"
+            onClick = { this.toggleThreadForm.bind(this) } >
+          </i>
+          <span id = "submit-thread-form" className = "button-submit-form"
+            onClick = { this.postThread.bind(this) } >
+            post
+          </span>
         </div>
       </div>
     )
@@ -168,7 +172,7 @@ class ThreadArea extends React.Component {
       postedBy: ""
     }
     this.state = {
-      showThreadForm : false,
+      displayThreadForm : false,
       currentThreadModal : emptyThread,
       displayThreadModal   : false
     }
@@ -187,27 +191,27 @@ class ThreadArea extends React.Component {
       maxHeight: 350,
       focus: true,
       disableDragAndDrop: true,
-      placeholder : "write here..."
+      placeholder : "type here!"
     });
   }
   toggleThreadForm(){
     this.setState({
-      showThreadForm : this.state.showThreadForm ? false : true
+      displayThreadForm : this.state.displayThreadForm ? false : true
     });
   }
   render() {
     let threadAreaHeight = {
-      height : this.props.showDriveArea ? "35%" : "100%"
+      height : this.props.displayDriveArea ? "35%" : "100%"
     }
     return (
       <div id="thread-area" style = { threadAreaHeight }>
         <ThreadMenu toggleThreadForm = { this.toggleThreadForm.bind(this) }
-          showDriveArea = { this.props.showDriveArea }
-          showThreadForm = { this.state.showThreadForm }
+          displayDriveArea = { this.props.displayDriveArea }
+          displayThreadForm = { this.state.displayThreadForm }
           toggleDriveArea = { this.props.toggleDriveArea.bind(this) } />
         <ThreadList threads = { this.props.threads }
           openThreadModal = { this.props.openThreadModal } />
-        <ThreadInputForm showThreadForm = { this.state.showThreadForm }
+        <ThreadInputForm displayThreadForm = { this.state.displayThreadForm }
           postThread = { this.props.postThread }
           toggleThreadForm = { this.toggleThreadForm.bind(this) } />
       </div>

@@ -54,6 +54,7 @@ class DriveInputForm extends React.Component {
             onChange = { this.handleFileNameChange.bind(this) }
             value = { this.state.newFileName } ></textarea>
           <div id = "drive-input-form-file-selector">
+            <span>Type </span>
             <i onClick = { this.chooseFileType.bind(this, "word") }
               className = { "drive-input-icon fa fa-file-word-o" + (this.state.newFileType === "word" ? " active" : "") } >
             </i>

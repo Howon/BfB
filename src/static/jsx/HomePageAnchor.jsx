@@ -1,6 +1,6 @@
-require('../stylesheets/calendar.css');
-require('../stylesheets/notificationBar.css');
-require('../stylesheets/sideBar.css');
+require('../css/calendar.css');
+require('../css/notificationBar.css');
+require('../css/sideBar.css');
 
 import React from 'react';
 import ReactDom from 'react-dom';

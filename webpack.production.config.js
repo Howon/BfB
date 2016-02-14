@@ -1,14 +1,14 @@
 var webpack = require('webpack');
 var path = require('path');
 var nodeModulesPath = path.resolve(__dirname, 'node_modules');
-var buildPath = path.resolve(__dirname, 'app', 'build');
+var buildPath = path.resolve(__dirname, 'src', 'build');
 
 var config = {
   // We change to normal source mapping
   devtool: 'source-map',
   entry: {
-    home: './app/render/homepage.jsx',
-    course: './app/render/coursepage.jsx'
+    home: './src/static/jsx/HomePageAnchor.jsx',
+    course: './src/static/jsx/CoursePageAnchor.jsx'
   },
   output: {
     path: buildPath,

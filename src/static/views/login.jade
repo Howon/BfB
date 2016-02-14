@@ -5,15 +5,14 @@ block head
   meta(http-equiv='X-UA-Compatible', content='IE=edge')
   meta(name='viewport', content='width=device-width, initial-scale=1')
   title Rayos
-  link(href='/stylesheets/ie10-viewport-bug-workaround.css', rel='stylesheet')
-  link(href='/stylesheets/login.css', rel='stylesheet')
+  link(rel='stylesheet' href='/css/ie10-viewport-bug-workaround.css')
+  link(rel='stylesheet' href='/css/login.css')
   style(type='text/css').
     :root .carbonad,
     :root #content > #right > .dose > .dosesingle,
     :root #content > #center > .dose > .dosesingle,
     :root #carbonads-container
     {display:none !important;}
-
 block body
   body
     .site-wrapper
@@ -58,5 +57,5 @@ block body
               a(href='http://rayos.xyz/') Rayos
               |  by&nbsp;
               a(href='https://adicu.com/') ADI Labs
-  script(src='/javascripts/ie10-viewport-bug-workaround.js')
-  script(src='/javascripts/loginPage.js')
+  script(src='/js/ie10-viewport-bug-workaround.js')
+  script(src='/js/loginPage.js')

@@ -5,8 +5,8 @@ var buildPath = path.resolve(__dirname, 'public', 'build');
 
 module.exports = {
   entry: {
-    home: ['webpack/hot/dev-server', 'webpack-dev-server/client?http://localhost:8080', './app/render/homepage.jsx'],
-    course: ['webpack/hot/dev-server', 'webpack-dev-server/client?http://localhost:8080', './app/render/coursepage.jsx']
+    home: ['webpack/hot/dev-server', 'webpack-dev-server/client?http://localhost:8080', './src/static/jsx/HomePageAnchor.jsx'],
+    course: ['webpack/hot/dev-server', 'webpack-dev-server/client?http://localhost:8080', './src/static/jsx/CoursePageAnchor.jsx']
   },
   output: {
     path: buildPath,

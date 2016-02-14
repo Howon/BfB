@@ -54,9 +54,9 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 
 require('babel-core/register');
-app.set('views', path.join(__dirname, 'app/views'))
+app.set('views', path.join(__dirname, 'src/static/views'))
 app.set('view engine', 'jade')
-app.use(express.static(path.join(__dirname, 'app')))
+app.use(express.static(path.join(__dirname, 'src/static')))
 
 app.use(cookieParser()); // read cookies (needed for auth)
 app.use(bodyParser.json()); // get information from html forms
@@ -74,12 +74,12 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
-require('./scripts/course/course')(io);
-require('./scripts/chat/chat')(io);
-require('./scripts/thread/thread')(io);
-require('./scripts/auth/authenticate')(config.googleAuth, passport);
-require('./scripts/drive/drive').setClient(config.drive);
-require('./scripts/routes')(app, passport);
+require('./src/scripts/course/course')(io);
+require('./src/scripts/chat/chat')(io);
+require('./src/scripts/thread/thread')(io);
+require('./src/scripts/auth/authenticate')(config.googleAuth, passport);
+require('./src/scripts/drive/drive').setClient(config.drive);
+require('./src/scripts/routes')(app, passport);
 
 proxy.on('error', function(e) {
   console.log('Could not connect to proxy, please try again...');

@@ -1,24 +1,74 @@
 var notificationSock = io(window.location.host + "/notification");
 var chatSock = io(window.location.host + "/chat");
 
-var userID = "james"
-var userID2 = "howon"
+var notifications = []
 
-notificationSock.emit("join", userID);
-notificationSock.on("match:card", function(userID){
-  console.log(userID)
+var users = [{
+  img: "http://stanlemmens.nl/wp/wp-content/uploads/2014/07/bill-gates-wealthiest-person.jpg",
+  name: "Bill",
+  lat: 47.6283102,
+  lon:-122.3428749
+}, {
+  img: "http://images.clipartpanda.com/person-clipart-dc85kMGMi.svg",
+  name: "Not_Donald",
+  lat: 47.6286920,
+  lon:-122.3428
+}]
+
+var user = users[0];
+var currentUser = users[1];
+
+var notificationModals = {}
+
+notificationSock.on("match:card", function(notification){
+  notifications.push(notification);
+  renderNotifications(notifications)
 })
+
+chatSock.on("start:chat", startChat);
+
+function startChat(){
+
+}
+
+function renderNotifications(notifications) {
+  notifications = notifications.map(x => "<li class='notification' id='notification-"+ x.itemID + "'> Matched with "+
+                                            x.from.name + " for "+ x.title +
+                                            "<img class='notification-image' src='+x.from.img+'" +
+                                            "data-id='"+x.itemID + "data-name='"+x.from.name+"' />"+
+                                            "<i class='dismiss-notification fa fa-times' data-id='"+ x.itemID +"'></i>" +
+                                         "</li>")
+  $("#notification-hook").html(notifications)
+}
+
+ $("#notification-hook").on('click', 'li.notification > img', notificationClicked)
+ $("#notification-hook").on('click', 'li.notification > .dismiss-notification', notificationDismissed)
+
+function notificationClicked(notification) {
+  var name = notification.currentTarget.dataset.name
+  chatSock.emit("start:chat", name);
+}
+
+function notificationDismissed(notification) {
+  var listID = notification.currentTarget.dataset.id
+  $("#notification-hook > #notification-" + listID).remove()
+}
 
 $("#panelSlide").jTinder({
   // dislike callback
   onDislike: function (item) {
-    console.log("disliked")
     $('#status').html('Dislike image ' + (item.index()+1));
   },
   // like callback
   onLike: function (item) {
-    console.log("liked")
-    notificationSock.emit("match:card", userID2);
+    var card = item[0];
+
+    notificationSock.emit("match:card", {
+      from: user,
+      itemID: card.dataset.id,
+      title : card.children[1].innerHTML,
+      content : card.children
+    });
     $('#status').html('Like image ' + (item.index()+1));
   },
   animationRevertSpeed: 200,

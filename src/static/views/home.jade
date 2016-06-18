@@ -14,12 +14,13 @@ block content
     #panelSlide
       ul
         each card, i in cards
-          li.card(class='panel-#{i}', style='transform: translate(0px, 0px) rotate(0rad);')
+          li.card(class='panel-#{i}' data-id=card.id, style='transform: translate(0px, 0px) rotate(0rad);')
             .card-img
               img(src=card.img)
             h4.card-title=card.title
             p.card-text=card.location
             p.card-text=card.description
+            p.card-text=card.creator
   #card-upload-modal(style='display:none;')
     #background-shader
     #card-modal
@@ -38,5 +39,8 @@ block content
         textarea#card-modal-desc-form.form-control(rows='5')
       button#submit-card
         label Submit
+  div#notification-area
+    | Notifications:
+    ul#notification-hook
   script(type='text/javascript', src='/static/js/cards.js')
   script(type='text/javascript', src='/static/js/map.js')

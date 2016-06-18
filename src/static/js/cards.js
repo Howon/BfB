@@ -9,7 +9,7 @@ var users = [{
   lat: 47.6283102,
   lon:-122.3428749
 }, {
-  img: "http://images.clipartpanda.com/person-clipart-dc85kMGMi.svg",
+  img: "http://media.vanityfair.com/photos/55ddc2f8e8f804624a2ff49c/master/h_590,c_limit/donald-trump-history-hair-ss09.jpg",
   name: "Not_Donald",
   lat: 47.6286920,
   lon:-122.3428
@@ -30,11 +30,20 @@ function startChat(){
 
 }
 
+$(".card-container").on('click', 'li.card > i', displayCardLocation);
+
+function displayCardLocation(item) {
+  var lat = notification.currentTarget.dataset.lat;
+  var lon = notification.currentTarget.dataset.lon;
+
+  //james
+}
+
 function renderNotifications(notifications) {
   notifications = notifications.map(x => "<li class='notification' id='notification-"+ x.itemID + "'> Matched with "+
-                                            x.from.name + " for "+ x.title +
-                                            "<img class='notification-image' src='+x.from.img+'" +
-                                            "data-id='"+x.itemID + "data-name='"+x.from.name+"' />"+
+                                            "<div>" + x.from.name + " for "+ x.title + "</div>" +
+                                            "<img class='notification-image' src='"+ x.from.img + "' "+
+                                            "data-id='"+ x.itemID + "' data-name='"+x.from.name+"' />"+
                                             "<i class='dismiss-notification fa fa-times' data-id='"+ x.itemID +"'></i>" +
                                          "</li>")
   $("#notification-hook").html(notifications)
@@ -126,7 +135,7 @@ Dropzone.options.imageUploadZone = {
         image = dataURL;
       };
       reader.readAsDataURL(data);
-      
+
 
           });
   }

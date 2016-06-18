@@ -72,6 +72,3 @@ function updateCard(id, owner, title, img, description,
 	});
 
 }
-
-alert("hi");
-createCard(0,"a","a","asdf",4,4,"la");

@@ -56,9 +56,7 @@ function createMap() {
       };
       map = new google.maps.Map(document.getElementById('map-canvas'),
           mapOptions);
-  }
 
-  function drop() {
       for (var i = 0; i < neighborhoods.length; i++) {
           setTimeout(function() {
               addMarker();

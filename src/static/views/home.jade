@@ -16,12 +16,15 @@ block content
     #panelSlide
       ul
         each card, i in cards
-          li.card(class='panel-#{i}', style='transform: translate(0px, 0px) rotate(0rad);')
+          li.card(class='panel-#{i}' data-id=card.id, style='transform: translate(0px, 0px) rotate(0rad);')
             .card-img
               img(src=card.img)
             h4.card-title=card.title
             p.card-text=card.location
             p.card-text=card.description
+            p.card-text=card.creator
+
+
   #map-modal(style='display:none;')
     #background-shader
     #card-modal
@@ -34,6 +37,7 @@ block content
       #panel(style="margin-left: -52px")
         button#drop(onclick="drop()") Drop Markers
       #map-canvas
+
 
   #card-upload-modal(style='display:none;')
     #background-shader
@@ -59,6 +63,9 @@ block content
 
   // script(src="https://maps.googleapis.com/maps/api/js?v=3.exp")
   script(src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAbebnQH25_Kuyk2dihcatibtfsSS7IVDI")
+  div#notification-area
+    | Notifications:
+    ul#notification-hook
   script(type='text/javascript', src='/static/js/cards.js')
   script(type='text/javascript', src='/static/js/map.js')
   script(type='text/javascript', src='/static/js/createCard.js')

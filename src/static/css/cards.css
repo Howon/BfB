@@ -292,3 +292,41 @@ div#card-upload-modal > #card-modal > #submit-card {
 button {
     outline-width: 0;
 }
+
+#notification-area {
+    width:250px;
+    position:absolute;
+    top:70px;
+
+}
+
+#notification-hook {
+    list-style: none;
+    background-color:#B9D2FF;
+    padding:0 10px;
+}
+
+.notification {
+    width:calc(100% - 20px);
+    background-color:red;
+    margin:0px 10px 5px 10px;
+    text-align:center;
+}
+
+.notification > img {
+    cursor:pointer;
+}
+
+.notification > .notification-image{
+    width:50%;
+    border-radius: 50%;
+}
+
+.notification > .dismiss-notification {
+    font-size:20px;
+    position: relative;
+    float:right;
+    right:-10px;
+    top:-20px;
+    cursor:pointer;
+}

@@ -15,7 +15,7 @@ var cards = [{
   title: 'Title',
   img: 'https://upload.wikimedia.org/wikipedia/commons/6/6d/Good_Food_Display_-_NCI_Visuals_Online.jpg',
   address: 'Here',
-  description: 'Event'
+  description: 'Event',
   lat:47.6287888,
   lon: -122.34280
 }, {
@@ -24,7 +24,7 @@ var cards = [{
   title: 'Title',
   img: 'https://upload.wikimedia.org/wikipedia/commons/6/6d/Good_Food_Display_-_NCI_Visuals_Online.jpg',
   address: 'Here',
-  description: 'Event'
+  description: 'Event',
   lat:47.6281888,
   lon: -122.38280
 },{
@@ -33,7 +33,7 @@ var cards = [{
   title: 'Title',
   img: 'https://upload.wikimedia.org/wikipedia/commons/6/6d/Good_Food_Display_-_NCI_Visuals_Online.jpg',
   address: 'Here',
-  description: 'Event'
+  description: 'Event',
   lat:47.6881888,
   lon: -122.30280
 },{
@@ -42,7 +42,7 @@ var cards = [{
   title: 'Title',
   img: 'https://upload.wikimedia.org/wikipedia/commons/6/6d/Good_Food_Display_-_NCI_Visuals_Online.jpg',
   address: 'Here',
-  description: 'Event'
+  description: 'Event',
   lat:47.6861888,
   lon: -122.33280
 },{
@@ -51,7 +51,7 @@ var cards = [{
   title: 'Title',
   img: 'https://upload.wikimedia.org/wikipedia/commons/6/6d/Good_Food_Display_-_NCI_Visuals_Online.jpg',
   address: 'Here',
-  description: 'Event'
+  description: 'Event',
   lat:47.6861888,
   lon: -122.33980
 }]

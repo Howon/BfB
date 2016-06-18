@@ -83,6 +83,7 @@ $("#card-uploader").click(function() {
 
 $("#show-map").click(function() {
   $("#map-modal").toggle()
+  createMap(47.6281888, -122.38286349999998, 13)
 })
 
 $("#close-upload-modal").click(function(){

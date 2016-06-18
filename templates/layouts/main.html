@@ -32,6 +32,7 @@
 <script src="/static/js/libs/modernizr-2.8.2.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/3.0.4/firebase.js"></script>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+<script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
 <script src='/static/js/login.js'></script>
 
 <!--[if lt IE 9]><script src="/static/js/libs/respond-1.4.2.min.js"></script><![endif]-->
@@ -39,15 +40,7 @@
 
 </head>
 <body>
-  <div id="fb-root"></div>
-<script>var ref = new Firebase("https://foodtinder-daa92.firebaseio.com/");
-ref.authWithOAuthPopup("facebook", function(error, authData) {
-  if (error) {
-    console.log("Login Failed!", error);
-  } else {
-    console.log("Authenticated successfully with payload:", authData);
-  }
-});</script>
+
 
   <!-- Wrap all page content here -->
   <div id="wrap">
@@ -83,7 +76,6 @@ ref.authWithOAuthPopup("facebook", function(error, authData) {
           <ul class="nav navbar-nav pull-right">
             <li><a href="{{ url_for('register') }}">Signup</a></li>
             <li><a href="{{ url_for('login') }}">Login</a></li>
-          <div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="false" data-auto-logout-link="false"></div>
           </ul>
         </div><!--/.nav-collapse -->
       </div>

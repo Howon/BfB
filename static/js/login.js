@@ -1,17 +1,21 @@
-var config = {
-  apiKey: "apiKey",
-  authDomain: "projectId.firebaseapp.com",
-  databaseURL: "https://databaseName.firebaseio.com"
-};
+// Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyAfoOHV3ZGqptKBzKVhXsPqi-Joyv10aUo",
+    authDomain: "foodtinder-daa92.firebaseapp.com",
+    databaseURL: "https://foodtinder-daa92.firebaseio.com",
+    storageBucket: "foodtinder-daa92.appspot.com",
+  };
+  firebase.initializeApp(config);
 
-firebase.initializeApp(config);
+  var rootRef = firebase.database().ref();
 
-var rootRef = firebase.database().ref();
+  var auth = firebase.auth();
 
-ref.authWithOAuthPopup("facebook", function(error, authData) {
-  if (error) {
-    console.log("Login Failed!", error);
-  } else {
-    console.log("Authenticated successfully with payload:", authData);
-  }
+var provider = new firebase.auth.FacebookAuthProvider();
+auth.signInWithPopup(provider).then(function(result) {
+  // User signed in!
+  console.log(result);
+  var uid = result.user.uid;
+}).catch(function(error) {
+  // An error occurred
 });

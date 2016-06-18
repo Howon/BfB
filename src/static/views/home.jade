@@ -1,7 +1,86 @@
-extends layout
+extends main
 
-block body
-  div#mount-point= body
-  script(type='text/javascript').
-    var APP_PROPS = !{JSON.stringify(APP_PROPS)};
-  script(type = 'text/javascript' src="/build/home.js")
+block content
+  link(type='text/css', rel='stylesheet', href='/static/css/cards.css')
+  link(type='text/css', rel='stylesheet', href='/static/css/dropzone.css')
+  script(type='text/javascript', src='/static/js/libs/jquery.transform2d.js')
+  script(type='text/javascript', src='/static/js/libs/jquery.jTinder.js')
+  script(type='text/javascript', src='/static/js/libs/dropzone.js')
+  .card-container
+    button#card-uploader
+      i.fa.fa-cutlery(aria-hidden='true')
+      i.fa.fa-plus(aria-hidden='true')
+    #panelSlide
+      ul
+        | {% for card in cards %}
+        li.card(class='panel-{{card}}', style='transform: translate(0px, 0px) rotate(0rad);')
+          .card-img
+            img(src='https://upload.wikimedia.org/wikipedia/commons/6/6d/Good_Food_Display_-_NCI_Visuals_Online.jpg')
+          h4.card-title {{ card.title }}
+          p.card-text {{ card.location }}
+          p.card-text {{ card.description }}
+        |       {% endfor %}
+  #card-upload-modal(style='display:none;')
+    #background-shader
+    #card-modal
+      i#close-modal.fa.fa-times(aria-hidden='true')
+      label#card-modal-label
+        | Share your food!
+      form#image-upload-zone.dropzone(action='/file-upload')
+      .row
+        label.card-modal-form-label Title
+        textarea#card-modal-title-form.form-control(rows='1')
+      .row
+        label.card-modal-form-label Address
+        #location-mount-point
+      .row
+        label.card-modal-form-label Description
+        textarea#card-modal-desc-form.form-control(rows='5')
+      button#submit-card
+        label Submit
+  script.
+    $("#panelSlide").jTinder({
+    // dislike callback
+      onDislike: function (item) {
+        console.log("disliked")
+        $('#status').html('Dislike image ' + (item.index()+1));
+      },
+      // like callback
+      onLike: function (item) {
+        console.log("liked")
+        $('#status').html('Like image ' + (item.index()+1));
+      },
+      animationRevertSpeed: 200,
+      animationSpeed: 400,
+      threshold: 1,
+      likeSelector: '.like',
+      dislikeSelector: '.dislike'
+    });
+
+    $("#card-uploader").click(function() {
+      $("#card-upload-modal").toggle()
+    })
+
+    $("#close-modal").click(function(){
+      $("#card-upload-modal").hide()
+    })
+
+    Dropzone.options.imageUploadZone = {
+      acceptedFiles: "image/*",
+      maxFilesize: 10, // MB
+      autoProcessQueue: false,
+      dictDefaultMessage:"Upload images here",
+      init: function() {
+        var submitButton = document.querySelector("#submit-card")
+        myDropzone = this; // closure
+        submitButton.addEventListener("click", function() {
+          myDropzone.processQueue(); // Tell Dropzone to process all queued files.
+        });
+        // You might want to show the submit button only when
+        // files are dropped here:
+        this.on("addedfile", function() {
+        // Show submit button here and/or inform user to click it.
+        });
+      }
+    };
+  script(type='text/javascript', src='/static/js/map.js')

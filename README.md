@@ -29,5 +29,3 @@ to display appropriate contents
 ## Developers
 [Howon Byun](https://github.com/Howon) <br />
 [Ken Aizawa](https://github.com/aizawak) <br />
-[Kevin Lin](https://github.com/kl2806) <br />
-[David Lee](https://github.com/davidlee1435)

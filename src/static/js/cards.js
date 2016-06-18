@@ -15,8 +15,7 @@ var users = [{
   lon:-122.3428
 }]
 
-var user = users[0];
-var currentUser = users[1];
+var user = users[props.userID];
 
 var notificationModals = {}
 

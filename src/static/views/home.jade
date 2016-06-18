@@ -13,7 +13,7 @@ block content
       i.fa.fa-plus(aria-hidden='true')
     #panelSlide
       ul
-        each card, i in cards
+        each card, i in props.cards
           li.card(class='panel-#{i}' data-id=card.id, style='transform: translate(0px, 0px) rotate(0rad);')
             .card-img
               img(src=card.img)
@@ -42,5 +42,7 @@ block content
   div#notification-area
     | Notifications:
     ul#notification-hook
+  script(type='text/javascript').
+    var props = !{JSON.stringify(props)};
   script(type='text/javascript', src='/static/js/cards.js')
   script(type='text/javascript', src='/static/js/map.js')

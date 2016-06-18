@@ -51,10 +51,13 @@ module.exports = function(app) {
     });
   });
 
-  app.get('/home', function(req, res) {
+  app.get('/home/:id', function(req, res) {
     res.render('home', {
       title: 'Banh mi for Bambi',
-      cards: cards
+      props: {
+        cards: cards,
+        userID: req.params.id
+      }
     });
   });
 };

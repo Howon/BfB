@@ -1,6 +1,6 @@
 # Banh mi for Bambi (BfB)
 
-#![alt text](http://i67.tinypic.com/14kza5c.png "Logo Title Text 1")
+#![alt text](http://i64.tinypic.com/2cnwqdx.png "Logo Title Text 1")
 
 Often we end up with leftover food that we cannot discard in an environmentally conscious and efficent manner.
 
@@ -22,5 +22,5 @@ To demo with two users, open two windows with these two routes: [/home/0](https:
 
 ## Developers
 * Howon Byun
-# Laura Hu
+* Laura Hu
 * James Xue

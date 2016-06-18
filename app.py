@@ -71,6 +71,17 @@ def forgot():
     form = ForgotForm(request.form)
     return render_template('forms/forgot.html', form=form)
 
+@app.route('/upload_food', methods=['POST'])
+def upload_food():
+    json_dict = request.get_json()
+    
+    user = request.form['userID']
+    description = request.form['description']
+    images = request.form['images']
+    lat = request.form['lat']
+    lng = request.form['lng']
+    return json.dumps({'status':'OK','user':user,'description':description, 'images':images, 'lat':lat, 'lng':lng});
+
 # Error handlers.
 
 

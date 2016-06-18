@@ -17,6 +17,7 @@
 <link type="text/css" rel="stylesheet" href="/static/css/main.css" />
 <link type="text/css" rel="stylesheet" href="/static/css/main.responsive.css" />
 <link type="text/css" rel="stylesheet" href="/static/css/main.quickfix.css" />
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.0.0/bootstrap-social.css">
 <!-- /styles -->
 
 <!-- favicons -->
@@ -40,7 +41,6 @@
 
 </head>
 <body>
-
 
   <!-- Wrap all page content here -->
   <div id="wrap">
@@ -76,6 +76,8 @@
           <ul class="nav navbar-nav pull-right">
             <li><a href="{{ url_for('register') }}">Signup</a></li>
             <li><a href="{{ url_for('login') }}">Login</a></li>
+            <button onclick="createUser()" id="facebook">Sign in with Facebook</button>
+           
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -119,6 +121,9 @@
   Modernizr.load({
     load: ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js'
   });
+  </script>
+  <script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAbebnQH25_Kuyk2dihcatibtfsSS7IVDI">
   </script>
 
 </body>

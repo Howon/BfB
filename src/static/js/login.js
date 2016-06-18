@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 function createUser() {
   // Initialize Firebase
   var config = {
@@ -74,4 +75,22 @@ function createUser() {
 
 $('facebook').click(function() {
   createUser();
+=======
+var config = {
+  apiKey: "apiKey",
+  authDomain: "projectId.firebaseapp.com",
+  databaseURL: "https://databaseName.firebaseio.com"
+};
+
+firebase.initializeApp(config);
+
+var rootRef = firebase.database().ref();
+
+ref.authWithOAuthPopup("facebook", function(error, authData) {
+  if (error) {
+    console.log("Login Failed!", error);
+  } else {
+    console.log("Authenticated successfully with payload:", authData);
+  }
+>>>>>>> eebae15eeadcecf6210e6714b372c11aa45c38f8
 });

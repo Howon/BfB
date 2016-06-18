@@ -7,6 +7,23 @@ var config = {
 };
 firebase.initializeApp(config);
 
+var allCards={};
+
+function getAllCards(){
+	var ref = firebase.database().ref('cards/');
+	ref.orderByChild("title").on("child_added",function(snapshot){
+		allCards[snapshot.key] = {
+		"owner": snapshot.val().owner,
+		"title": snapshot.val().title,
+		"img": snapshot.val().img,
+		"description": snapshot.val().description,
+		"claimed": snapshot.val().claimed,
+		"lat": snapshot.val().lat,
+		"long": snapshot.val().long,
+		"location": snapshot.val().location
+		};
+	});
+}
 
 
 function createCard(owner, title, img, description,

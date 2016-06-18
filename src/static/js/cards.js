@@ -32,9 +32,19 @@ $("#card-uploader").click(function() {
   $("#card-upload-modal").toggle()
 })
 
-$("#close-modal").click(function(){
+$("#show-map").click(function() {
+  $("#map-modal").toggle()
+})
+
+$("#close-upload-modal").click(function(){
   $("#card-upload-modal").hide()
 })
+
+$("#close-map-modal").click(function(){
+  $("#map-modal").hide()
+})
+
+var image;
 
 Dropzone.options.imageUploadZone = {
   acceptedFiles: "image/*",
@@ -46,12 +56,32 @@ Dropzone.options.imageUploadZone = {
     myDropzone = this; // closure
     submitButton.addEventListener("click", function() {
       myDropzone.processQueue(); // Tell Dropzone to process all queued files.
+      var title = $('#card-modal-title-form').val();
+      var description = $('#card-modal-desc-form').val();
+      // console.log(image);
+      // var asdf = document.getElementById('card-uploader');
+      // asdf.innerHTML = "<img src=" + image + "></img>";
+      createCard(userID, title, image, description, lat, lon, address);
+
+
     });
     // You might want to show the submit button only when
     // files are dropped here:
-    this.on("addedfile", function() {
+    this.on("addedfile", function(data) {
     // Show submit button here and/or inform user to click it.
-    });
+      // console.log(data);
+      var reader = new FileReader();
+      reader.onload = function(){
+        var dataURL = reader.result;
+        var output = document.getElementById('output');
+        image = dataURL;
+      };
+      reader.readAsDataURL(data);
+      
+
+          });
   }
 };
+
+
 

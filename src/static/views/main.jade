@@ -33,16 +33,6 @@ html
       script(src='/static/js/libs/respond-1.4.2.min.js')
     // /scripts
   body
-    #fb-root
-    script.
-      var ref = new Firebase("https://foodtinder-daa92.firebaseio.com/");
-      ref.authWithOAuthPopup("facebook", function(error, authData) {
-      if (error) {
-      console.log("Login Failed!", error);
-      } else {
-      console.log("Authenticated successfully with payload:", authData);
-      }
-      });
     // Wrap all page content here
     #wrap
       // Fixed navbar

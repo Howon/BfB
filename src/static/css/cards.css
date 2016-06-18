@@ -320,7 +320,7 @@ button {
 #notification-hook {
     list-style: none;
     background-color:#B9D2FF;
-    padding:0 10px;
+    padding:0 0px;
 }
 
 .notification {
@@ -344,7 +344,92 @@ button {
     position: relative;
     float:right;
     right:-10px;
-    top:-20px;
+    top:-40px;
     cursor:pointer;
 }
 
+
+
+#chat-area{
+    position: absolute;
+    width: 60%;
+    height: 100%;
+    padding: 0;
+    background-color: #FAFAFA;
+}
+
+.chat-area-component{
+    position: absolute;
+    left: 180px;
+    width: calc(100% - 180px);
+    border: 0;
+    margin: 0;
+}
+
+
+ul#messages-area{
+    background-color: white;
+    top: 45px;
+    list-style-type: none;
+    height: calc(100% - 95px);
+    overflow: auto;
+    padding: 10px;
+    overflow-y: auto;
+    background-color: white;
+}
+
+ul#messages-area li{
+    margin: 5px 0px;
+}
+
+ul#messages-area div{
+    display: inline-block;
+    padding: 0;
+}
+
+ul#messages-area div.message-sender{
+    color: #5F8BAF;
+    float: left;
+    width: 80px;
+    text-align: center;
+}
+
+ul#messages-area div.message-content{
+    overflow: auto;
+    color: #B59484;
+    padding: 0;
+    width: calc(100% - 80px);
+    word-break: break-all;
+}
+
+#message-input-area{
+    height: 50px;
+    float: bottom;
+    bottom: 0px;
+    border-top: 1px solid #90A4AE;
+}
+
+textarea#message-input-text{
+    position: absolute;
+    padding: 0.5% 1% 0 1%;
+    height: 100%;
+    resize: none;
+    outline: none;
+    border: 0;
+    border-right: 1px solid #90A4AE;
+    width: calc(100% - 60px);
+    background-color: #FAFAFA;
+}
+
+#message-input-button{
+    position: absolute;
+    float: bottom;
+    bottom: 10px;
+    right: 18px;
+    cursor: pointer;
+    color: #2573A6;
+}
+
+#message-input-button:hover{
+    color: #2889CA;
+}

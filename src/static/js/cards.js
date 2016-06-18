@@ -3,19 +3,7 @@ var chatSock = io(window.location.host + "/chat");
 
 var notifications = []
 
-var users = [{
-  img: "http://stanlemmens.nl/wp/wp-content/uploads/2014/07/bill-gates-wealthiest-person.jpg",
-  name: "Bill",
-  lat: 47.6283102,
-  lon:-122.3428749
-}, {
-  img: "http://media.vanityfair.com/photos/55ddc2f8e8f804624a2ff49c/master/h_590,c_limit/donald-trump-history-hair-ss09.jpg",
-  name: "Not_Donald",
-  lat: 47.6286920,
-  lon:-122.3428
-}]
-
-var user = users[props.userID];
+var user = props.users[props.userID];
 
 var notificationModals = {}
 
@@ -26,8 +14,20 @@ notificationSock.on("match:card", function(notification){
 
 chatSock.on("start:chat", startChat);
 
-function startChat(){
+chatSock.on("receive:message", function(message) {
+  var messageItem = "<li className = 'message'>" +
+                      "<div className = 'message-sender'>" + message.sender + "</div>" +
+                      "<div className = 'message-content'>" + message.content + "</div>" +
+                    "</li>"
+  $("#messages-area").prepend(messageItem)
+})
 
+function startChat(){
+  $("#messages-area").show();
+}
+
+function endChat(){
+  $("#messages-area").hide();
 }
 
 $(".card-container").on('click', 'li.card > i', displayCardLocation);
@@ -70,12 +70,10 @@ $("#panelSlide").jTinder({
   // like callback
   onLike: function (item) {
     var card = item[0];
-
     notificationSock.emit("match:card", {
       from: user,
       itemID: card.dataset.id,
-      title : card.children[1].innerHTML,
-      content : card.children
+      title : $(card)[0].children[1].children[0].innerHTML
     });
     $('#status').html('Like image ' + (item.index()+1));
   },

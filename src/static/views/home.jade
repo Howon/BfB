@@ -35,12 +35,18 @@ block content
         | Where is everyone?
 
 
-
       #panel(style="margin-left: -52px")
         button#drop(onclick="drop()") Drop Markers
       #map-canvas
 
-
+  #chat-area
+    ul#messages-area.chat-area-component
+    div#message-input-area.chat-area-component
+      textarea#message-input-text(
+        type = "text"
+        placeholder = "Type to chat"
+      )
+      i#message-input-button.fa.fa-paper-plane-o
   #card-upload-modal(style='display:none;')
     #background-shader
     #card-modal

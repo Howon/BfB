@@ -1,0 +1,103 @@
+html
+  head
+    meta(charset='utf-8')
+    title=body
+    // meta
+    meta(name='description', content='')
+    meta(name='author', content='')
+    meta(name='viewport', content='width=device-width,initial-scale=1')
+    // /meta
+    // styles
+    link(type='text/css', rel='stylesheet', href='/static/css/font-awesome-4.1.0.min.css')
+    link(type='text/css', rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css')
+    link(type='text/css', rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js')
+    link(type='text/css', rel='stylesheet', href='/static/css/layout.main.css')
+    link(type='text/css', rel='stylesheet', href='/static/css/main.css')
+    link(type='text/css', rel='stylesheet', href='/static/css/main.responsive.css')
+    link(type='text/css', rel='stylesheet', href='/static/css/main.quickfix.css')
+    // /styles
+    // favicons
+    link(rel='shortcut icon', href='/static/ico/favicon.png')
+    link(rel='apple-touch-icon-precomposed', sizes='144x144', href='/static/ico/apple-touch-icon-144-precomposed.png')
+    link(rel='apple-touch-icon-precomposed', sizes='114x114', href='/static/ico/apple-touch-icon-114-precomposed.png')
+    link(rel='apple-touch-icon-precomposed', sizes='72x72', href='/static/ico/apple-touch-icon-72-precomposed.png')
+    link(rel='apple-touch-icon-precomposed', href='/static/ico/apple-touch-icon-57-precomposed.png')
+    link(rel='shortcut icon', href='/static/ico/favicon.png')
+    // /favicons
+    // scripts
+    script(src='/static/js/libs/modernizr-2.8.2.min.js')
+    script(src='https://www.gstatic.com/firebasejs/3.0.4/firebase.js')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js')
+    script(src='/static/js/login.js')
+    //if lt IE 9
+      script(src='/static/js/libs/respond-1.4.2.min.js')
+    // /scripts
+  body
+    #fb-root
+    script.
+      var ref = new Firebase("https://foodtinder-daa92.firebaseio.com/");
+      ref.authWithOAuthPopup("facebook", function(error, authData) {
+      if (error) {
+      console.log("Login Failed!", error);
+      } else {
+      console.log("Authenticated successfully with payload:", authData);
+      }
+      });
+    // Wrap all page content here
+    #wrap
+      // Fixed navbar
+      .navbar.navbar-default.navbar-fixed-top
+        .container
+          .navbar-header
+            button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
+              span.icon-bar
+              span.icon-bar
+              span.icon-bar
+            a.navbar-brand(href='/') Project name
+          .collapse.navbar-collapse
+            ul.nav.navbar-nav
+              li.active({%='', if='', request.endpoint='=', %}='', endif='')
+                a(href="/") Home
+              li.active({%='', if='', request.endpoint='=', %}='', endif='')
+                a(href="/") About
+              li.dropdown
+                a.dropdown-toggle(data-toggle='dropdown')
+                  | Dropdown
+                  b.caret
+                ul.dropdown-menu
+                  li
+                    a Action
+                  li
+                    a Another action
+                  li
+                    a Something else here
+                  li.divider
+                  li.dropdown-header Nav header
+                  li
+                    a Separated link
+                  li
+                    a One more separated link
+            ul.nav.navbar-nav.pull-right
+              li
+                a(href="/") Signup
+              li
+                a(href="/") Login
+              button(onclick="createUser()" id="facebook") Sign in with Facebook
+              .fb-login-button(data-max-rows='1', data-size='large', data-show-faces='false', data-auto-logout-link='false')
+      main#content.container(role='main')
+        block content
+    #footer
+      .container
+        p Your Company © All Rights Reserved.
+    script(type='text/javascript', src='//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js')
+    script.
+      window.jQuery || document.write('<script type="text/javascript" src="/static/js/libs/jquery-1.11.1.min.js"><\\/script>')
+    script(type='text/javascript', src='/static/js/libs/bootstrap-3.1.1.min.js', defer='')
+    script(type='text/javascript', src='/static/js/plugins.js', defer='')
+    script(type='text/javascript', src='/static/js/script.js', defer='')
+    // Google Analytics - Change UA-XXXXX-X to be your site's ID
+    script.
+      window._gaq = [['_setAccount','UAXXXXXXXX1'],['_trackPageview'],['_trackPageLoadTime']];
+      Modernizr.load({
+      load: ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js'
+      });

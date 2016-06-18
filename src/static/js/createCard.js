@@ -36,7 +36,6 @@
      firebase.database().ref().update(updates);
 
 
-
  }
 
  function updateCard(id, owner, title, img, description, lat, long, address) {

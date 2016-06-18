@@ -8,11 +8,11 @@ block content
   script(type='text/javascript', src='/static/js/libs/dropzone.js')
   script(type='text/javascript', src="https://cdn.socket.io/socket.io-1.4.5.js")
   .card-container
-    button#card-uploader
-      i.fa.fa-cutlery(aria-hidden='true') &nbsp;
-      i.fa.fa-plus(aria-hidden='true')
-    button#show-map
-      i.fa.fa-map-marker(aria-hidden='true')
+    button#card-uploader.action-button
+      i.fa.fa-plus(aria-hidden='true') &nbsp;
+      i.fa.fa-cutlery(aria-hidden='true')
+    button#show-map.action-button
+      i#map-marker.fa.fa-map-marker(aria-hidden='true')
     #panelSlide
       ul
         each card, i in props.cards
@@ -22,33 +22,34 @@ block content
             .card-content
               h3.card-title=card.title
               p.card-text.address=card.address
-               | &nbsp; <i class="fa fa-map-marker" data-lat=#{card.lat} data-lon=#{card.lon} aria-hidden="true"></i>
+               | &nbsp; <i id="showCardMap" class="fa fa-map-marker" data-lat=#{card.lat} data-lon=#{card.lon} aria-hidden="true"></i>
               p.card-text=card.description
               h3.card-text.creator=card.creator
 
 
   #map-modal(style='display:none;')
-    #background-shader
-    #card-modal
+    .chat-background-shader
+    #map-panel
       i#close-map-modal.fa.fa-times(aria-hidden='true')
       label#map-modal-label
-        | Where is everyone?
-
-
-      #panel(style="margin-left: -52px")
-        button#drop(onclick="drop()") Drop Markers
+        | Food Map
       #map-canvas
 
-  #chat-area
-    ul#messages-area.chat-area-component
-    div#message-input-area.chat-area-component
-      textarea#message-input-text(
-        type = "text"
-        placeholder = "Type to chat"
-      )
-      i#message-input-button.fa.fa-paper-plane-o
+  #chat-area(style="display:none;")
+    .chat-background-shader
+    div#chat
+      div#chat-header-anchor
+      i#close-chat-area.fa.fa-times(aria-hidden='true')
+      ul#messages-area.chat-area-component
+      div#message-input-area.chat-area-component
+        textarea#message-input-text(
+          type = "text"
+          placeholder = "Type to chat"
+        )
+        i#message-input-button.fa.fa-paper-plane-o
+
   #card-upload-modal(style='display:none;')
-    #background-shader
+    .background-shader
     #card-modal
       i#close-upload-modal.fa.fa-times(aria-hidden='true')
       label#card-modal-label
@@ -65,12 +66,11 @@ block content
         textarea#card-modal-desc-form.form-control(rows='5')
       button#submit-card
         label Submit
-
-  // script(src="https://maps.googleapis.com/maps/api/js?v=3.exp")
-  script(src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAbebnQH25_Kuyk2dihcatibtfsSS7IVDI")
   div#notification-area
-    | Notifications:
+    h3 Notifications
     ul#notification-hook
+
+  script(src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAbebnQH25_Kuyk2dihcatibtfsSS7IVDI")
   script(type='text/javascript').
     var props = !{JSON.stringify(props)};
   script(type='text/javascript', src='/static/js/cards.js')

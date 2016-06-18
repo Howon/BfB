@@ -1,11 +1,11 @@
-var notificationSock = io(window.location.host + "/notification");
-var chatSock = io(window.location.host + "/chat");
+let notificationSock = io(window.location.host + "/notification");
+let chatSock = io(window.location.host + "/chat");
 
-var notifications = []
+let notifications = []
 
-var user = props.users[props.userID];
+let user = props.users[props.userID];
 
-var notificationModals = {}
+let notificationModals = {}
 
 notificationSock.on("match:card", function(notification){
   notifications.push(notification);
@@ -14,27 +14,65 @@ notificationSock.on("match:card", function(notification){
 
 chatSock.on("start:chat", startChat);
 
-chatSock.on("receive:message", function(message) {
-  var messageItem = "<li className = 'message'>" +
-                      "<div className = 'message-sender'>" + message.sender + "</div>" +
-                      "<div className = 'message-content'>" + message.content + "</div>" +
-                    "</li>"
-  $("#messages-area").prepend(messageItem)
-})
+chatDisabled = {}
 
-function startChat(){
-  $("#messages-area").show();
+chatSock.on("close:chat", function(user){
+  let messageItem = "<li class = 'message message-close'>" +
+                      "<div class = 'message-sender'>" + user.name + "</div>" +
+                      "<div class = 'message-content'> left the chat</div>" +
+                    "</li>"
+  $("#messages-area").prepend(messageItem);
+  chatDisabled[user.name] = true;
+});
+
+chatSock.on("receive:message", addMessage);
+
+function addMessage(message) {
+  let messageItem = "<li class = 'message'>" +
+                      "<img class = 'message-sender' src='" + message.sender.img + "' />" +
+                      "<div class = 'message-content'> " + message.message + "</div>" +
+                    "</li>"
+  $("#messages-area").append(messageItem);
 }
 
-function endChat(){
-  $("#messages-area").hide();
+function startChat(chatData){
+  $("#chat-header-anchor").html("Chat between " + chatData.from + " and " + chatData.to);
+  $("#chat-area").show();
+}
+
+function clearChat() {
+  $("#chat-area").hide();
+  $("#message-input-text").val('');
+  $("#messages-area").empty();
+}
+
+$("#chat").on('click', 'i#close-chat-area', function(){
+  clearChat();
+  chatSock.emit("close:chat", user);
+});
+
+$(document).keypress(function(e) {
+  if(e.which == 13) {
+    let message = $("#message-input-text").val();
+    if(!/^\s*$/.test(message)) {
+      let messagePacket = {sender: user, message: message};
+      chatSock.emit("post:message", messagePacket);
+      addMessage(messagePacket);
+      $("#message-input-text").val("");
+    }
+  }
+});
+
+function sendChatMessage() {
+  let message = $("#message-input-text").val();
+  console.log(message);
 }
 
 $(".card-container").on('click', 'li.card > i', displayCardLocation);
 
 function displayCardLocation(item) {
-  var lat = notification.currentTarget.dataset.lat;
-  var lon = notification.currentTarget.dataset.lon;
+  let lat = notification.currentTarget.dataset.lat;
+  let lon = notification.currentTarget.dataset.lon;
 
   //james
 }
@@ -49,16 +87,20 @@ function renderNotifications(notifications) {
   $("#notification-hook").html(notifications)
 }
 
- $("#notification-hook").on('click', 'li.notification > img', notificationClicked)
- $("#notification-hook").on('click', 'li.notification > .dismiss-notification', notificationDismissed)
+$("#notification-hook").on('click', 'li.notification > img', notificationClicked)
+$("#notification-hook").on('click', 'li.notification > .dismiss-notification', notificationDismissed)
 
 function notificationClicked(notification) {
-  var name = notification.currentTarget.dataset.name
-  chatSock.emit("start:chat", name);
+  let name = notification.currentTarget.dataset.name
+  if(!name in chatDisabled || !chatDisabled[name]){
+    let chatData = {from: user.name, to: name}
+    chatSock.emit("start:chat", chatData);
+    startChat(chatData)
+  }
 }
 
 function notificationDismissed(notification) {
-  var listID = notification.currentTarget.dataset.id
+  let listID = notification.currentTarget.dataset.id
   $("#notification-hook > #notification-" + listID).remove()
 }
 
@@ -69,7 +111,7 @@ $("#panelSlide").jTinder({
   },
   // like callback
   onLike: function (item) {
-    var card = item[0];
+    let card = item[0];
     notificationSock.emit("match:card", {
       from: user,
       itemID: card.dataset.id,
@@ -88,8 +130,18 @@ $("#card-uploader").click(function() {
   $("#card-upload-modal").toggle()
 })
 
+$(".card-text").on('click', "#showCardMap", function(item) {
+  let lat = item.currentTarget.dataset.lat
+  let lon = item.currentTarget.dataset.lon
+  $("#map-modal").toggle()
+  $(".background-shader").show()
+  showMap(lat, lon, 14)
+})
+
 $("#show-map").click(function() {
   $("#map-modal").toggle()
+  $(".background-shader").show()
+  createMap(currLat, currLon, 14)
 })
 
 $("#close-upload-modal").click(function(){
@@ -100,7 +152,7 @@ $("#close-map-modal").click(function(){
   $("#map-modal").hide()
 })
 
-var image;
+let image;
 
 Dropzone.options.imageUploadZone = {
   acceptedFiles: "image/*",
@@ -108,14 +160,14 @@ Dropzone.options.imageUploadZone = {
   autoProcessQueue: false,
   dictDefaultMessage:"Upload images here",
   init: function() {
-    var submitButton = document.querySelector("#submit-card")
+    let submitButton = document.querySelector("#submit-card")
     myDropzone = this; // closure
     submitButton.addEventListener("click", function() {
       myDropzone.processQueue(); // Tell Dropzone to process all queued files.
-      var title = $('#card-modal-title-form').val();
-      var description = $('#card-modal-desc-form').val();
+      let title = $('#card-modal-title-form').val();
+      let description = $('#card-modal-desc-form').val();
       // console.log(image);
-      // var asdf = document.getElementById('card-uploader');
+      // let asdf = document.getElementById('card-uploader');
       // asdf.innerHTML = "<img src=" + image + "></img>";
       createCard(userID, title, image, description, lat, lon, address);
 
@@ -126,10 +178,10 @@ Dropzone.options.imageUploadZone = {
     this.on("addedfile", function(data) {
     // Show submit button here and/or inform user to click it.
       // console.log(data);
-      var reader = new FileReader();
+      let reader = new FileReader();
       reader.onload = function(){
-        var dataURL = reader.result;
-        var output = document.getElementById('output');
+        let dataURL = reader.result;
+        let output = document.getElementById('output');
         image = dataURL;
       };
       reader.readAsDataURL(data);

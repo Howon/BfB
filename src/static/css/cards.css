@@ -1,3 +1,17 @@
+#bfb-logo {
+    width:44px;
+    margin-top: -15px;
+    left:0;
+    margin-right:10px;
+}
+
+.navbar.navbar-default.navbar-fixed-top{
+    background-color:#3498DB;
+}
+
+li > a {
+    color:black;
+}
 /* Wrapper with padding */
 .card-container  {
   position:relative;
@@ -100,9 +114,9 @@
 
 li.card {
   position: absolute;
-  width:450px;
-  height:550px;
-  border: 4px #B8B8B8 solid;
+  width:400px;
+  height:500px;
+  border: 4px #3498DB solid;
   border-radius: 3px;
   background-color: #F8F8F8;
   left:0;
@@ -119,7 +133,7 @@ li.card > div.card-img {
   height:70%;
   text-align: center; /* ensures the image is always in the h-middle */
   overflow: hidden; /* hide the cropped portion */
-  border-bottom: 3px #BCBCBC solid;
+  border-bottom: 4px #3498DB solid;
 }
 
 li.card.panel-1 {
@@ -164,18 +178,24 @@ h3.creator {
     right:0;
 }
 
-#card-uploader {
+.action-button {
+    display: block;
     position:absolute;
     right:0;
     font-size:30px;
     background:#F1F1F1;
-    border: 3px #CECECE solid;
+    border: 3px #3498DB solid;
     border-radius: 2px;
     margin-top:20px;
     z-index:50;
+    top:20px;
 }
 
-div#card-upload-modal > #background-shader {
+#show-map {
+    top:80px;
+}
+
+.background-shader {
     position:fixed;
     z-index:25;
     background-color: #C1C1C1;
@@ -194,7 +214,7 @@ div#card-upload-modal > #card-modal{
     width:450px;
     height:550px;
     background-color: #FFFFFF;
-    border: 3px #ADADAD solid;
+    border: 3px #3498DB solid;
     border-radius: 2px;
     left: 0;
     right: 0;
@@ -207,29 +227,45 @@ div#card-upload-modal > #card-modal{
     font-size:24px;
 }
 
-
-div#map-modal{
-    position:absolute;
-    width:1000px;
-    height:500px;
-    background-color: #FFFFFF;
-    border: 3px #ADADAD solid;
-    border-radius: 2px;
-    top:-25px;
-    bottom:0;
-    margin: auto;
+#card-modal textarea{
+    color : #3498DB;
+}
+#map-panel {
     z-index:50;
+    background-color: #FFFFFF;
+    border: 3px #3498DB solid;
+    border-radius: 2px;
+    position:absolute;
+    width:1100px;
+    height:600px;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    margin: auto;
+}
+
+div#map-modal {
+    z-index:70;
     text-align:center;
     padding:15px;
     font-size:24px;
 }
 
-html,
-body,
 #map-canvas {
-    height: 100%;
-    margin: 0px;
-    padding: 0px
+    height: 85%;
+    width: calc(100% - 40px);
+    margin: 10px 20px;
+    padding: 0px;
+    z-index:50;
+}
+
+#close-map-modal {
+    position: absolute;
+    float:right;
+    right:20px;
+    cursor:pointer;
+    z-index:50;
 }
 
 #panel {
@@ -242,7 +278,6 @@ body,
     padding: 5px;
     border: 1px solid #999;
 }
-
 
 div#card-upload-modal > #card-modal > #image-upload-zone {
     width:calc(100% - 44px);
@@ -263,7 +298,7 @@ div#card-upload-modal > #card-modal > #submit-card {
     font-size:23px;
     background-color:transparent;
     border:0;
-    bottom:30px;
+    bottom:25px;
     right:40px;
     cursor: pointer;
 }
@@ -299,10 +334,10 @@ div#card-upload-modal > #card-modal > #submit-card {
     margin-left:80px;
 }
 
-#close-modal {
+#close-upload-modal {
     position:absolute;
     float:right;
-    right:20px;
+    right:35px;
     cursor:pointer;
 }
 
@@ -314,19 +349,19 @@ button {
     width:250px;
     position:absolute;
     top:70px;
-
+    text-align:center;
 }
 
 #notification-hook {
     list-style: none;
-    background-color:#B9D2FF;
+    background-color: transparent;
     padding:0 0px;
 }
 
 .notification {
     width:calc(100% - 20px);
     padding:10px;
-    background-color:red;
+    background-color: #E9F5F6;
     margin:0px 10px 5px 10px;
     text-align:center;
     min-height: 140px;
@@ -343,35 +378,65 @@ button {
     font-size:20px;
     position: relative;
     float:right;
-    right:-10px;
+    right:0px;
     top:-40px;
     cursor:pointer;
+    color:#CFDCDC;
 }
 
+.notification > .dismiss-notification:hover {
+    color:#B2BDBD;
+}
 
+.chat-background-shader {
+    position: fixed;
+    background-color:#B8B8B8;
+    opacity:0.4;
+    width:100%;
+    heigth:100%;
+    top:0;
+    bottom:0;
+    left:0;
+}
+
+#chat {
+    z-index: 70;
+    background-color:white;
+}
 
 #chat-area{
+    top:100px;
+    left:0;
+    right:0;
+    margin:auto;
+    z-index:50;
     position: absolute;
-    width: 60%;
-    height: 100%;
+    width: 40%;
+    height: 70%;
     padding: 0;
-    background-color: #FAFAFA;
+    background-color: white;
+    border: 3px #ADADAD solid;
+    border-radius: 2px;
 }
 
 .chat-area-component{
     position: absolute;
-    left: 180px;
-    width: calc(100% - 180px);
+    width: 100%;
     border: 0;
     margin: 0;
 }
-
+#chat-header-anchor {
+    text-align:center;
+    height:45px;
+    padding:10px 0;
+}
 
 ul#messages-area{
+    width:100%;
+    top:40px;
     background-color: white;
-    top: 45px;
     list-style-type: none;
-    height: calc(100% - 95px);
+    height: calc(100% - 90px);
     overflow: auto;
     padding: 10px;
     overflow-y: auto;
@@ -380,6 +445,11 @@ ul#messages-area{
 
 ul#messages-area li{
     margin: 5px 0px;
+    vertical-align: text-top;
+    min-height:50px;
+}
+ul#messages-area li:nth-child(even){
+    background-color:#E6F5F5;
 }
 
 ul#messages-area div{
@@ -387,18 +457,31 @@ ul#messages-area div{
     padding: 0;
 }
 
-ul#messages-area div.message-sender{
+ul#messages-area .message-sender{
+    position:absolute;
     color: #5F8BAF;
     float: left;
-    width: 80px;
+    width: 50px;
+    border-radius:50%;
     text-align: center;
 }
 
+.message-close div.message-content {
+    left: 50px;
+}
+
+ul#messages-area img.message-sender{
+    width:50px;
+    height:50px;
+}
+
 ul#messages-area div.message-content{
+    position: absolute;
     overflow: auto;
     color: #B59484;
     padding: 0;
-    width: calc(100% - 80px);
+    margin-left:50px;
+    width: calc(100% - 90px);
     word-break: break-all;
 }
 
@@ -424,12 +507,20 @@ textarea#message-input-text{
 #message-input-button{
     position: absolute;
     float: bottom;
-    bottom: 10px;
-    right: 18px;
+    bottom:20px;
+    right: 25px;
     cursor: pointer;
     color: #2573A6;
 }
 
 #message-input-button:hover{
     color: #2889CA;
+}
+
+#close-chat-area {
+    position:absolute;
+    top:10px;
+    right:10px;
+    font-size:18px;
+    cursor:pointer;
 }

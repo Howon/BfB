@@ -6,8 +6,12 @@ module.exports = function(io) {
       socket.broadcast.emit('receive:message', message);
     });
 
-    socket.on("start:chat", function(){
-      socket.emit('receive:message');
+    socket.on("start:chat", function(chatData) {
+      socket.broadcast.emit('start:chat', chatData);
     });
+
+    socket.on("close:chat", function(user) {
+      socket.broadcast.emit('close:chat', user);
+    })
   });
 }

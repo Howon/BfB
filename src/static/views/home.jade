@@ -11,6 +11,8 @@ block content
     button#card-uploader
       i.fa.fa-cutlery(aria-hidden='true') &nbsp;
       i.fa.fa-plus(aria-hidden='true')
+    button#show-map
+      i.fa.fa-map-marker(aria-hidden='true')
     #panelSlide
       ul
         each card, i in props.cards
@@ -21,10 +23,26 @@ block content
             p.card-text=card.location
             p.card-text=card.description
             p.card-text=card.creator
+
+
+  #map-modal(style='display:none;')
+    #background-shader
+    #card-modal
+      i#close-map-modal.fa.fa-times(aria-hidden='true')
+      label#map-modal-label
+        | Where is everyone?
+        
+     
+
+      #panel(style="margin-left: -52px")
+        button#drop(onclick="drop()") Drop Markers
+      #map-canvas
+
+
   #card-upload-modal(style='display:none;')
     #background-shader
     #card-modal
-      i#close-modal.fa.fa-times(aria-hidden='true')
+      i#close-upload-modal.fa.fa-times(aria-hidden='true')
       label#card-modal-label
         | Share your food!
       form#image-upload-zone.dropzone(action='/file-upload')
@@ -39,6 +57,12 @@ block content
         textarea#card-modal-desc-form.form-control(rows='5')
       button#submit-card
         label Submit
+
+  
+     
+
+  // script(src="https://maps.googleapis.com/maps/api/js?v=3.exp")
+  script(src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAbebnQH25_Kuyk2dihcatibtfsSS7IVDI")
   div#notification-area
     | Notifications:
     ul#notification-hook
@@ -46,3 +70,4 @@ block content
     var props = !{JSON.stringify(props)};
   script(type='text/javascript', src='/static/js/cards.js')
   script(type='text/javascript', src='/static/js/map.js')
+  script(type='text/javascript', src='/static/js/createCard.js')

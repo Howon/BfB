@@ -190,6 +190,43 @@ div#card-upload-modal > #card-modal{
     font-size:24px;
 }
 
+
+div#map-modal{
+    position:absolute;
+    width:1000px;
+    height:500px;
+    background-color: #FFFFFF;
+    border: 3px #ADADAD solid;
+    border-radius: 2px;
+    top:-25px;
+    bottom:0;
+    margin: auto;
+    z-index:50;
+    text-align:center;
+    padding:15px;
+    font-size:24px;
+}
+
+html,
+body,
+#map-canvas {
+    height: 100%;
+    margin: 0px;
+    padding: 0px
+}
+
+#panel {
+    position: absolute;
+    top: 5px;
+    left: 50%;
+    margin-left: -180px;
+    z-index: 5;
+    background-color: #fff;
+    padding: 5px;
+    border: 1px solid #999;
+}
+
+
 div#card-upload-modal > #card-modal > #image-upload-zone {
     width:calc(100% - 44px);
     height:30%;

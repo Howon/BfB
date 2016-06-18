@@ -6,21 +6,17 @@ var sass = require('gulp-sass');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var sh = require('shelljs');
-var ngAnnotate = require('gulp-ng-annotate');
-var uglify = require('gulp-uglifyjs');
-var wrap = require('gulp-wrap');
 
 var paths = {
-  sass: ['./scss/**/*.scss'],
-  js: ['./www/js/**/*.js'],
-  vendor: ['./www/lib/**/*']
+  sass: ['./scss/**/*.scss']
 };
 
-gulp.task('default', ['sass', 'js']);
+gulp.task('default', ['sass']);
 
 gulp.task('sass', function(done) {
   gulp.src('./scss/ionic.app.scss')
     .pipe(sass())
+    .on('error', sass.logError)
     .pipe(gulp.dest('./www/css/'))
     .pipe(minifyCss({
       keepSpecialComments: 0
@@ -30,40 +26,8 @@ gulp.task('sass', function(done) {
     .on('end', done);
 });
 
-gulp.task('vendor', function(done) {
-  var paths = [
-    './www/lib/underscore/underscore.js',
-    './www/lib/ionic/js/ionic.bundle.js',
-    "./www/lib/collide/collide.js",
-    "./www/lib/ngstorage/ngStorage.min.js",
-    "./www/lib/angular-jwt/dist/angular-jwt.js",
-    './www/lib/ngCordova/dist/ng-cordova.js'
-  ]
-
-  return gulp.src(paths)
-    .pipe(concat('vendor.js'))
-    .pipe(uglify())
-    .pipe(gulp.dest('./www/dist'))
-});
-
-gulp.task('js', function(done) {
-  var paths = [
-    './www/lib/ionic-contrib-tinder-cards/ionic.tdcards.js',
-    "./www/lib/angular-flux-helpers/angular-flux.js",
-    './www/js/app.js',
-    './www/js/**/*.js'
-  ];
-
-  return gulp.src(paths)
-    .pipe(concat('bundle.js'))
-    .pipe(gulp.dest('./www/dist'))
-});
-
 gulp.task('watch', function() {
-  gulp.watch([paths.sass, paths.js, paths.vendor], function() {
-    gulp.start('default');
-  });
-  gulp.start('default');
+  gulp.watch(paths.sass, ['sass']);
 });
 
 gulp.task('install', ['git-check'], function() {

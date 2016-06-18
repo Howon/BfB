@@ -192,5 +192,14 @@ ul.sm-wrap li#gplus-sm {
 }
 
 ul.sm-wrap a{
-    text-decoration: none;    
+    text-decoration: none;
 }
+
+#bfb-logo {
+    width:44px;
+    margin-top: -15px;
+    left:0;
+    margin-right:10px;
+}
+
+

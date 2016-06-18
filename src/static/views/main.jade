@@ -43,42 +43,20 @@ html
               span.icon-bar
               span.icon-bar
               span.icon-bar
-            a.navbar-brand(href='/') Project name
+            a.navbar-brand(href='/')
+              img#bfb-logo(src="/static/images/BFB_Logo.png")
           .collapse.navbar-collapse
             ul.nav.navbar-nav
-              li.active({%='', if='', request.endpoint='=', %}='', endif='')
+              li
                 a(href="/") Home
-              li.active({%='', if='', request.endpoint='=', %}='', endif='')
+              li
                 a(href="/") About
-              li.dropdown
-                a.dropdown-toggle(data-toggle='dropdown')
-                  | Dropdown
-                  b.caret
-                ul.dropdown-menu
-                  li
-                    a Action
-                  li
-                    a Another action
-                  li
-                    a Something else here
-                  li.divider
-                  li.dropdown-header Nav header
-                  li
-                    a Separated link
-                  li
-                    a One more separated link
             ul.nav.navbar-nav.pull-right
               li
-                a(href="/") Signup
-              li
-                a(href="/") Login
-              button(onclick="createUser()" id="facebook") Sign in with Facebook
+                a(href="/home/0") Login
               .fb-login-button(data-max-rows='1', data-size='large', data-show-faces='false', data-auto-logout-link='false')
       main#content.container(role='main')
         block content
-    #footer
-      .container
-        p Your Company © All Rights Reserved.
     script(type='text/javascript', src='//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js')
     script.
       window.jQuery || document.write('<script type="text/javascript" src="/static/js/libs/jquery-1.11.1.min.js"><\\/script>')

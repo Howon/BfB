@@ -1,79 +1,90 @@
-var lat;
-var lon;
+var currLat;
+var currLon;
 var address;
 
 function getLocation() {
-    if (navigator.geolocation) {
-        function reverseGeoCodingGenerator(lat, lon, key) {
-            return "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + lon + "&key=" + key;
-        }
-
-        function showPosition(position) {
-            lat = position.coords.latitude;
-            lon = position.coords.longitude;
-
-            var xhr = new XMLHttpRequest();
-            var apiKey = "AIzaSyC3RB-TqPKhqFjiigOwAX15HEmjvziKc4M";
-
-            xhr.open('GET', reverseGeoCodingGenerator(lat, lon, apiKey), true);
-            xhr.send();
-
-            xhr.onreadystatechange = processRequest;
-
-            function processRequest(e) {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    var response = JSON.parse(xhr.responseText);
-                    address = response.results[0].formatted_address;
-                    document.getElementById("location-mount-point").innerHTML = address;
-                }
-            }
-            createMap();
-        }
-        navigator.geolocation.getCurrentPosition(showPosition);
+  if (navigator.geolocation) {
+    function reverseGeoCodingGenerator(lat, lon, key) {
+      return "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + lon + "&key=" + key;
     }
-}
 
+    function showPosition(position) {
+      currLat = position.coords.latitude;
+      currLon = position.coords.longitude;
+
+      var xhr = new XMLHttpRequest();
+      var apiKey = "AIzaSyC3RB-TqPKhqFjiigOwAX15HEmjvziKc4M";
+
+      xhr.open('GET', reverseGeoCodingGenerator(currLat, currLon, apiKey), true);
+      xhr.send();
+
+      xhr.onreadystatechange = processRequest;
+
+      function processRequest(e) {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+          var response = JSON.parse(xhr.responseText);
+          address = response.results[0].formatted_address;
+          document.getElementById("location-mount-point").innerHTML = address;
+        }
+      }
+    }
+    navigator.geolocation.getCurrentPosition(showPosition);
+  }
+}
 
 getLocation()
 
-function createMap() {
-  console.log(47.6282888, -122.34286349999998);
-  var center = new google.maps.LatLng(47.6282888, -122.34286349999998);
-  var neighborhoods = [
-      new google.maps.LatLng(52.511467, 13.447179),
-      new google.maps.LatLng(52.549061, 13.422975),
-      new google.maps.LatLng(52.497622, 13.396110),
-      new google.maps.LatLng(52.517683, 13.394393)
-  ];
+function showMap(lat, lon, zoom) {
+  var center = new google.maps.LatLng(parseFloat(lat), parseFloat(lon));
   var markers = [];
   var iterator = 0;
   var map;
 
-  function initialize() {
+  function initMap() {
       var mapOptions = {
-          zoom: 12,
+          zoom: zoom,
           center: center
       };
-      map = new google.maps.Map(document.getElementById('map-canvas'),
-          mapOptions);
-
-      for (var i = 0; i < neighborhoods.length; i++) {
-          setTimeout(function() {
-              addMarker();
-          }, i * 200);
-      }
-  }
-
-  function addMarker() {
+      map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+      google.maps.event.trigger(map, 'resize');
       markers.push(new google.maps.Marker({
-          position: neighborhoods[iterator],
-          map: map,
-          draggable: false,
-          animation: google.maps.Animation.DROP
+        position: center,
+        map: map,
+        draggable: false
       }));
-      iterator++;
   }
-  google.maps.event.addDomListener(window, 'load', initialize);
+  initMap();
 }
 
-createMap()
+function createMap(lat, lon, zoom) {
+  var center = new google.maps.LatLng(lat, lon);
+  var neighborhoods = []
+  for (var i = 0; i < props.cards.length; i++) {
+    neighborhood = new google.maps.LatLng(props.cards[i].lat, props.cards[i].lon);
+    neighborhoods.push(neighborhood);
+  }
+
+  var markers = [];
+  var iterator = 0;
+  var map;
+
+  function initMap() {
+
+    var mapOptions = {
+      zoom: zoom,
+      center: center
+    };
+    map = new google.maps.Map(document.getElementById('map-canvas'),
+      mapOptions);
+    google.maps.event.trigger(map, 'resize');
+    for (var i = 0; i < neighborhoods.length; i++) {
+      // console.log(neighborhoods[i]);
+      markers.push(new google.maps.Marker({
+        position: neighborhoods[i],
+        map: map,
+        draggable: false
+      }));
+    }
+  }
+  initMap();
+}

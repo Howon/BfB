@@ -1,6 +1,6 @@
  // Initialize Firebase
 var config = {
-  apiKey: "AIzaSyAfoOHV3ZGqptKBzKVhXsPqi-Joyv10aUo",
+  apiKey: "",
   authDomain: "foodtinder-daa92.firebaseapp.com",
   databaseURL: "https://foodtinder-daa92.firebaseio.com",
   storageBucket: "foodtinder-daa92.appspot.com",

@@ -15,7 +15,7 @@ require('./src/scripts/notification')(io)
 require('./src/scripts/chat')(io)
 require('./src/scripts/routes')(app)
 
-var port = 3000;
+var port = process.env.PORT || 3000;
 
 server.listen(port, function() {
   console.log('*****************************')

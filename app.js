@@ -11,6 +11,7 @@ app.set('views', path.join(__dirname, 'src/static/views'))
 app.set('view engine', 'jade')
 app.use(express.static(path.join(__dirname, 'src/')))
 
+
 require('./src/scripts/notification')(io)
 require('./src/scripts/chat')(io)
 require('./src/scripts/routes')(app)

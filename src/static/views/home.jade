@@ -1,0 +1,42 @@
+extends main
+
+block content
+  link(type='text/css', rel='stylesheet', href='/static/css/cards.css')
+  link(type='text/css', rel='stylesheet', href='/static/css/dropzone.css')
+  script(type='text/javascript', src='/static/js/libs/jquery.transform2d.js')
+  script(type='text/javascript', src='/static/js/libs/jquery.jTinder.js')
+  script(type='text/javascript', src='/static/js/libs/dropzone.js')
+  script(type='text/javascript', src="https://cdn.socket.io/socket.io-1.4.5.js")
+  .card-container
+    button#card-uploader
+      i.fa.fa-cutlery(aria-hidden='true') &nbsp;
+      i.fa.fa-plus(aria-hidden='true')
+    #panelSlide
+      ul
+        each card, i in cards
+          li.card(class='panel-#{i}', style='transform: translate(0px, 0px) rotate(0rad);')
+            .card-img
+              img(src=card.img)
+            h4.card-title=card.title
+            p.card-text=card.location
+            p.card-text=card.description
+  #card-upload-modal(style='display:none;')
+    #background-shader
+    #card-modal
+      i#close-modal.fa.fa-times(aria-hidden='true')
+      label#card-modal-label
+        | Share your food!
+      form#image-upload-zone.dropzone(action='/file-upload')
+      .row
+        label.card-modal-form-label Title
+        textarea#card-modal-title-form.form-control(rows='1')
+      .row
+        label.card-modal-form-label Address
+        #location-mount-point
+      .row
+        label.card-modal-form-label Description
+        textarea#card-modal-desc-form.form-control(rows='5')
+      button#submit-card
+        label Submit
+  script(type='text/javascript', src='/static/js/cards.js')
+  script(type='text/javascript', src='/static/js/map.js')

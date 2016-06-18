@@ -38,24 +38,11 @@ function createCard(owner, title, img, description,
 		"long": long,
 		"location": location
 	});
-	console.log(newCard);
+
 	var newCardId = newCard.key;
-
-
-	var userItems = firebase.database().ref('users/' + owner + "/items");
-	var myItems = [newCardId]
-	
-	userItems.on('value', function(snapshot) {
-		myItems.push(snapshot.val());
-	});
-
-
-	var updates = {};
-	updates['users/' + owner + "/items"] = myItems;
-	firebase.database().ref().update(updates);
-	
-	
-
+	var myOwner = firebase.database().ref('users/' + owner + '/items').push(
+		newCard.key
+	)
 }
 
 function updateCard(id, owner, title, img, description,
@@ -72,5 +59,3 @@ function updateCard(id, owner, title, img, description,
 	});
 
 }
-
-getAllCards();

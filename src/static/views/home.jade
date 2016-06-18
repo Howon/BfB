@@ -16,13 +16,15 @@ block content
     #panelSlide
       ul
         each card, i in props.cards
-          li.card(class='panel-#{i}' data-id=card.id, style='transform: translate(0px, 0px) rotate(0rad);')
+          li.card(class='card panel-#{i}' data-id=card.id, style='transform: translate(0px, 0px) rotate(0rad);')
             .card-img
               img(src=card.img)
-            h4.card-title=card.title
-            p.card-text=card.location
-            p.card-text=card.description
-            p.card-text=card.creator
+            .card-content
+              h3.card-title=card.title
+              p.card-text.address=card.address
+               | &nbsp; <i class="fa fa-map-marker" data-lat=#{card.lat} data-lon=#{card.lon} aria-hidden="true"></i>
+              p.card-text=card.description
+              h3.card-text.creator=card.creator
 
 
   #map-modal(style='display:none;')
@@ -52,9 +54,6 @@ block content
         textarea#card-modal-desc-form.form-control(rows='5')
       button#submit-card
         label Submit
-
-
-
 
   // script(src="https://maps.googleapis.com/maps/api/js?v=3.exp")
   script(src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAbebnQH25_Kuyk2dihcatibtfsSS7IVDI")

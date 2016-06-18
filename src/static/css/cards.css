@@ -100,8 +100,8 @@
 
 li.card {
   position: absolute;
-  width:500px;
-  height:600px;
+  width:450px;
+  height:550px;
   border: 4px #B8B8B8 solid;
   border-radius: 3px;
   background-color: #F8F8F8;
@@ -114,7 +114,6 @@ li.card {
   overflow: hidden;
   z-index: 2;
 }
-
 
 li.card > div.card-img {
   height:70%;
@@ -139,12 +138,30 @@ li.card.panel-2 {
     transform: rotate(4deg);
 }
 
-
 li.card > div.card-img > img {
   position: relative;
   left: 100%;
   margin-left: -200%;
   height:100%;
+}
+
+.card-content {
+    padding:0 20px;
+}
+
+div.card-content > h3 {
+    margin-top:10px;
+}
+p.card-text > i {
+    cursor:pointer;
+    font-size:18px;
+}
+
+h3.creator {
+    position:relative;
+    top: -108px;
+    float:right;
+    right:0;
 }
 
 #card-uploader {
@@ -308,18 +325,18 @@ button {
 
 .notification {
     width:calc(100% - 20px);
+    padding:10px;
     background-color:red;
     margin:0px 10px 5px 10px;
     text-align:center;
-}
-
-.notification > img {
-    cursor:pointer;
+    min-height: 140px;
 }
 
 .notification > .notification-image{
     width:50%;
     border-radius: 50%;
+    cursor:pointer;
+    height:100px;
 }
 
 .notification > .dismiss-notification {
@@ -330,3 +347,4 @@ button {
     top:-20px;
     cursor:pointer;
 }
+

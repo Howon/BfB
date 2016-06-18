@@ -72,3 +72,5 @@ function updateCard(id, owner, title, img, description,
 	});
 
 }
+
+getAllCards();

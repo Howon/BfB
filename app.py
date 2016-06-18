@@ -45,6 +45,9 @@ def login_required(test):
 def home():
     return render_template('pages/placeholder.home.html')
 
+@app.route("/echo")
+def echo(): 
+    return "You said: " + request.args.get('text', '')
 
 @app.route('/about')
 def about():
